@@ -1,0 +1,51 @@
+
+"""
+Configuration module for LLM benchmarking suite.
+Contains endpoint configurations and benchmark settings.
+"""
+
+from dataclasses import dataclass
+from typing import Optional
+
+
+@dataclass
+class EndpointConfig:
+    """Configuration for an LLM endpoint."""
+    name: str
+    url: str
+    model_name: str
+    auth_token: str
+    api_type: str = "openai"  # openai-compatible API
+    verify_ssl: bool = False
+    timeout: int = 120
+
+
+@dataclass
+class BenchmarkConfig:
+    """Configuration for benchmark execution."""
+    num_iterations: int = 10
+    concurrent_requests: int = 1
+    timeout: int = 120
+    output_dir: str = "results"
+    temperature: float = 0.7
+    max_tokens: int = 512
+    stream: bool = True
+
+
+# Endpoint configurations
+VLLM_ENDPOINT = EndpointConfig(
+    name="vLLM",
+    url="https://mlis-bench-vllm.project-user-zeitler.serving.hpepcai.demo.local/v1/chat/completions",
+    model_name="meta-llama/Llama-3.1-8B-Instruct",
+    auth_token="eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ4M3J1WW8yNWRBdXJ5aUtkbFlQX0g1RXplZlNjZHN6Z3ZWeURtb3MwejRBIn0.eyJleHAiOjE3NjE4Mzc3OTEsImlhdCI6MTc2MTU3ODU5MSwiYXV0aF90aW1lIjoxNzYxNTU5MjU2LCJqdGkiOiI5OWY3YmM2Ny0yNGNhLTQ5YTgtODQ1MC01MDA0MDdiN2ZkOWIiLCJpc3MiOiJodHRwczovL2tleWNsb2FrLmhwZXBjYWkuZGVtby5sb2NhbC9yZWFsbXMvVUEiLCJhdWQiOiJ1YSIsInN1YiI6IjJhNWNlODM2LTk5NDQtNGNkYi1hZWZhLTFjNzJhOGRlOGEwYiIsInR5cCI6IklEIiwiYXpwIjoidWEiLCJub25jZSI6IldocV9pSlVwTlkxTU1QdHBHU19MWjh1cnR6VExJSUsyb1Z0dUtIVWc3ODQiLCJzZXNzaW9uX3N0YXRlIjoiMDMyNGUzODYtY2E0My00NGU2LTljYWEtNjJhMzBkNzMxNjdlIiwiYXRfaGFzaCI6Ii1acXBDd3p1RjdSVXpxQ1lWNXctR3ciLCJhY3IiOiIxIiwic2lkIjoiMDMyNGUzODYtY2E0My00NGU2LTljYWEtNjJhMzBkNzMxNjdlIiwidWlkIjoiMTAwMDAwMjYiLCJnaWQiOiIxMDAxIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiTWF4IFplaXRsZXIiLCJuYW1lc3BhY2UiOiJwcm9qZWN0LXVzZXItemVpdGxlciIsImdyb3VwcyI6WyJ1YS1lbmFibGVkIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsImRlZmF1bHQtcm9sZXMtdWEiLCJ1bWFfYXV0aG9yaXphdGlvbiJdLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ6ZWl0bGVyIiwicG9zaXhfdXNlcm5hbWUiOiJ6ZWl0bGVyIiwiZ2l2ZW5fbmFtZSI6Ik1heCIsImZhbWlseV9uYW1lIjoiWmVpdGxlciIsImVtYWlsIjoiemVpdGxlckBocGUuY29tIn0.pDZ9JJaHfchBu0opNEQ0bW6X8NpJ7XVGWkTQdmh4G7gwxvGC3vRZA-nVW39jUehck_4ttH9b-LcQmAizsu2tHzWscB6XDvAuM-I7CRKpNmaacZoGx5zA3JBvWC4pKb_Dy4XCDsBT3KgdK6jn9R6Ak3YLqgB0CD7CXN-r5CZuBMt9MsBd5WH0gv6AhKVvngethxw0XpNHDHsSg2KCwmMzLzLZHBgzLZs_ozZvPp2gRdudWyTTF-4A8SyExRgQ3ry5d_ydixr652s8rfAeACj_a91QBpV1od4fUTBX_VVUn3nY2ehBEtIcwQEwo6n9EMe519IAxtVNfqOp7hahtPnDhA"
+)
+
+NVIDIA_NIM_ENDPOINT = EndpointConfig(
+    name="Nvidia_NIM",
+    url="https://mlis-bench-ngc.project-user-zeitler.serving.hpepcai.demo.local/v1/chat/completions",
+    model_name="meta/llama-3.1-8b-instruct",
+    auth_token="eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ4M3J1WW8yNWRBdXJ5aUtkbFlQX0g1RXplZlNjZHN6Z3ZWeURtb3MwejRBIn0.eyJleHAiOjE3NjE4Mzg5OTcsImlhdCI6MTc2MTU3OTc5NywiYXV0aF90aW1lIjoxNzYxNTU5MjU2LCJqdGkiOiIwN2Y4NTViZC02OTNhLTQ5ZjQtODFjMS0yY2QzMGRmMjg2NTgiLCJpc3MiOiJodHRwczovL2tleWNsb2FrLmhwZXBjYWkuZGVtby5sb2NhbC9yZWFsbXMvVUEiLCJhdWQiOiJ1YSIsInN1YiI6IjJhNWNlODM2LTk5NDQtNGNkYi1hZWZhLTFjNzJhOGRlOGEwYiIsInR5cCI6IklEIiwiYXpwIjoidWEiLCJub25jZSI6IldocV9pSlVwTlkxTU1QdHBHU19MWjh1cnR6VExJSUsyb1Z0dUtIVWc3ODQiLCJzZXNzaW9uX3N0YXRlIjoiMDMyNGUzODYtY2E0My00NGU2LTljYWEtNjJhMzBkNzMxNjdlIiwiYXRfaGFzaCI6IlM3XzJ2Z2RTMEl1UkNSeDlaaXB2NmciLCJhY3IiOiIxIiwic2lkIjoiMDMyNGUzODYtY2E0My00NGU2LTljYWEtNjJhMzBkNzMxNjdlIiwidWlkIjoiMTAwMDAwMjYiLCJnaWQiOiIxMDAxIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJuYW1lIjoiTWF4IFplaXRsZXIiLCJuYW1lc3BhY2UiOiJwcm9qZWN0LXVzZXItemVpdGxlciIsImdyb3VwcyI6WyJ1YS1lbmFibGVkIiwib2ZmbGluZV9hY2Nlc3MiLCJhZG1pbiIsImRlZmF1bHQtcm9sZXMtdWEiLCJ1bWFfYXV0aG9yaXphdGlvbiJdLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJ6ZWl0bGVyIiwicG9zaXhfdXNlcm5hbWUiOiJ6ZWl0bGVyIiwiZ2l2ZW5fbmFtZSI6Ik1heCIsImZhbWlseV9uYW1lIjoiWmVpdGxlciIsImVtYWlsIjoiemVpdGxlckBocGUuY29tIn0.epHS1rmDyD-eS6NEQ8BVcHlFLuB58BNgbQkOwh89izh24iSJWAB80zLHL-Ok_sMSYLIA1W5VrJvtavD_e5zWob-zF4EMJSXl4iK3YrVteKVckIzJQdIJcb9JhO_F151kZyZmZq7oRn2ZVSEEoKeBqd8DioBC5sa1W7aGuQWzgFeZRKF_wzwArHY160B5AwaK8yD53kjqZAr7XgqqcJM_I34nWfypaEGaFZtDXzAly9_y-8M2lWAnW7bNszkE4r2uKFPaYBauASmJxxI1851GAJo8IUift876Ond3oZuvHapQzriFYOCeIpDux4cpPtrMdtaYUovj3KFwdcy4tuo4ig"
+)
+
+# All endpoints to test
+ENDPOINTS = [VLLM_ENDPOINT, NVIDIA_NIM_ENDPOINT]

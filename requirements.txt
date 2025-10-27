@@ -1,0 +1,16 @@
+
+# Core dependencies
+aiohttp>=3.9.0
+urllib3>=2.0.0
+
+# Data processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Visualization
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Optional: For better async performance
+aiodns>=3.0.0
+cchardet>=2.1.7
