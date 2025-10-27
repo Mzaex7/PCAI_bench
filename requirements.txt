@@ -13,4 +13,4 @@ seaborn>=0.12.0
 
 # Optional: For better async performance
 aiodns>=3.0.0
-cchardet>=2.1.7
+charset-normalizer>=3.0.0
