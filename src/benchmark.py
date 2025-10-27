@@ -240,17 +240,21 @@ class LLMBenchmark:
             List of benchmark results
         """
         results = []
+        total_requests = self.config.num_iterations * len(prompts)
+        completed = 0
         
         async with aiohttp.ClientSession() as session:
             for iteration in range(self.config.num_iterations):
-                print(f"  [{endpoint.name}] Sequential iteration {iteration + 1}/{self.config.num_iterations}")
-                
                 for prompt_idx, prompt in enumerate(prompts):
-                    print(f"    Testing prompt {prompt_idx + 1}/{len(prompts)} - {prompt['category']}")
                     result = await self._make_streaming_request(
                         session, endpoint, prompt, iteration, concurrent_level=1
                     )
                     results.append(result)
+                    completed += 1
+                    
+                    # Print progress every 10% or at key milestones
+                    if completed % max(1, total_requests // 10) == 0 or completed == total_requests:
+                        print(f"  [{endpoint.name}] Progress: {completed}/{total_requests} requests ({100*completed/total_requests:.0f}%)")
         
         return results
     
@@ -270,12 +274,10 @@ class LLMBenchmark:
             List of benchmark results
         """
         results = []
+        total_iterations = self.config.num_iterations
         
         async with aiohttp.ClientSession() as session:
-            for iteration in range(self.config.num_iterations):
-                print(f"  [{endpoint.name}] Concurrent iteration {iteration + 1}/{self.config.num_iterations}")
-                print(f"    Running {len(prompts)} prompts with concurrency={self.config.concurrent_requests}")
-                
+            for iteration in range(total_iterations):
                 # Create tasks for concurrent execution
                 tasks = []
                 for prompt in prompts:
@@ -286,12 +288,61 @@ class LLMBenchmark:
                     tasks.append(task)
                 
                 # Run concurrent requests in batches
+                batch_count = 0
                 for i in range(0, len(tasks), self.config.concurrent_requests):
                     batch = tasks[i:i + self.config.concurrent_requests]
                     batch_results = await asyncio.gather(*batch)
                     results.extend(batch_results)
+                    batch_count += 1
+                
+                # Print progress after each iteration
+                completed = iteration + 1
+                print(f"  [{endpoint.name}] Progress: {completed}/{total_iterations} iterations ({100*completed/total_iterations:.0f}%) - {len(results)} requests completed")
         
         return results
+    
+    async def _benchmark_single_endpoint(
+        self,
+        endpoint: EndpointConfig,
+        prompts: List[Dict],
+        sequential: bool
+    ) -> Tuple[EndpointConfig, List[BenchmarkResult]]:
+        """
+        Benchmark a single endpoint (helper for parallel execution).
+        
+        Args:
+            endpoint: Endpoint to test
+            prompts: List of prompts
+            sequential: Whether to run prompts sequentially
+            
+        Returns:
+            Tuple of (endpoint, results)
+        """
+        print(f"[{endpoint.name}] Starting benchmark...")
+        print(f"  Model: {endpoint.model_name}")
+        print(f"  URL: {endpoint.url}\n")
+        
+        if sequential or self.config.concurrent_requests == 1:
+            results = await self._run_sequential_benchmark(endpoint, prompts)
+        else:
+            results = await self._run_concurrent_benchmark(endpoint, prompts)
+        
+        # Print summary for this endpoint
+        successful = sum(1 for r in results if r.success)
+        failed = len(results) - successful
+        avg_latency = sum(r.total_latency for r in results if r.success) / successful if successful > 0 else 0
+        avg_ttft = sum(r.time_to_first_token for r in results if r.success and r.time_to_first_token) / successful if successful > 0 else 0
+        avg_throughput = sum(r.tokens_per_second for r in results if r.success and r.tokens_per_second) / successful if successful > 0 else 0
+        
+        print(f"\n[{endpoint.name}] ✓ Completed!")
+        print(f"    Success: {successful}/{len(results)} ({100*successful/len(results):.1f}%)")
+        print(f"    Failed: {failed}")
+        print(f"    Avg Total Latency: {avg_latency:.3f}s")
+        print(f"    Avg TTFT: {avg_ttft:.3f}s")
+        print(f"    Avg Throughput: {avg_throughput:.2f} tokens/s")
+        print()
+        
+        return endpoint, results
     
     async def run_benchmark(
         self,
@@ -299,11 +350,12 @@ class LLMBenchmark:
         sequential: bool = True
     ) -> List[BenchmarkResult]:
         """
-        Run complete benchmark suite.
+        Run complete benchmark suite with parallel endpoint testing.
         
         Args:
-            endpoints: List of endpoints to test
-            sequential: If True, run sequential tests; if False, run concurrent tests
+            endpoints: List of endpoints to test (will be tested in parallel)
+            sequential: If True, run prompts sequentially within each endpoint;
+                       if False, run prompts concurrently within each endpoint
             
         Returns:
             List of all benchmark results
@@ -312,8 +364,9 @@ class LLMBenchmark:
         print(f"Starting {'Sequential' if sequential else 'Concurrent'} Benchmark")
         print(f"{'='*80}\n")
         print(f"Configuration:")
+        print(f"  - Prompt mode: {'Sequential' if sequential else f'Concurrent (batch size: {self.config.concurrent_requests})'}")
+        print(f"  - Endpoint mode: Parallel (all endpoints tested simultaneously)")
         print(f"  - Iterations: {self.config.num_iterations}")
-        print(f"  - Concurrent requests: {self.config.concurrent_requests}")
         print(f"  - Timeout: {self.config.timeout}s")
         print(f"  - Max tokens: {self.config.max_tokens}")
         print(f"  - Temperature: {self.config.temperature}")
@@ -322,36 +375,21 @@ class LLMBenchmark:
         
         prompts = get_test_prompts()
         print(f"Loaded {len(prompts)} test prompts")
-        print(f"Testing {len(endpoints)} endpoints\n")
+        print(f"Testing {len(endpoints)} endpoints in parallel\n")
         
+        # Run all endpoints in parallel
+        tasks = [
+            self._benchmark_single_endpoint(endpoint, prompts, sequential)
+            for endpoint in endpoints
+        ]
+        
+        # Gather results from all endpoints
+        endpoint_results = await asyncio.gather(*tasks)
+        
+        # Combine all results
         all_results = []
-        
-        for endpoint in endpoints:
-            print(f"Testing endpoint: {endpoint.name}")
-            print(f"  Model: {endpoint.model_name}")
-            print(f"  URL: {endpoint.url}\n")
-            
-            if sequential or self.config.concurrent_requests == 1:
-                results = await self._run_sequential_benchmark(endpoint, prompts)
-            else:
-                results = await self._run_concurrent_benchmark(endpoint, prompts)
-            
+        for endpoint, results in endpoint_results:
             all_results.extend(results)
-            
-            # Print summary for this endpoint
-            successful = sum(1 for r in results if r.success)
-            failed = len(results) - successful
-            avg_latency = sum(r.total_latency for r in results if r.success) / successful if successful > 0 else 0
-            avg_ttft = sum(r.time_to_first_token for r in results if r.success and r.time_to_first_token) / successful if successful > 0 else 0
-            avg_throughput = sum(r.tokens_per_second for r in results if r.success and r.tokens_per_second) / successful if successful > 0 else 0
-            
-            print(f"\n  Summary for {endpoint.name}:")
-            print(f"    Success: {successful}/{len(results)} ({100*successful/len(results):.1f}%)")
-            print(f"    Failed: {failed}")
-            print(f"    Avg Total Latency: {avg_latency:.3f}s")
-            print(f"    Avg TTFT: {avg_ttft:.3f}s")
-            print(f"    Avg Throughput: {avg_throughput:.2f} tokens/s")
-            print()
         
         self.results = all_results
         return all_results

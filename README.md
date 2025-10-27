@@ -22,9 +22,10 @@ A comprehensive Python benchmarking suite for comparing the performance of multi
   - Different categories: Factual Q&A, Creative Writing, Technical Explanation, Coding, Analysis, and more
 
 - **Flexible Testing Modes**
-  - Sequential mode: One request at a time for stable baseline measurements
-  - Concurrent mode: Multiple parallel requests to test scalability
+  - Sequential mode: One prompt at a time per endpoint (all endpoints tested in parallel)
+  - Concurrent mode: Multiple prompts in parallel per endpoint (all endpoints tested in parallel)
   - Configurable iteration counts and concurrency levels
+  - **Parallel endpoint testing**: All endpoints are always tested simultaneously for faster results
 
 - **Rich Visualizations**
   - Latency comparisons (box plots)
@@ -135,9 +136,9 @@ python run_benchmark.py --no-visualizations
 
 | Argument | Type | Default | Description |
 |----------|------|---------|-------------|
-| `--mode` | str | `sequential` | Benchmark mode: `sequential` or `concurrent` |
+| `--mode` | str | `sequential` | Prompt execution mode: `sequential` (one prompt at a time per endpoint) or `concurrent` (multiple prompts in parallel per endpoint). **Note**: Endpoints are always tested in parallel. |
 | `--iterations` | int | `10` | Number of iterations per prompt |
-| `--concurrent` | int | `1` | Concurrent request level (concurrent mode only) |
+| `--concurrent` | int | `1` | Number of concurrent prompts per endpoint (concurrent mode only) |
 | `--timeout` | int | `120` | Request timeout in seconds |
 | `--max-tokens` | int | `512` | Maximum tokens to generate |
 | `--temperature` | float | `0.7` | Sampling temperature |
@@ -226,17 +227,23 @@ The suite generates 8 comprehensive charts:
 
 ### Benchmark Methodology
 
-**Sequential Mode:**
-- Tests endpoints one request at a time
+**Endpoint Execution:**
+- All configured endpoints are **always tested in parallel**
+- Each endpoint runs independently on its own hardware
+- No mutual interference between endpoint tests
+- Significantly faster than sequential endpoint testing
+
+**Sequential Mode (for prompts):**
+- Tests prompts one at a time within each endpoint
 - Provides stable, repeatable baseline measurements
-- Eliminates resource contention effects
+- Eliminates prompt-to-prompt resource contention
 - Recommended for initial performance characterization
 
-**Concurrent Mode:**
-- Tests multiple simultaneous requests
+**Concurrent Mode (for prompts):**
+- Tests multiple prompts simultaneously within each endpoint
 - Reveals scaling behavior and bottlenecks
 - May show degraded performance under load
-- Useful for capacity planning
+- Useful for capacity planning and stress testing
 
 ## Architecture
 

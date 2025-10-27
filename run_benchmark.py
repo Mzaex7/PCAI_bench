@@ -30,10 +30,10 @@ def parse_args():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # Run sequential benchmark with default settings
+  # Run sequential benchmark (endpoints tested in parallel, prompts sequential)
   python run_benchmark.py
   
-  # Run concurrent benchmark with 5 concurrent requests
+  # Run concurrent benchmark with 5 parallel prompts per endpoint
   python run_benchmark.py --concurrent 5
   
   # Run 20 iterations with custom output directory
@@ -41,6 +41,10 @@ Examples:
   
   # Run sequential mode explicitly
   python run_benchmark.py --mode sequential --iterations 5
+
+Note: All endpoints are ALWAYS tested in parallel (simultaneously).
+      The --mode flag controls whether prompts within each endpoint run
+      sequentially (one at a time) or concurrently (multiple at once).
         """
     )
     
@@ -49,7 +53,7 @@ Examples:
         type=str,
         choices=['sequential', 'concurrent'],
         default='sequential',
-        help='Benchmark mode: sequential (one at a time) or concurrent (parallel requests)'
+        help='Prompt execution mode: sequential (one prompt at a time per endpoint) or concurrent (multiple prompts in parallel per endpoint). Note: Endpoints are always tested in parallel.'
     )
     
     parser.add_argument(
@@ -63,7 +67,7 @@ Examples:
         '--concurrent',
         type=int,
         default=1,
-        help='Number of concurrent requests (only used in concurrent mode, default: 1)'
+        help='Number of concurrent prompts per endpoint (only used in concurrent mode, default: 1)'
     )
     
     parser.add_argument(
@@ -130,16 +134,17 @@ async def main():
 ╚══════════════════════════════════════════════════════════════════════════════╝
 
 Configuration:
-  Mode:               {args.mode}
+  Prompt Mode:        {args.mode}
+  Endpoint Mode:      Parallel (all endpoints tested simultaneously)
   Iterations:         {config.num_iterations}
-  Concurrent Level:   {config.concurrent_requests}
+  Concurrent Prompts: {config.concurrent_requests}
   Timeout:            {config.timeout}s
   Max Tokens:         {config.max_tokens}
   Temperature:        {config.temperature}
   Streaming:          {config.stream}
   Output Directory:   {config.output_dir}
   
-Endpoints to test:  {len(ENDPOINTS)}
+Endpoints to test:  {len(ENDPOINTS)} (in parallel)
 """)
     
     for idx, endpoint in enumerate(ENDPOINTS, 1):
