@@ -1,7 +1,7 @@
 # 1. Quick Start Guide
 
 ```bash
-python -m venv myfirstproject
+python -m venv venv
 
 source venv/bin/activate
 
