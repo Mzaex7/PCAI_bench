@@ -42,6 +42,7 @@ class ProgressTracker:
         self.start_time = time.time()
         self.last_update = 0
         self.update_interval = 0.5  # Update display every 0.5 seconds
+        self.first_display = True  # Track if this is the first display
         
     def _get_progress_bar(self, completed: int, total: int, width: int = 30) -> str:
         """Generate a visual progress bar."""
@@ -125,14 +126,24 @@ class ProgressTracker:
     
     def display(self):
         """Display the current progress with rich formatting."""
-        # Move cursor to top and clear screen (for updating in place)
-        if self.last_update > 0:  # Not the first update
-            lines_to_clear = len(self.endpoints) + 8
-            sys.stdout.write(f'\033[{lines_to_clear}A')  # Move cursor up
+        # Calculate total lines to display
+        # 1 separator + 1 title + 1 separator + 1 blank + 
+        # 1 overall + 1 success/fail + 1 blank + 1 header + 1 separator + 
+        # N endpoints + 1 separator + 1 blank = 10 + N
+        total_lines = 10 + len(self.endpoints)
+        
+        # Clear previous display
+        if not self.first_display:
+            # Move cursor up to the beginning of previous output
+            sys.stdout.write(f'\033[{total_lines}A')
+            # Clear from cursor to end of screen
+            sys.stdout.write('\033[J')
+        
+        self.first_display = False
         
         elapsed = time.time() - self.start_time
         
-        print("\n" + "=" * 100)
+        print("=" * 100)
         print(f"  🚀 LLM BENCHMARK PROGRESS  |  ⏱  Elapsed: {self._format_time(elapsed)}")
         print("=" * 100)
         
@@ -563,16 +574,13 @@ class LLMBenchmark:
         print("Endpoints:")
         for i, ep in enumerate(endpoints, 1):
             print(f"  {i}. {ep.name} - {ep.model_name}")
-        print()
+        print("\n")  # Two newlines before progress starts
         
         # Initialize progress tracker
         self.progress_tracker = ProgressTracker(
             [ep.name for ep in endpoints],
             total_requests_per_endpoint
         )
-        
-        # Display initial progress
-        self.progress_tracker.display()
         
         # Run all endpoints in parallel
         tasks = [
