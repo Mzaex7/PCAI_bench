@@ -9,6 +9,7 @@ import asyncio
 import aiohttp
 import json
 import warnings
+import sys
 from typing import Dict, List, Optional, Tuple
 from datetime import datetime
 from dataclasses import dataclass, asdict
@@ -20,6 +21,189 @@ from prompts import get_test_prompts
 # Suppress SSL warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 warnings.filterwarnings("ignore", message="Unverified HTTPS request")
+
+
+class ProgressTracker:
+    """Enhanced progress tracking with rich terminal visualization."""
+    
+    def __init__(self, endpoints: List[str], total_requests_per_endpoint: int):
+        """Initialize progress tracker."""
+        self.endpoints = {name: {
+            'completed': 0,
+            'total': total_requests_per_endpoint,
+            'success': 0,
+            'failed': 0,
+            'start_time': None,
+            'latencies': [],
+            'ttfts': [],
+            'throughputs': [],
+            'status': 'pending'  # pending, running, completed, error
+        } for name in endpoints}
+        self.start_time = time.time()
+        self.last_update = 0
+        self.update_interval = 0.5  # Update display every 0.5 seconds
+        
+    def _get_progress_bar(self, completed: int, total: int, width: int = 30) -> str:
+        """Generate a visual progress bar."""
+        if total == 0:
+            return f"[{'█' * width}]"
+        
+        filled = int(width * completed / total)
+        bar = '█' * filled + '░' * (width - filled)
+        percentage = 100 * completed / total
+        return f"[{bar}] {percentage:5.1f}%"
+    
+    def _format_time(self, seconds: float) -> str:
+        """Format seconds into human-readable time."""
+        if seconds < 60:
+            return f"{seconds:.1f}s"
+        elif seconds < 3600:
+            mins = int(seconds // 60)
+            secs = int(seconds % 60)
+            return f"{mins}m {secs}s"
+        else:
+            hours = int(seconds // 3600)
+            mins = int((seconds % 3600) // 60)
+            return f"{hours}h {mins}m"
+    
+    def _calculate_eta(self, completed: int, total: int, elapsed: float) -> str:
+        """Calculate estimated time of arrival."""
+        if completed == 0 or completed == total:
+            return "N/A"
+        
+        rate = completed / elapsed
+        remaining = total - completed
+        eta_seconds = remaining / rate if rate > 0 else 0
+        return self._format_time(eta_seconds)
+    
+    def _get_status_symbol(self, status: str) -> str:
+        """Get status symbol with color."""
+        symbols = {
+            'pending': '⏸',
+            'running': '▶',
+            'completed': '✓',
+            'error': '✗'
+        }
+        return symbols.get(status, '?')
+    
+    def start_endpoint(self, endpoint_name: str):
+        """Mark endpoint as started."""
+        if endpoint_name in self.endpoints:
+            self.endpoints[endpoint_name]['start_time'] = time.time()
+            self.endpoints[endpoint_name]['status'] = 'running'
+    
+    def update_progress(self, endpoint_name: str, success: bool, 
+                       latency: Optional[float] = None,
+                       ttft: Optional[float] = None,
+                       throughput: Optional[float] = None):
+        """Update progress for an endpoint."""
+        if endpoint_name not in self.endpoints:
+            return
+        
+        ep = self.endpoints[endpoint_name]
+        ep['completed'] += 1
+        
+        if success:
+            ep['success'] += 1
+            if latency:
+                ep['latencies'].append(latency)
+            if ttft:
+                ep['ttfts'].append(ttft)
+            if throughput:
+                ep['throughputs'].append(throughput)
+        else:
+            ep['failed'] += 1
+        
+        if ep['completed'] >= ep['total']:
+            ep['status'] = 'completed'
+        
+        # Throttle display updates
+        current_time = time.time()
+        if current_time - self.last_update >= self.update_interval or ep['completed'] == ep['total']:
+            self.display()
+            self.last_update = current_time
+    
+    def display(self):
+        """Display the current progress with rich formatting."""
+        # Move cursor to top and clear screen (for updating in place)
+        if self.last_update > 0:  # Not the first update
+            lines_to_clear = len(self.endpoints) + 8
+            sys.stdout.write(f'\033[{lines_to_clear}A')  # Move cursor up
+        
+        elapsed = time.time() - self.start_time
+        
+        print("\n" + "=" * 100)
+        print(f"  🚀 LLM BENCHMARK PROGRESS  |  ⏱  Elapsed: {self._format_time(elapsed)}")
+        print("=" * 100)
+        
+        # Calculate overall stats
+        total_completed = sum(ep['completed'] for ep in self.endpoints.values())
+        total_requests = sum(ep['total'] for ep in self.endpoints.values())
+        total_success = sum(ep['success'] for ep in self.endpoints.values())
+        total_failed = sum(ep['failed'] for ep in self.endpoints.values())
+        
+        # Overall progress bar
+        overall_bar = self._get_progress_bar(total_completed, total_requests, width=40)
+        print(f"\n  Overall: {overall_bar}  ({total_completed}/{total_requests} requests)")
+        print(f"  Success: {total_success} ✓  |  Failed: {total_failed} ✗")
+        print()
+        
+        # Header for endpoint table
+        print(f"{'Endpoint':<20} {'Status':<8} {'Progress':<35} {'Success':<12} {'Avg TTFT':<12} {'Avg Thr.':<12} {'ETA':<10}")
+        print("-" * 100)
+        
+        # Display each endpoint
+        for name, ep in self.endpoints.items():
+            status = self._get_status_symbol(ep['status'])
+            progress_bar = self._get_progress_bar(ep['completed'], ep['total'], width=20)
+            
+            # Calculate averages
+            avg_ttft = sum(ep['ttfts']) / len(ep['ttfts']) if ep['ttfts'] else 0
+            avg_thr = sum(ep['throughputs']) / len(ep['throughputs']) if ep['throughputs'] else 0
+            
+            success_rate = f"{ep['success']}/{ep['completed']}"
+            ttft_str = f"{avg_ttft:.3f}s" if avg_ttft > 0 else "N/A"
+            thr_str = f"{avg_thr:.1f} t/s" if avg_thr > 0 else "N/A"
+            
+            # Calculate ETA for this endpoint
+            ep_elapsed = time.time() - ep['start_time'] if ep['start_time'] else elapsed
+            eta = self._calculate_eta(ep['completed'], ep['total'], ep_elapsed)
+            
+            # Truncate endpoint name if too long
+            display_name = name[:18] + '..' if len(name) > 20 else name
+            
+            print(f"{display_name:<20} {status:<8} {progress_bar:<35} {success_rate:<12} {ttft_str:<12} {thr_str:<12} {eta:<10}")
+        
+        print("=" * 100)
+        print()  # Extra line for clarity
+        
+        sys.stdout.flush()
+    
+    def final_summary(self):
+        """Display final summary statistics."""
+        elapsed = time.time() - self.start_time
+        
+        print("\n" + "=" * 100)
+        print("  🎉 BENCHMARK COMPLETED!")
+        print("=" * 100)
+        print(f"\n  Total Duration: {self._format_time(elapsed)}\n")
+        
+        print(f"{'Endpoint':<20} {'Requests':<12} {'Success':<10} {'Avg Latency':<15} {'Avg TTFT':<12} {'Avg Throughput':<15}")
+        print("-" * 100)
+        
+        for name, ep in self.endpoints.items():
+            display_name = name[:18] + '..' if len(name) > 20 else name
+            
+            avg_latency = sum(ep['latencies']) / len(ep['latencies']) if ep['latencies'] else 0
+            avg_ttft = sum(ep['ttfts']) / len(ep['ttfts']) if ep['ttfts'] else 0
+            avg_thr = sum(ep['throughputs']) / len(ep['throughputs']) if ep['throughputs'] else 0
+            
+            success_pct = f"{100*ep['success']/ep['total']:.1f}%" if ep['total'] > 0 else "N/A"
+            
+            print(f"{display_name:<20} {ep['total']:<12} {success_pct:<10} "
+                  f"{avg_latency:.3f}s{'':<8} {avg_ttft:.3f}s{'':<5} {avg_thr:.1f} tokens/s")
+        
+        print("=" * 100 + "\n")
 
 
 @dataclass
@@ -63,6 +247,7 @@ class LLMBenchmark:
         """Initialize benchmarking utility."""
         self.config = config
         self.results: List[BenchmarkResult] = []
+        self.progress_tracker: Optional[ProgressTracker] = None
     
     async def _make_streaming_request(
         self,
@@ -240,8 +425,6 @@ class LLMBenchmark:
             List of benchmark results
         """
         results = []
-        total_requests = self.config.num_iterations * len(prompts)
-        completed = 0
         
         async with aiohttp.ClientSession() as session:
             for iteration in range(self.config.num_iterations):
@@ -250,11 +433,16 @@ class LLMBenchmark:
                         session, endpoint, prompt, iteration, concurrent_level=1
                     )
                     results.append(result)
-                    completed += 1
                     
-                    # Print progress every 10% or at key milestones
-                    if completed % max(1, total_requests // 10) == 0 or completed == total_requests:
-                        print(f"  [{endpoint.name}] Progress: {completed}/{total_requests} requests ({100*completed/total_requests:.0f}%)")
+                    # Update progress tracker
+                    if self.progress_tracker:
+                        self.progress_tracker.update_progress(
+                            endpoint.name,
+                            result.success,
+                            result.total_latency if result.success else None,
+                            result.time_to_first_token if result.success else None,
+                            result.tokens_per_second if result.success else None
+                        )
         
         return results
     
@@ -274,10 +462,9 @@ class LLMBenchmark:
             List of benchmark results
         """
         results = []
-        total_iterations = self.config.num_iterations
         
         async with aiohttp.ClientSession() as session:
-            for iteration in range(total_iterations):
+            for iteration in range(self.config.num_iterations):
                 # Create tasks for concurrent execution
                 tasks = []
                 for prompt in prompts:
@@ -288,16 +475,21 @@ class LLMBenchmark:
                     tasks.append(task)
                 
                 # Run concurrent requests in batches
-                batch_count = 0
                 for i in range(0, len(tasks), self.config.concurrent_requests):
                     batch = tasks[i:i + self.config.concurrent_requests]
                     batch_results = await asyncio.gather(*batch)
                     results.extend(batch_results)
-                    batch_count += 1
-                
-                # Print progress after each iteration
-                completed = iteration + 1
-                print(f"  [{endpoint.name}] Progress: {completed}/{total_iterations} iterations ({100*completed/total_iterations:.0f}%) - {len(results)} requests completed")
+                    
+                    # Update progress tracker for each result in batch
+                    if self.progress_tracker:
+                        for result in batch_results:
+                            self.progress_tracker.update_progress(
+                                endpoint.name,
+                                result.success,
+                                result.total_latency if result.success else None,
+                                result.time_to_first_token if result.success else None,
+                                result.tokens_per_second if result.success else None
+                            )
         
         return results
     
@@ -318,29 +510,14 @@ class LLMBenchmark:
         Returns:
             Tuple of (endpoint, results)
         """
-        print(f"[{endpoint.name}] Starting benchmark...")
-        print(f"  Model: {endpoint.model_name}")
-        print(f"  URL: {endpoint.url}\n")
+        # Mark endpoint as started in progress tracker
+        if self.progress_tracker:
+            self.progress_tracker.start_endpoint(endpoint.name)
         
         if sequential or self.config.concurrent_requests == 1:
             results = await self._run_sequential_benchmark(endpoint, prompts)
         else:
             results = await self._run_concurrent_benchmark(endpoint, prompts)
-        
-        # Print summary for this endpoint
-        successful = sum(1 for r in results if r.success)
-        failed = len(results) - successful
-        avg_latency = sum(r.total_latency for r in results if r.success) / successful if successful > 0 else 0
-        avg_ttft = sum(r.time_to_first_token for r in results if r.success and r.time_to_first_token) / successful if successful > 0 else 0
-        avg_throughput = sum(r.tokens_per_second for r in results if r.success and r.tokens_per_second) / successful if successful > 0 else 0
-        
-        print(f"\n[{endpoint.name}] ✓ Completed!")
-        print(f"    Success: {successful}/{len(results)} ({100*successful/len(results):.1f}%)")
-        print(f"    Failed: {failed}")
-        print(f"    Avg Total Latency: {avg_latency:.3f}s")
-        print(f"    Avg TTFT: {avg_ttft:.3f}s")
-        print(f"    Avg Throughput: {avg_throughput:.2f} tokens/s")
-        print()
         
         return endpoint, results
     
@@ -360,22 +537,42 @@ class LLMBenchmark:
         Returns:
             List of all benchmark results
         """
-        print(f"\n{'='*80}")
-        print(f"Starting {'Sequential' if sequential else 'Concurrent'} Benchmark")
-        print(f"{'='*80}\n")
+        print(f"\n{'='*100}")
+        print(f"  🚀 LLM ENDPOINT BENCHMARK")
+        print(f"{'='*100}\n")
         print(f"Configuration:")
-        print(f"  - Prompt mode: {'Sequential' if sequential else f'Concurrent (batch size: {self.config.concurrent_requests})'}")
-        print(f"  - Endpoint mode: Parallel (all endpoints tested simultaneously)")
-        print(f"  - Iterations: {self.config.num_iterations}")
-        print(f"  - Timeout: {self.config.timeout}s")
-        print(f"  - Max tokens: {self.config.max_tokens}")
-        print(f"  - Temperature: {self.config.temperature}")
-        print(f"  - Streaming: {self.config.stream}")
+        print(f"  • Prompt mode: {'Sequential' if sequential else f'Concurrent (batch size: {self.config.concurrent_requests})'}")
+        print(f"  • Endpoint mode: Parallel (all endpoints tested simultaneously)")
+        print(f"  • Iterations per prompt: {self.config.num_iterations}")
+        print(f"  • Request timeout: {self.config.timeout}s")
+        print(f"  • Max tokens: {self.config.max_tokens}")
+        print(f"  • Temperature: {self.config.temperature}")
+        print(f"  • Streaming: {'Enabled' if self.config.stream else 'Disabled'}")
         print()
         
         prompts = get_test_prompts()
-        print(f"Loaded {len(prompts)} test prompts")
-        print(f"Testing {len(endpoints)} endpoints in parallel\n")
+        total_requests_per_endpoint = len(prompts) * self.config.num_iterations
+        
+        print(f"Test Suite:")
+        print(f"  • Prompts: {len(prompts)} (across {len(set(p['length'] for p in prompts))} lengths, {len(set(p['complexity'] for p in prompts))} complexity levels)")
+        print(f"  • Total requests per endpoint: {total_requests_per_endpoint}")
+        print(f"  • Endpoints: {len(endpoints)}")
+        print()
+        
+        # Print endpoint details
+        print("Endpoints:")
+        for i, ep in enumerate(endpoints, 1):
+            print(f"  {i}. {ep.name} - {ep.model_name}")
+        print()
+        
+        # Initialize progress tracker
+        self.progress_tracker = ProgressTracker(
+            [ep.name for ep in endpoints],
+            total_requests_per_endpoint
+        )
+        
+        # Display initial progress
+        self.progress_tracker.display()
         
         # Run all endpoints in parallel
         tasks = [
@@ -392,6 +589,11 @@ class LLMBenchmark:
             all_results.extend(results)
         
         self.results = all_results
+        
+        # Display final summary
+        if self.progress_tracker:
+            self.progress_tracker.final_summary()
+        
         return all_results
     
     def get_results(self) -> List[Dict]:
