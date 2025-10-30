@@ -1,6 +1,8 @@
 # 1. Quick Start Guide
 
 ```bash
+python -m venv myfirstproject
+
 source venv/bin/activate
 
 pip install -r requirements.txt
