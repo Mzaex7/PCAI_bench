@@ -10,6 +10,25 @@ pip install -r requirements.txt
 
 # 2. Usage
 
+## Selecting Models
+
+```bash
+# List all available models
+python run_benchmark.py --list-models
+
+# Run benchmark on specific model
+python run_benchmark.py --models llama
+
+# Compare multiple models
+python run_benchmark.py --models llama qwen gemma deepseek
+
+# Compare different deployments of same model
+python run_benchmark.py --models llama-vllm llama-nim
+
+# Run all configured models (default)
+python run_benchmark.py
+```
+
 ## Sequential Mode
 
 ```bash
@@ -21,6 +40,9 @@ python run_benchmark.py --output-dir my_benchmark_results
 
 # Adjust generation parameters
 python run_benchmark.py --max-tokens 1024 --temperature 0.9
+
+# Test specific model only
+python run_benchmark.py --models qwen --iterations 5
 ```
 
 ## Concurrent Mode - load testing
@@ -29,8 +51,8 @@ python run_benchmark.py --max-tokens 1024 --temperature 0.9
 # Run with 5 concurrent requests
 python run_benchmark.py --mode concurrent --concurrent 5
 
-# High concurrency test
-python run_benchmark.py --mode concurrent --concurrent 10 --iterations 5
+# High concurrency test on specific model
+python run_benchmark.py --mode concurrent --concurrent 10 --iterations 5 --models llama
 ```
 
 ## Additional Options
@@ -50,7 +72,9 @@ python run_benchmark.py --no-visualizations
 
 | Argument | Type | Default | Description |
 |----------|------|---------|-------------|
-| `--mode` | str | `sequential` | Prompt execution mode: `sequential` (one prompt at a time per endpoint) or `concurrent` (multiple prompts in parallel per endpoint). **Note**: Endpoints are always tested in parallel. |
+| `--mode` | str | `sequential` | Prompt execution mode: `sequential` or `concurrent` |
+| `--models` | str+ | all | Space-separated list of model names to benchmark |
+| `--list-models` | flag | - | List all available models and exit |
 | `--iterations` | int | `10` | Number of iterations per prompt |
 | `--concurrent` | int | `1` | Number of concurrent prompts per endpoint (concurrent mode only) |
 | `--timeout` | int | `120` | Request timeout in seconds |
@@ -102,3 +126,68 @@ Edit `src/prompts.py` and comment out some prompts in `get_test_prompts()`
 - **3 Length Categories**: Short, Medium, Long
 - **3 Complexity Levels**: Simple, Moderate, Complex
 - **Multiple Categories**: Factual Q&A, Creative Writing, Technical, Coding, Analysis, Business Strategy, etc.
+
+# 6. Adding New Models
+
+To add a new model for benchmarking:
+
+1. **Edit `src/config.py`** and add your model configuration:
+
+```python
+# --- Qwen 2.5 ---
+QWEN = EndpointConfig(
+    name="Qwen-2.5-7B",
+    url="https://your-qwen-endpoint.com/v1/chat/completions",
+    model_name="Qwen/Qwen2.5-7B-Instruct",
+    auth_token="your-auth-token"
+)
+```
+
+2. **Add to the model registry**:
+
+```python
+ALL_MODELS = {
+    # Llama family
+    "llama": LLAMA_VLLM,
+    "llama-vllm": LLAMA_VLLM,
+    "llama-nim": LLAMA_NIM,
+    
+    # Add your new model here:
+    "qwen": QWEN,  # ← Add here with short name
+}
+```
+
+3. **Test your new model**:
+
+```bash
+# List to verify it's available
+python run_benchmark.py --list-models
+
+# Run benchmark on your new model
+python run_benchmark.py --models qwen --iterations 2
+
+# Compare with other models
+python run_benchmark.py --models llama qwen gemma
+```
+
+**Note**: The endpoint must be OpenAI-compatible (supports `/v1/chat/completions` API).
+
+## Quick Template for New Models
+
+```python
+# In config.py
+
+# --- Your Model Name ---
+YOUR_MODEL = EndpointConfig(
+    name="Display Name (Deployment)",
+    url="https://your-endpoint-url/v1/chat/completions",
+    model_name="organization/model-name",
+    auth_token="your-bearer-token"
+)
+
+# Add to ALL_MODELS:
+ALL_MODELS = {
+    # ... existing models ...
+    "your-model": YOUR_MODEL,
+}
+```

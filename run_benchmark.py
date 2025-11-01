@@ -17,7 +17,7 @@ import os
 # Add src to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
-from config import ENDPOINTS, BenchmarkConfig
+from config import ENDPOINTS, BenchmarkConfig, get_models_by_names, list_available_models, print_available_models
 from benchmark import LLMBenchmark
 from csv_writer import BenchmarkCSVWriter
 from visualize import BenchmarkVisualizer
@@ -110,12 +110,57 @@ Note: All endpoints are ALWAYS tested in parallel (simultaneously).
         help='Disable streaming mode'
     )
     
+    parser.add_argument(
+        '--endpoints',
+        '--models',
+        type=str,
+        nargs='+',
+        dest='models',
+        help='Specific models to benchmark (space-separated names). Use --list-models to see available options.'
+    )
+    
+    parser.add_argument(
+        '--list-endpoints',
+        '--list-models',
+        action='store_true',
+        dest='list_models',
+        help='List all available models and exit'
+    )
+    
     return parser.parse_args()
 
 
 async def main():
     """Main execution function."""
     args = parse_args()
+    
+    # Handle --list-models
+    if args.list_models:
+        print_available_models()
+        print(f"\nUsage Examples:")
+        print(f"  # Test specific model")
+        print(f"  python run_benchmark.py --models llama")
+        print(f"  ")
+        print(f"  # Test multiple models")
+        print(f"  python run_benchmark.py --models llama qwen gemma")
+        print(f"  ")
+        print(f"  # Compare deployment methods for same model")
+        print(f"  python run_benchmark.py --models llama-vllm llama-nim")
+        print()
+        return 0
+    
+    # Determine which models to test
+    if args.models:
+        try:
+            endpoints_to_test = get_models_by_names(args.models)
+            print(f"\n✓ Selected models: {', '.join(args.models)}\n")
+        except ValueError as e:
+            print(f"\n❌ Error: {e}\n")
+            print("Use --list-models to see all available models.\n")
+            return 1
+    else:
+        endpoints_to_test = ENDPOINTS
+        print(f"\n📌 Using default models\n")
     
     # Create benchmark configuration
     config = BenchmarkConfig(
@@ -144,10 +189,10 @@ Configuration:
   Streaming:          {config.stream}
   Output Directory:   {config.output_dir}
   
-Endpoints to test:  {len(ENDPOINTS)} (in parallel)
+Endpoints to test:  {len(endpoints_to_test)} (in parallel)
 """)
     
-    for idx, endpoint in enumerate(ENDPOINTS, 1):
+    for idx, endpoint in enumerate(endpoints_to_test, 1):
         print(f"  {idx}. {endpoint.name}")
         print(f"     Model: {endpoint.model_name}")
         print(f"     URL: {endpoint.url}")
@@ -161,7 +206,7 @@ Endpoints to test:  {len(ENDPOINTS)} (in parallel)
     # Run benchmark
     try:
         sequential = (args.mode == 'sequential')
-        results = await benchmark.run_benchmark(ENDPOINTS, sequential=sequential)
+        results = await benchmark.run_benchmark(endpoints_to_test, sequential=sequential)
         
         if not results:
             print("\n⚠ No results generated. Exiting.")
