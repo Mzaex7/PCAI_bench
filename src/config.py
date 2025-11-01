@@ -61,65 +61,62 @@ LLAMA_31_8B_VLLM_V11 = EndpointConfig(
     auth_token="eyJhbGciOiJSUzI1NiIsImtpZCI6InNHSEFRZkMwdTVadnVRWm9pRVdsRFA4dkZvS29wb2hrSE9LSVl0RnQxX2sifQ.eyJhdWQiOlsiYXBpIiwiaXN0aW8tY2EiXSwiZXhwIjoxNzkzNDQyMzg1LCJpYXQiOjE3NjE5MDYzODUsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwianRpIjoiM2M0MDM5YWYtOThlZi00MTRkLWJiNzUtZDFkNWJiMjI5N2M4Iiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJ1aSIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJpc3ZjLWVwLTE3NjE5MDYzODU0NTIiLCJ1aWQiOiIyZGNhYTgyMS0zZDMwLTQyMTAtYmM0Ni03NzQ5NzhmMzMyNGYifX0sIm5iZiI6MTc2MTkwNjM4NSwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OnVpOmlzdmMtZXAtMTc2MTkwNjM4NTQ1MiJ9.cxS4QgvDwC9fGNC-wnXJjpShWCLH-g8ejEJ9WowCOQ_armeyeI6wkikHPQK-mwfUkjFENhqXuQ2w8JwrooY0LBDXhUMKxBeA6-C5lNyYTHJB8c1XFrPLM35ICWfc32mNXdvNneHkOhqgfe7FN1thBshLwazJ7YMVzYCbNt_PMDvZKaWSVQmphcrkfDrXdI-35Yp5lNij97MLOxz7UkZeh4yDZRcx4Gxj6G8s5dYoSXaBhSU9um1npRpTgw3UDrfFphbM0i3iaz32LDVasstyFkVOkcrQ-A3UQz3Dtb0y_ej1XdcMZgzBbYOVW2P8vMHefb_ZL60OXN25EUI_hKo6fw"
 )
 
-# --- Qwen 2.5 7B (add your configs here) ---
 # QWEN_25_7B_VLLM = EndpointConfig(
-#     name="qwen25-7b-vllm",
-#     url="your-qwen-url",
-#     model_name="Qwen/Qwen2.5-7B-Instruct",
+#     name="qwen-vllm",
+#     url="https://mlis-bench-qwen-vllm.project-user-zeitler.serving.hpepcai.demo.local/v1/chat/completions",
+#     model_name="qwen/qwen-2.5-7b-instruct",
 #     auth_token="your-token"
 # )
-#
-# QWEN_25_7B_NIM = EndpointConfig(
-#     name="qwen25-7b-nim",
-#     url="your-qwen-url",
-#     model_name="Qwen/Qwen2.5-7B-Instruct",
-#     auth_token="your-token"
-# )
+
+QWEN_25_7B_NIM = EndpointConfig(
+    name="qwen-nim",
+    url="https://mlis-bench-qwen-ngc.project-user-zeitler.serving.hpepcai.demo.local/v1/chat/completions",
+    model_name="qwen/qwen-2.5-7b-instruct",
+    auth_token="eyJhbGciOiJSUzI1NiIsImtpZCI6InNHSEFRZkMwdTVadnVRWm9pRVdsRFA4dkZvS29wb2hrSE9LSVl0RnQxX2sifQ.eyJhdWQiOlsiYXBpIiwiaXN0aW8tY2EiXSwiZXhwIjoxNzkzNTYyMjg5LCJpYXQiOjE3NjIwMjYyODksImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwianRpIjoiYWU0NWFjOGQtNGFiNC00NjQyLTgzYTEtMmFjMzBmNjc2YTZlIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJ1aSIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJpc3ZjLWVwLTE3NjIwMjYyODk4NTciLCJ1aWQiOiIzNDk0NWQ5NS03Nzc1LTRkNmEtYTY1Zi1iMzRkMGQ3ODc0ZTMifX0sIm5iZiI6MTc2MjAyNjI4OSwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OnVpOmlzdmMtZXAtMTc2MjAyNjI4OTg1NyJ9.TtomwU1zn5pTxa6BccTN7U5r5iZIpf_aUD5896LsmG1vPzl7FwCzjkpOSW7ClGtAFELuh96Tkbc4NaIU9KwznCJwZs9WDAYOk-WQpBNf3HSfInJDTxApyPLPyrz2psg7H-vW4NA9-f3ijrSfrJj-i1-NzltQ3AtdD7kUmhpxXrXUBSziTnmoo0MNHuqydNeGpPPYwvZhFTCPPZ7rqsuoLnJ038TS5X6IH2WH5iMYXKyrAwA8rBTAQ4jZ_TZJAVVnzAloDurF9xxv3t8LAX00h4jo3YBG0EYhiXJPlFjahXhDNYv1WBBJCKI1CMIIsYAT8DiMy2rZI6ZEqz-FKVKDRw"
+)
 
 # --- Gemma 2 9B (add your configs here) ---
-# GEMMA_2_9B_VLLM = EndpointConfig(
-#     name="gemma2-9b-vllm",
-#     url="your-gemma-url",
-#     model_name="google/gemma-2-9b-it",
+# GEMMA_3_1B_VLLM = EndpointConfig(
+#     name="gemma-vllm",
+#     url="https://mlis-bench-gemma-vllm.project-user-zeitler.serving.hpepcai.demo.local/v1/chat/completions",
+#     model_name="google/gemma-3-1b-it",
 #     auth_token="your-token"
 # )
 #
-# GEMMA_2_9B_NIM = EndpointConfig(
-#     name="gemma2-9b-nim",
-#     url="your-gemma-url",
-#     model_name="google/gemma-2-9b-it",
-#     auth_token="your-token"
-# )
+GEMMA_3_1B_NIM = EndpointConfig(
+    name="gemma-nim",
+    url="https://mlis-bench-gemma-ngc.project-user-zeitler.serving.hpepcai.demo.local/v1/chat/completions",
+    model_name="google/gemma-3-1b-it",
+    auth_token="eyJhbGciOiJSUzI1NiIsImtpZCI6InNHSEFRZkMwdTVadnVRWm9pRVdsRFA4dkZvS29wb2hrSE9LSVl0RnQxX2sifQ.eyJhdWQiOlsiYXBpIiwiaXN0aW8tY2EiXSwiZXhwIjoxNzkzNTYxODEzLCJpYXQiOjE3NjIwMjU4MTMsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwianRpIjoiZDI4NjYwNWYtY2RlMy00ZmUxLWEwMzgtYzg5M2NlZTNhMDkyIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJ1aSIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJpc3ZjLWVwLTE3NjIwMjU4MTMyNzUiLCJ1aWQiOiI5MjYyZGZlMi0zOWIwLTQwMzUtOWM0MC1hMDQyOWY5NTg0NDcifX0sIm5iZiI6MTc2MjAyNTgxMywic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OnVpOmlzdmMtZXAtMTc2MjAyNTgxMzI3NSJ9.SLtIeGcCvYFk7dk34dXw3AjPxRwKjosBMpEuV4NvSCmA4402QmMUBmBeOS_tNym40V0dvM57N7I-xxFIpjhzJNeRgYAwuCkNcE6SKQo66DYYewXe5pfh7qcdZKSLioV7lmgUDtYqPu3xn1ZqsH72roUKzSeTsXOA3U3V_mTBgl8cUNTrolQz3R37WDPVRJIr_jNsudxXXivnfAry2ouLTQOGISGJC7Zy0zeK8XqSWTdPc4A2A-tj8O8W0OextEIm24EMzzuyljsS77_HhqUOFbZVawcv_masIbSe9LzKV_MtwJuUX89DOUkjV9MgBXLtdtV2on6F8tHlyxDUfb9WFQ"
+)
 
-# --- DeepSeek R1 Distill Qwen 7B (add your configs here) ---
 # DEEPSEEK_R1_DISTILL_QWEN_7B_VLLM = EndpointConfig(
-#     name="deepseek-r1-distill-qwen7b-vllm",
-#     url="your-deepseek-url",
-#     model_name="deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
-#     auth_token="your-token"
-# )
-#
-# DEEPSEEK_R1_DISTILL_QWEN_7B_NIM = EndpointConfig(
-#     name="deepseek-r1-distill-qwen7b-nim",
-#     url="your-deepseek-url",
+#     name="deepseek-vllm",
+#     url="https://mlis-bench-deepseek-vllm.project-user-zeitler.serving.hpepcai.demo.local/v1/chat/completions",
 #     model_name="deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
 #     auth_token="your-token"
 # )
 
-# --- GPT-OSS 20B (add your configs here) ---
+# DEEPSEEK_R1_DISTILL_QWEN_7B_NIM = EndpointConfig(
+#     name="deepseek-nim",
+#     url="https://mlis-bench-deepseek-ngc.project-user-zeitler.serving.hpepcai.demo.local/v1/chat/completions",
+#     model_name="deepseek-ai/DeepSeek-R1-Distill-Qwen-7B",
+#     auth_token="your-token"
+# )
+
 # GPT_OSS_20B_VLLM = EndpointConfig(
-#     name="gpt-oss-20b-vllm",
-#     url="your-gpt-oss-url",
-#     model_name="gpt-oss-20b-model",
+#     name="gpt-vllm",
+#     url="https://mlis-bench-gpt-ngc.project-user-zeitler.serving.hpepcai.demo.local/v1/chat/completions"
+#     model_name="openai/gpt-oss-20b",
 #     auth_token="your-token"
 # )
-#
-# GPT_OSS_20B_NIM = EndpointConfig(
-#     name="gpt-oss-20b-nim",
-#     url="your-gpt-oss-url",
-#     model_name="gpt-oss-20b-model",
-#     auth_token="your-token"
-# )
+
+GPT_OSS_20B_NIM = EndpointConfig(
+    name="gpt-nim",
+    url="https://mlis-bench-gpt-vllm.project-user-zeitler.serving.hpepcai.demo.local/v1/chat/completions"
+    model_name="openai/gpt-oss-20b",
+    auth_token="eyJhbGciOiJSUzI1NiIsImtpZCI6InNHSEFRZkMwdTVadnVRWm9pRVdsRFA4dkZvS29wb2hrSE9LSVl0RnQxX2sifQ.eyJhdWQiOlsiYXBpIiwiaXN0aW8tY2EiXSwiZXhwIjoxNzkzNTYxMDgyLCJpYXQiOjE3NjIwMjUwODIsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwianRpIjoiOWE2Nzg4MTMtYjUzOS00N2EyLWI2Y2UtZTJjNWRjMjkyMjRkIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJ1aSIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJpc3ZjLWVwLTE3NjIwMjUwODI5MjUiLCJ1aWQiOiIwZDA1MjRlOS1mMTk2LTQ1ODctOTRkNC03MTYyNzY4ZjhlNzcifX0sIm5iZiI6MTc2MjAyNTA4Miwic3ViIjoic3lzdGVtOnNlcnZpY2VhY2NvdW50OnVpOmlzdmMtZXAtMTc2MjAyNTA4MjkyNSJ9.CtW30eKzdyP3aZ40jaS43D4fIsXT5V-DJoaif4xYQ_X964Dz-t1u7WHHGu35yfwjqmJyGhI7ae0_AESyDJCTPplGitk33CG6WdfjfNR-GGMjC1bRdaZ0JoDi2khKs5iw48vrEWt-bDwBlXBAFrkUCc5msXEtDBkZxNv1AIgVrfiaKCH8p90o0aYwSb-SRsG8o8yz2r_MKN2oRhjSxGJsQt2xoMPQoQpPgiziC6hbAE3YHRLOnU8pYu1G8WnKGf6Q9-vjUo5HT3-q1JQQAejjrqaARrLduksuyt06-c6Ro0uya10WI1g1sTiRlxmbCQKKLcfDwq6TA4EG-1kvbr-ARA"
+)
 
 
 # ============================================================================
@@ -129,39 +126,25 @@ LLAMA_31_8B_VLLM_V11 = EndpointConfig(
 # Format: modelname-size-deployment-version (e.g., llama31-8b-vllm-v060)
 
 ALL_MODELS = {
-    # Llama 3.1 8B family
-    "llama31-8b-vllm": LLAMA_31_8B_VLLM,
-    "llama31-8b-nim": LLAMA_31_8B_NIM,
-    
-    # Convenience aliases
-    "llama": LLAMA_31_8B_VLLM,  # Default to vLLM
     "llama-vllm": LLAMA_31_8B_VLLM,
     "llama-nim": LLAMA_31_8B_NIM,
+    "llama-vllm-new": LLAMA_31_8B_VLLM_V11,
     
-    # Add your vLLM version comparisons:
-    # "llama31-8b-vllm-v060": LLAMA_31_8B_VLLM_V060,
-    # "llama31-8b-vllm-v061": LLAMA_31_8B_VLLM_V061,
-    # "llama31-8b-vllm-v062": LLAMA_31_8B_VLLM_V062,
+    # Qwen family
+    # "qwen-vllm": QWEN_25_7B_VLLM,
+    "qwen-nim": QWEN_25_7B_NIM,
     
-    # Qwen family (uncomment when ready)
-    # "qwen25-7b-vllm": QWEN_25_7B_VLLM,
-    # "qwen25-7b-nim": QWEN_25_7B_NIM,
-    # "qwen": QWEN_25_7B_VLLM,  # Default alias
-    
-    # Gemma family (uncomment when ready)
-    # "gemma2-9b-vllm": GEMMA_2_9B_VLLM,
-    # "gemma2-9b-nim": GEMMA_2_9B_NIM,
-    # "gemma": GEMMA_2_9B_VLLM,  # Default alias
+    # Gemma family
+    # "gemma-vllm": GEMMA_3_1B_VLLM,
+    "gemma-nim": GEMMA_3_1B_NIM,
     
     # DeepSeek family (uncomment when ready)
-    # "deepseek-r1-distill-qwen7b-vllm": DEEPSEEK_R1_DISTILL_QWEN_7B_VLLM,
-    # "deepseek-r1-distill-qwen7b-nim": DEEPSEEK_R1_DISTILL_QWEN_7B_NIM,
-    # "deepseek": DEEPSEEK_R1_DISTILL_QWEN_7B_VLLM,  # Default alias
+    # "deepseek-vllm": DEEPSEEK_R1_DISTILL_QWEN_7B_VLLM,
+    # "deepseek-nim": DEEPSEEK_R1_DISTILL_QWEN_7B_NIM,
     
-    # GPT-OSS family (uncomment when ready)
-    # "gpt-oss-20b-vllm": GPT_OSS_20B_VLLM,
-    # "gpt-oss-20b-nim": GPT_OSS_20B_NIM,
-    # "gpt-oss": GPT_OSS_20B_VLLM,  # Default alias
+    # GPT-OSS family
+    # "gpt-vllm": GPT_OSS_20B_VLLM,
+    "gpt-nim": GPT_OSS_20B_NIM,
 }
 
 # Default models to test (if no selection is made)
