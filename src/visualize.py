@@ -723,6 +723,27 @@ class BenchmarkVisualizer:
         fig.suptitle('Reliability Metrics - Production Readiness', 
                      fontsize=16, fontweight='bold')
         
+        # Parse endpoint info if not already done
+        if 'inference_engine' not in self.df.columns:
+            def parse_endpoint(name: str) -> Tuple[str, str]:
+                name_lower = name.lower()
+                if 'nim' in name_lower:
+                    engine = 'NIM'
+                elif 'vllm' in name_lower:
+                    engine = 'vLLM'
+                else:
+                    engine = 'Unknown'
+                
+                for separator in ['-nim', '-vllm', '_nim', '_vllm', ' nim', ' vllm']:
+                    if separator in name_lower:
+                        model = name[:name_lower.index(separator)]
+                        return model.strip(), engine
+                
+                return name, engine
+            
+            self.df['model_family'] = self.df['endpoint_name'].apply(lambda x: parse_endpoint(x)[0])
+            self.df['inference_engine'] = self.df['endpoint_name'].apply(lambda x: parse_endpoint(x)[1])
+        
         # 1. Success rate by engine
         ax1 = axes[0, 0]
         success_stats = self.df.groupby(['inference_engine', 'success']).size().unstack(fill_value=0)
@@ -839,6 +860,26 @@ class BenchmarkVisualizer:
             'total_latency': ['mean', 'std'],
             'avg_inter_token_latency': 'mean'
         }).round(3)
+        
+        # Parse endpoint info for full df if not already done
+        if 'inference_engine' not in self.df.columns:
+            def parse_endpoint(name: str) -> Tuple[str, str]:
+                name_lower = name.lower()
+                if 'nim' in name_lower:
+                    engine = 'NIM'
+                elif 'vllm' in name_lower:
+                    engine = 'vLLM'
+                else:
+                    engine = 'Unknown'
+                
+                for separator in ['-nim', '-vllm', '_nim', '_vllm', ' nim', ' vllm']:
+                    if separator in name_lower:
+                        model = name[:name_lower.index(separator)]
+                        return model.strip(), engine
+                
+                return name, engine
+            
+            self.df['inference_engine'] = self.df['endpoint_name'].apply(lambda x: parse_endpoint(x)[1])
         
         success_stats = self.df.groupby('inference_engine')['success'].agg(['sum', 'count'])
         success_rates = (success_stats['sum'] / success_stats['count'] * 100).round(1)
