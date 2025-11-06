@@ -242,6 +242,15 @@ class BenchmarkResult:
     tokens_per_second: Optional[float]  # Overall throughput
     time_per_output_token: Optional[float]  # TPOT - average time per token
     
+    # Inter-token latency metrics
+    inter_token_latencies: Optional[List[float]]  # List of latencies between consecutive tokens
+    avg_inter_token_latency: Optional[float]  # Average inter-token latency
+    min_inter_token_latency: Optional[float]  # Minimum inter-token latency
+    max_inter_token_latency: Optional[float]  # Maximum inter-token latency
+    p50_inter_token_latency: Optional[float]  # 50th percentile (median)
+    p95_inter_token_latency: Optional[float]  # 95th percentile
+    p99_inter_token_latency: Optional[float]  # 99th percentile
+    
     # Response
     response_text: Optional[str]
     
@@ -305,6 +314,10 @@ class LLMBenchmark:
         error_message = None
         success = False
         
+        # Inter-token latency tracking
+        token_timestamps: List[float] = []
+        last_token_time = None
+        
         try:
             async with session.post(
                 endpoint.url,
@@ -345,6 +358,10 @@ class LLMBenchmark:
                                 delta = data['choices'][0].get('delta', {})
                                 content = delta.get('content', '')
                                 if content:
+                                    # Record token timestamp for inter-token latency
+                                    current_time = time.time()
+                                    token_timestamps.append(current_time)
+                                    
                                     response_text += content
                                     output_tokens += 1
                                 
@@ -390,6 +407,39 @@ class LLMBenchmark:
             tokens_per_second = output_tokens / total_latency
             time_per_output_token = total_latency / output_tokens
         
+        # Calculate inter-token latencies
+        inter_token_latencies = None
+        avg_inter_token_latency = None
+        min_inter_token_latency = None
+        max_inter_token_latency = None
+        p50_inter_token_latency = None
+        p95_inter_token_latency = None
+        p99_inter_token_latency = None
+        
+        if len(token_timestamps) > 1:
+            # Calculate time differences between consecutive tokens
+            inter_token_latencies = [
+                token_timestamps[i] - token_timestamps[i-1] 
+                for i in range(1, len(token_timestamps))
+            ]
+            
+            if inter_token_latencies:
+                avg_inter_token_latency = sum(inter_token_latencies) / len(inter_token_latencies)
+                min_inter_token_latency = min(inter_token_latencies)
+                max_inter_token_latency = max(inter_token_latencies)
+                
+                # Calculate percentiles
+                sorted_latencies = sorted(inter_token_latencies)
+                n = len(sorted_latencies)
+                
+                p50_idx = int(n * 0.50)
+                p95_idx = int(n * 0.95)
+                p99_idx = int(n * 0.99)
+                
+                p50_inter_token_latency = sorted_latencies[p50_idx] if p50_idx < n else sorted_latencies[-1]
+                p95_inter_token_latency = sorted_latencies[p95_idx] if p95_idx < n else sorted_latencies[-1]
+                p99_inter_token_latency = sorted_latencies[p99_idx] if p99_idx < n else sorted_latencies[-1]
+        
         # If we couldn't get input tokens from usage, estimate from prompt
         if input_tokens is None:
             # Rough estimation: ~4 characters per token
@@ -414,6 +464,13 @@ class LLMBenchmark:
             total_tokens=total_tokens,
             tokens_per_second=tokens_per_second,
             time_per_output_token=time_per_output_token,
+            inter_token_latencies=inter_token_latencies,
+            avg_inter_token_latency=avg_inter_token_latency,
+            min_inter_token_latency=min_inter_token_latency,
+            max_inter_token_latency=max_inter_token_latency,
+            p50_inter_token_latency=p50_inter_token_latency,
+            p95_inter_token_latency=p95_inter_token_latency,
+            p99_inter_token_latency=p99_inter_token_latency,
             response_text=response_text[:200] + "..." if response_text and len(response_text) > 200 else response_text,
             timestamp=datetime.now().isoformat(),
             iteration=iteration,

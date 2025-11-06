@@ -51,6 +51,12 @@ class BenchmarkCSVWriter:
             'total_tokens',
             'tokens_per_second',
             'time_per_output_token',
+            'avg_inter_token_latency',
+            'min_inter_token_latency',
+            'max_inter_token_latency',
+            'p50_inter_token_latency',
+            'p95_inter_token_latency',
+            'p99_inter_token_latency',
             'response_text',
             'timestamp',
             'iteration',
@@ -107,6 +113,12 @@ class BenchmarkCSVWriter:
                     'throughputs': [],
                     'input_tokens': [],
                     'output_tokens': [],
+                    'avg_inter_token_latencies': [],
+                    'min_inter_token_latencies': [],
+                    'max_inter_token_latencies': [],
+                    'p50_inter_token_latencies': [],
+                    'p95_inter_token_latencies': [],
+                    'p99_inter_token_latencies': [],
                 }
             
             stats = endpoint_stats[endpoint]
@@ -126,6 +138,20 @@ class BenchmarkCSVWriter:
                     stats['input_tokens'].append(result['input_tokens'])
                 if result['output_tokens']:
                     stats['output_tokens'].append(result['output_tokens'])
+                
+                # Collect inter-token latency metrics
+                if result.get('avg_inter_token_latency'):
+                    stats['avg_inter_token_latencies'].append(result['avg_inter_token_latency'])
+                if result.get('min_inter_token_latency'):
+                    stats['min_inter_token_latencies'].append(result['min_inter_token_latency'])
+                if result.get('max_inter_token_latency'):
+                    stats['max_inter_token_latencies'].append(result['max_inter_token_latency'])
+                if result.get('p50_inter_token_latency'):
+                    stats['p50_inter_token_latencies'].append(result['p50_inter_token_latency'])
+                if result.get('p95_inter_token_latency'):
+                    stats['p95_inter_token_latencies'].append(result['p95_inter_token_latency'])
+                if result.get('p99_inter_token_latency'):
+                    stats['p99_inter_token_latencies'].append(result['p99_inter_token_latency'])
             else:
                 stats['failed_requests'] += 1
         
@@ -167,6 +193,25 @@ class BenchmarkCSVWriter:
             
             if stats['output_tokens']:
                 summary['avg_output_tokens'] = sum(stats['output_tokens']) / len(stats['output_tokens'])
+            
+            # Add inter-token latency statistics
+            if stats['avg_inter_token_latencies']:
+                summary['avg_inter_token_latency'] = sum(stats['avg_inter_token_latencies']) / len(stats['avg_inter_token_latencies'])
+            
+            if stats['min_inter_token_latencies']:
+                summary['min_inter_token_latency'] = min(stats['min_inter_token_latencies'])
+            
+            if stats['max_inter_token_latencies']:
+                summary['max_inter_token_latency'] = max(stats['max_inter_token_latencies'])
+            
+            if stats['p50_inter_token_latencies']:
+                summary['avg_p50_inter_token_latency'] = sum(stats['p50_inter_token_latencies']) / len(stats['p50_inter_token_latencies'])
+            
+            if stats['p95_inter_token_latencies']:
+                summary['avg_p95_inter_token_latency'] = sum(stats['p95_inter_token_latencies']) / len(stats['p95_inter_token_latencies'])
+            
+            if stats['p99_inter_token_latencies']:
+                summary['avg_p99_inter_token_latency'] = sum(stats['p99_inter_token_latencies']) / len(stats['p99_inter_token_latencies'])
             
             summary_data.append(summary)
         
