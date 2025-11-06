@@ -129,8 +129,8 @@ class ProgressTracker:
         # Calculate total lines to display
         # 1 separator + 1 title + 1 separator + 1 blank + 
         # 1 overall + 1 success/fail + 1 blank + 1 header + 1 separator + 
-        # N endpoints + 1 separator + 1 blank = 10 + N
-        total_lines = 10 + len(self.endpoints)
+        # N endpoints + 1 separator + 1 blank = 11 + N (was 10, now 11)
+        total_lines = 11 + len(self.endpoints)
         
         # Clear previous display
         if not self.first_display:
@@ -631,7 +631,7 @@ class LLMBenchmark:
         print("Endpoints:")
         for i, ep in enumerate(endpoints, 1):
             print(f"  {i}. {ep.name} - {ep.model_name}")
-        print("\n")  # Two newlines before progress starts
+        print()  # Blank line before progress starts
         
         # Initialize progress tracker
         self.progress_tracker = ProgressTracker(
