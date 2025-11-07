@@ -110,6 +110,20 @@ results/
 - `success_rate_[timestamp].png`
 - `complexity_performance_[timestamp].png`
 
+
+## Automatisch die neueste CSV finden und visualisieren
+```bash
+python generate_visualizations.py
+```
+## Oder spezifische CSV angeben
+```bash
+python generate_visualizations.py --csv results/benchmark_results_2024-11-07_143022.csv
+```
+## Mit custom Output-Verzeichnis
+```bash
+python generate_visualizations.py --csv results/my_results.csv --output-dir custom_charts
+```
+
 # 4. Key Metrics Explained
 
 | Metric | What It Means | Better Value |

@@ -242,9 +242,9 @@ class BenchmarkVisualizer:
         Detailed TTFT comparison with distribution analysis.
         Shows responsiveness - critical for user experience.
         """
-        fig, axes = plt.subplots(1, 2, figsize=(16, 6))
+        fig, axes = plt.subplots(1, 2, figsize=(18, 8))
         fig.suptitle('Time to First Token (TTFT) Analysis - Responsiveness Metric', 
-                     fontsize=16, fontweight='bold')
+                     fontsize=18, fontweight='bold', y=0.98)
         
         df_ttft = self.df_success.dropna(subset=['time_to_first_token'])
         
@@ -258,46 +258,57 @@ class BenchmarkVisualizer:
             labels=engines,
             patch_artist=True,
             showmeans=True,
-            meanline=True
+            meanline=True,
+            widths=0.6
         )
         
         for patch, color in zip(box_parts['boxes'], colors):
             patch.set_facecolor(color)
             patch.set_alpha(0.7)
         
-        ax1.set_title('TTFT Distribution by Engine', fontweight='bold', pad=10)
-        ax1.set_ylabel('TTFT (seconds)', fontweight='bold')
-        ax1.set_xlabel('Inference Engine', fontweight='bold')
+        ax1.set_title('TTFT Distribution by Engine', fontweight='bold', pad=15, fontsize=14)
+        ax1.set_ylabel('TTFT (seconds)', fontweight='bold', fontsize=13)
+        ax1.set_xlabel('Inference Engine', fontweight='bold', fontsize=13)
+        ax1.tick_params(axis='both', labelsize=12)
         ax1.grid(axis='y', alpha=0.3)
         
-        # Add statistical annotations
+        # Add statistical annotations with better positioning
         for i, eng in enumerate(engines, 1):
             data = df_ttft[df_ttft['inference_engine'] == eng]['time_to_first_token']
             median = data.median()
-            ax1.text(i, median, f'{median:.3f}s', ha='center', va='bottom', fontsize=9, fontweight='bold')
+            mean = data.mean()
+            # Position text above the box plot with more space
+            y_offset = ax1.get_ylim()[1] * 0.02
+            ax1.text(i, median + y_offset, f'Med: {median:.3f}s', 
+                    ha='center', va='bottom', fontsize=10, fontweight='bold',
+                    bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8, edgecolor='gray'))
         
         # 2. Grouped bar chart by model family
         ax2 = axes[1]
         grouped = df_ttft.groupby(['model_family', 'inference_engine'])['time_to_first_token'].mean().reset_index()
         pivot = grouped.pivot(index='model_family', columns='inference_engine', values='time_to_first_token')
         
-        pivot.plot(kind='bar', ax=ax2, color=[self._get_engine_color(col) for col in pivot.columns], width=0.7)
-        ax2.set_title('Average TTFT by Model Family', fontweight='bold', pad=10)
-        ax2.set_ylabel('TTFT (seconds)', fontweight='bold')
-        ax2.set_xlabel('Model Family', fontweight='bold')
-        ax2.legend(title='Engine', frameon=True, shadow=True)
+        pivot.plot(kind='bar', ax=ax2, color=[self._get_engine_color(col) for col in pivot.columns], width=0.65)
+        ax2.set_title('Average TTFT by Model Family', fontweight='bold', pad=15, fontsize=14)
+        ax2.set_ylabel('TTFT (seconds)', fontweight='bold', fontsize=13)
+        ax2.set_xlabel('Model Family', fontweight='bold', fontsize=13)
+        ax2.tick_params(axis='both', labelsize=11)
+        ax2.legend(title='Engine', frameon=True, shadow=True, fontsize=11, title_fontsize=12)
         ax2.grid(axis='y', alpha=0.3)
         plt.setp(ax2.xaxis.get_majorticklabels(), rotation=45, ha='right')
         
-        # Add percentage difference annotations
+        # Add percentage difference annotations with better spacing
         for idx, model in enumerate(pivot.index):
             if len(pivot.columns) == 2:
                 val1, val2 = pivot.iloc[idx]
                 if pd.notna(val1) and pd.notna(val2):
                     diff_pct = ((val2 - val1) / val1) * 100
                     color = COLORS['success'] if diff_pct < 0 else COLORS['danger']
-                    ax2.text(idx, max(val1, val2) * 1.05, f'{diff_pct:+.1f}%', 
-                            ha='center', fontsize=9, color=color, fontweight='bold')
+                    # Position above bars with more space
+                    y_pos = max(val1, val2) * 1.08
+                    ax2.text(idx, y_pos, f'{diff_pct:+.1f}%', 
+                            ha='center', va='bottom', fontsize=10, color=color, fontweight='bold',
+                            bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.8, edgecolor=color))
         
         plt.tight_layout()
         
