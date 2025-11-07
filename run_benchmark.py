@@ -73,15 +73,15 @@ Note: All endpoints are ALWAYS tested in parallel (simultaneously).
     parser.add_argument(
         '--timeout',
         type=int,
-        default=120,
-        help='Request timeout in seconds (default: 120)'
+        default=240,
+        help='Request timeout in seconds (default: 240)'
     )
     
     parser.add_argument(
         '--max-tokens',
         type=int,
-        default=512,
-        help='Maximum tokens to generate (default: 512)'
+        default=2048,
+        help='Maximum tokens to generate (default: 2048)'
     )
     
     parser.add_argument(
