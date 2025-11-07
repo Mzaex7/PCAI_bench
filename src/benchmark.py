@@ -494,7 +494,16 @@ class LLMBenchmark:
         """
         results = []
         
-        async with aiohttp.ClientSession() as session:
+        # Create dedicated session for this endpoint
+        # Even in sequential mode, each endpoint gets its own session for fairness
+        connector = aiohttp.TCPConnector(
+            limit=10,  # Sequential doesn't need many connections
+            limit_per_host=10
+        )
+        
+        timeout = aiohttp.ClientTimeout(total=self.config.timeout)
+        
+        async with aiohttp.ClientSession(connector=connector, timeout=timeout) as session:
             for iteration in range(self.config.num_iterations):
                 for prompt_idx, prompt in enumerate(prompts):
                     result = await self._make_streaming_request(
@@ -531,7 +540,17 @@ class LLMBenchmark:
         """
         results = []
         
-        async with aiohttp.ClientSession() as session:
+        # Create dedicated session for this endpoint with fair connection limits
+        # This ensures each endpoint gets equal access to HTTP connections
+        connector = aiohttp.TCPConnector(
+            limit=self.config.concurrent_requests * 2,  # 2x concurrent for safety
+            limit_per_host=self.config.concurrent_requests * 2,  # Per-endpoint limit
+            ttl_dns_cache=300  # DNS cache for performance
+        )
+        
+        timeout = aiohttp.ClientTimeout(total=self.config.timeout)
+        
+        async with aiohttp.ClientSession(connector=connector, timeout=timeout) as session:
             for iteration in range(self.config.num_iterations):
                 # Create tasks for concurrent execution
                 tasks = []
