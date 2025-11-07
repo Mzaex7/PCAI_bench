@@ -555,12 +555,24 @@ class LLMBenchmark:
         semaphore = asyncio.Semaphore(self.config.concurrent_requests)
         
         async def bounded_request(session, endpoint, prompt, iteration):
-            """Wrapper to enforce concurrency limit with semaphore."""
+            """Wrapper to enforce concurrency limit with semaphore and update progress."""
             async with semaphore:
-                return await self._make_streaming_request(
+                result = await self._make_streaming_request(
                     session, endpoint, prompt, iteration, 
                     concurrent_level=self.config.concurrent_requests
                 )
+                
+                # Update progress tracker immediately after each request completes
+                if self.progress_tracker:
+                    self.progress_tracker.update_progress(
+                        endpoint.name,
+                        result.success,
+                        result.total_latency if result.success else None,
+                        result.time_to_first_token if result.success else None,
+                        result.tokens_per_second if result.success else None
+                    )
+                
+                return result
         
         async with aiohttp.ClientSession(connector=connector, timeout=timeout) as session:
             # Create ALL tasks upfront (all iterations × all prompts)
@@ -572,18 +584,8 @@ class LLMBenchmark:
             
             # Run ALL tasks concurrently - semaphore controls how many run at once
             # This ensures continuous utilization: as soon as one finishes, another starts
+            # Progress is updated in real-time as each request completes
             all_results = await asyncio.gather(*all_tasks)
-            
-            # Update progress tracker for all results
-            if self.progress_tracker:
-                for result in all_results:
-                    self.progress_tracker.update_progress(
-                        endpoint.name,
-                        result.success,
-                        result.total_latency if result.success else None,
-                        result.time_to_first_token if result.success else None,
-                        result.tokens_per_second if result.success else None
-                    )
             
             results.extend(all_results)
         
