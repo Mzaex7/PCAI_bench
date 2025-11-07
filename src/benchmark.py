@@ -529,7 +529,8 @@ class LLMBenchmark:
         prompts: List[Dict]
     ) -> List[BenchmarkResult]:
         """
-        Run concurrent benchmark (multiple requests simultaneously).
+        Run concurrent benchmark with continuous concurrency control.
+        Uses semaphore to maintain exactly N concurrent requests at all times.
         
         Args:
             endpoint: Endpoint to test
@@ -550,33 +551,41 @@ class LLMBenchmark:
         
         timeout = aiohttp.ClientTimeout(total=self.config.timeout)
         
+        # Semaphore to limit concurrent requests to exactly the configured amount
+        semaphore = asyncio.Semaphore(self.config.concurrent_requests)
+        
+        async def bounded_request(session, endpoint, prompt, iteration):
+            """Wrapper to enforce concurrency limit with semaphore."""
+            async with semaphore:
+                return await self._make_streaming_request(
+                    session, endpoint, prompt, iteration, 
+                    concurrent_level=self.config.concurrent_requests
+                )
+        
         async with aiohttp.ClientSession(connector=connector, timeout=timeout) as session:
+            # Create ALL tasks upfront (all iterations × all prompts)
+            all_tasks = []
             for iteration in range(self.config.num_iterations):
-                # Create tasks for concurrent execution
-                tasks = []
                 for prompt in prompts:
-                    task = self._make_streaming_request(
-                        session, endpoint, prompt, iteration, 
-                        concurrent_level=self.config.concurrent_requests
+                    task = bounded_request(session, endpoint, prompt, iteration)
+                    all_tasks.append(task)
+            
+            # Run ALL tasks concurrently - semaphore controls how many run at once
+            # This ensures continuous utilization: as soon as one finishes, another starts
+            all_results = await asyncio.gather(*all_tasks)
+            
+            # Update progress tracker for all results
+            if self.progress_tracker:
+                for result in all_results:
+                    self.progress_tracker.update_progress(
+                        endpoint.name,
+                        result.success,
+                        result.total_latency if result.success else None,
+                        result.time_to_first_token if result.success else None,
+                        result.tokens_per_second if result.success else None
                     )
-                    tasks.append(task)
-                
-                # Run concurrent requests in batches
-                for i in range(0, len(tasks), self.config.concurrent_requests):
-                    batch = tasks[i:i + self.config.concurrent_requests]
-                    batch_results = await asyncio.gather(*batch)
-                    results.extend(batch_results)
-                    
-                    # Update progress tracker for each result in batch
-                    if self.progress_tracker:
-                        for result in batch_results:
-                            self.progress_tracker.update_progress(
-                                endpoint.name,
-                                result.success,
-                                result.total_latency if result.success else None,
-                                result.time_to_first_token if result.success else None,
-                                result.tokens_per_second if result.success else None
-                            )
+            
+            results.extend(all_results)
         
         return results
     
