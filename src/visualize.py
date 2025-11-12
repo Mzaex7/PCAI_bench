@@ -32,10 +32,12 @@ COLORS = {
     # Primary colors for engine comparison
     'nim': '#0070F8',           # HPE Blue - Clear, tech-forward
     'vllm': '#7764FC',          # HPE Purple - Complementary, distinct
+    'ollama': '#01A982',        # HPE Green - Open source alternative
     
     # Alternate engine colors (if needed)
     'nim_alt': '#01A982',       # HPE Green - Brand signature
     'vllm_alt': '#62E5F6',      # HPE Cyan - Fresh, modern
+    'ollama_alt': '#05CC93',    # Jade Green
     
     # Status indicators
     'success': '#01A982',       # HPE Green - Positive, growth
@@ -103,38 +105,67 @@ class BenchmarkVisualizer:
         def parse_endpoint(name: str) -> Tuple[str, str]:
             """
             Parse endpoint name to extract model and engine.
-            Expected format: 'ModelName-Engine' or 'ModelName_Engine'
-            Example: 'Llama3-NIM', 'Mistral-vLLM'
+            Examples:
+              'llama-vllm-new' -> ('Llama', 'vLLM New')
+              'llama-vllm' -> ('Llama', 'vLLM Old')
+              'llama-nim' -> ('Llama', 'NIM')
+              'llama-ollama' -> ('Llama', 'Ollama')
+              'qwen-vllm' -> ('Qwen', 'vLLM')
+            
+            SPECIAL CASE: For vLLM comparisons (vllm.csv, vllm-*.csv),
+            distinguish between old and new versions by checking for 'new' suffix.
             """
             name_lower = name.lower()
             
-            # Detect inference engine
-            if 'nim' in name_lower:
+            # Detect inference engine (order matters! Check ollama first)
+            if 'ollama' in name_lower:
+                engine = 'Ollama'
+            elif 'nim' in name_lower:
                 engine = 'NIM'
             elif 'vllm' in name_lower:
-                engine = 'vLLM'
+                # SPECIAL: Distinguish vLLM old vs new
+                if 'new' in name_lower:
+                    engine = 'vLLM New'
+                else:
+                    # Check if this is the old version (no 'new' in name)
+                    # For endpoints like 'llama-vllm' (without 'new')
+                    engine = 'vLLM Old'
             else:
                 engine = 'Unknown'
             
             # Extract model family (everything before the engine indicator)
-            for separator in ['-nim', '-vllm', '_nim', '_vllm', ' nim', ' vllm']:
+            # Check ollama first since it's most specific
+            for separator in ['-ollama', '-nim', '-vllm', '_ollama', '_nim', '_vllm', ' ollama', ' nim', ' vllm']:
                 if separator in name_lower:
                     model = name[:name_lower.index(separator)]
-                    return model.strip(), engine
+                    # Capitalize first letter for consistency
+                    return model.capitalize(), engine
             
-            # If no clear separator, use the full name
-            return name, engine
+            # If no clear separator, use the first part before dash
+            if '-' in name:
+                parts = name.split('-')
+                return parts[0].capitalize(), engine
+            
+            # Last resort: use full name
+            return name.capitalize(), engine
         
+        # Add to both df and df_success for reliability metrics
+        self.df['model_family'] = self.df['endpoint_name'].apply(lambda x: parse_endpoint(x)[0])
+        self.df['inference_engine'] = self.df['endpoint_name'].apply(lambda x: parse_endpoint(x)[1])
         self.df_success['model_family'] = self.df_success['endpoint_name'].apply(lambda x: parse_endpoint(x)[0])
         self.df_success['inference_engine'] = self.df_success['endpoint_name'].apply(lambda x: parse_endpoint(x)[1])
     
     def _get_engine_color(self, engine: str) -> str:
         """Get color for inference engine."""
         engine_lower = engine.lower()
-        if 'nim' in engine_lower:
+        if 'ollama' in engine_lower:
+            return COLORS['ollama']
+        elif 'nim' in engine_lower:
             return COLORS['nim']
-        elif 'vllm' in engine_lower:
-            return COLORS['vllm']
+        elif 'vllm new' in engine_lower:
+            return COLORS['vllm']  # Purple for new
+        elif 'vllm old' in engine_lower or 'vllm' in engine_lower:
+            return '#9B8DD9'  # Lighter purple for old
         return COLORS['primary']
     
     def _apply_hpe_styling(self, ax):
@@ -734,26 +765,8 @@ class BenchmarkVisualizer:
         fig.suptitle('Reliability Metrics - Production Readiness', 
                      fontsize=16, fontweight='bold')
         
-        # Parse endpoint info if not already done
-        if 'inference_engine' not in self.df.columns:
-            def parse_endpoint(name: str) -> Tuple[str, str]:
-                name_lower = name.lower()
-                if 'nim' in name_lower:
-                    engine = 'NIM'
-                elif 'vllm' in name_lower:
-                    engine = 'vLLM'
-                else:
-                    engine = 'Unknown'
-                
-                for separator in ['-nim', '-vllm', '_nim', '_vllm', ' nim', ' vllm']:
-                    if separator in name_lower:
-                        model = name[:name_lower.index(separator)]
-                        return model.strip(), engine
-                
-                return name, engine
-            
-            self.df['model_family'] = self.df['endpoint_name'].apply(lambda x: parse_endpoint(x)[0])
-            self.df['inference_engine'] = self.df['endpoint_name'].apply(lambda x: parse_endpoint(x)[1])
+        # Columns are already created by _parse_endpoint_info() in __init__
+        # No need to parse again
         
         # 1. Success rate by engine
         ax1 = axes[0, 0]
@@ -872,33 +885,15 @@ class BenchmarkVisualizer:
             'avg_inter_token_latency': 'mean'
         }).round(3)
         
-        # Parse endpoint info for full df if not already done
-        if 'inference_engine' not in self.df.columns:
-            def parse_endpoint(name: str) -> Tuple[str, str]:
-                name_lower = name.lower()
-                if 'nim' in name_lower:
-                    engine = 'NIM'
-                elif 'vllm' in name_lower:
-                    engine = 'vLLM'
-                else:
-                    engine = 'Unknown'
-                
-                for separator in ['-nim', '-vllm', '_nim', '_vllm', ' nim', ' vllm']:
-                    if separator in name_lower:
-                        model = name[:name_lower.index(separator)]
-                        return model.strip(), engine
-                
-                return name, engine
-            
-            self.df['inference_engine'] = self.df['endpoint_name'].apply(lambda x: parse_endpoint(x)[1])
-        
+        # Columns are already created by _parse_endpoint_info() in __init__
         success_stats = self.df.groupby('inference_engine')['success'].agg(['sum', 'count'])
         success_rates = (success_stats['sum'] / success_stats['count'] * 100).round(1)
         
-        # 1. Key Metrics Cards (Top Row)
+        # 1. Key Metrics Cards (Top Row) - Display up to 3 engines
         engines = sorted(self.df_success['inference_engine'].unique())
+        num_engines = min(len(engines), 3)  # Max 3 cards
         
-        for i, engine in enumerate(engines):
+        for i, engine in enumerate(engines[:num_engines]):
             ax = fig.add_subplot(gs[0, i])
             ax.axis('off')
             
@@ -920,25 +915,6 @@ class BenchmarkVisualizer:
             
             ax.set_xlim(0, 1)
             ax.set_ylim(0, 1)
-        
-        # Winner card
-        ax_winner = fig.add_subplot(gs[0, 2])
-        ax_winner.axis('off')
-        
-        # Determine winner
-        ttft_winner = grouped[('time_to_first_token', 'mean')].idxmin()
-        tps_winner = grouped[('tokens_per_second', 'mean')].idxmax()
-        
-        ax_winner.add_patch(plt.Rectangle((0, 0), 1, 1, facecolor=COLORS['success'], alpha=0.15, 
-                                         edgecolor=COLORS['success'], linewidth=3))
-        ax_winner.text(0.5, 0.85, '🏆 Winners', ha='center', va='top', fontsize=18, 
-                      fontweight='bold', color=COLORS['midnight'])
-        ax_winner.text(0.5, 0.60, f'Fastest TTFT:\n{ttft_winner}', ha='center', va='center', 
-                      fontsize=12, fontweight='bold', color=COLORS['midnight'])
-        ax_winner.text(0.5, 0.30, f'Best Throughput:\n{tps_winner}', ha='center', va='center', 
-                      fontsize=12, fontweight='bold', color=COLORS['midnight'])
-        ax_winner.set_xlim(0, 1)
-        ax_winner.set_ylim(0, 1)
         
         # 2. Performance Comparison (Middle Row)
         ax_perf = fig.add_subplot(gs[1, :2])
@@ -1044,16 +1020,14 @@ class BenchmarkVisualizer:
         filepaths = []
         
         # Order matters - most important first
+        # Executive Summary, Efficiency and Reliability removed as per user request
         visualizations = [
-            ("Executive Summary", self.plot_executive_summary),
             ("Engine Comparison Dashboard", self.plot_engine_comparison_dashboard),
             ("TTFT Detailed Analysis", self.plot_ttft_detailed_comparison),
             ("Throughput Analysis", self.plot_throughput_analysis),
             ("Inter-Token Latency Analysis", self.plot_inter_token_latency_analysis),
             ("Scalability Analysis", self.plot_scalability_analysis),
             ("Performance Heatmap", self.plot_performance_heatmap),
-            ("Efficiency Analysis", self.plot_cost_efficiency_analysis),
-            ("Reliability Metrics", self.plot_reliability_metrics),
         ]
         
         for i, (name, func) in enumerate(visualizations, 1):
@@ -1075,11 +1049,10 @@ class BenchmarkVisualizer:
         
         # Print recommendation
         print("📊 PRESENTATION TIPS:")
-        print("  1. Start with '00_executive_summary' for stakeholder overview")
-        print("  2. Use '01_engine_comparison_dashboard' for detailed metrics")
-        print("  3. Show '04_inter_token_latency' for streaming applications")
-        print("  4. Use '06_performance_heatmap' for at-a-glance comparison")
-        print("  5. End with '08_reliability_metrics' for production readiness\n")
+        print("  1. Use '01_engine_comparison_dashboard' for detailed metrics overview")
+        print("  2. Show '02_ttft_detailed' for responsiveness analysis")
+        print("  3. Use '04_inter_token_latency' for streaming applications")
+        print("  4. Use '06_performance_heatmap' for at-a-glance comparison\n")
         
         return filepaths
     

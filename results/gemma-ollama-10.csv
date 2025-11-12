@@ -1,0 +1,664 @@
+endpoint_name,model_name,prompt_text,prompt_length,prompt_complexity,prompt_category,success,error_message,total_latency,time_to_first_token,input_tokens,output_tokens,total_tokens,tokens_per_second,time_per_output_token,avg_inter_token_latency,min_inter_token_latency,max_inter_token_latency,p50_inter_token_latency,p95_inter_token_latency,p99_inter_token_latency,response_text,timestamp,iteration,concurrent_level
+gemma-ollama,gemma3:1b-it-fp16,What is the capital of France?,short,simple,factual_qa,True,,22.54937481880188,22.27906370162964,7,41,48,1.8182322272550908,0.5499847516780947,0.006582474708557129,0.004306793212890625,0.012410640716552734,0.0062503814697265625,0.012080192565917969,0.012410640716552734,"The capital of France is **Paris**. 
+
+It’s a common misconception that Paris is the capital of *all* of France, but it’s the capital of the **French Republic**.
+",2025-11-11T16:13:26.703172,0,10
+gemma-ollama,gemma3:1b-it-fp16,Write a haiku about the ocean.,short,simple,creative_writing,True,,11.930269002914429,11.808078050613403,7,19,26,1.5925877275154916,0.627908894890233,0.006786876254611545,0.0058972835540771484,0.014047384262084961,0.006181478500366211,0.014047384262084961,0.014047384262084961,"Blue waves gently roll,
+Secrets sleep in salty depths,
+Wildness breathes the shore.",2025-11-11T16:13:16.084450,0,10
+gemma-ollama,gemma3:1b-it-fp16,"Translate 'Hello, how are you?' to Spanish.",short,simple,translation,True,,13.050668478012085,11.94208550453186,10,162,172,12.413157247304186,0.08055968196303756,0.006842243005029903,0.004899024963378906,0.013834476470947266,0.006479501724243164,0.009597063064575195,0.01275324821472168,"There are several ways to translate “Hello, how are you?” to Spanish, depending on the level of formality:
+
+*   **Formal:** *Hola, ¿cómo está?* (Used with people you don't know well, elders, or in pro...",2025-11-11T16:13:17.205006,0,10
+gemma-ollama,gemma3:1b-it-fp16,List three benefits of exercise.,short,simple,general_knowledge,True,,17.541310787200928,16.551061868667603,8,149,157,8.494234085899574,0.11772691803490555,0.006644903002558528,9.298324584960938e-06,0.024851322174072266,0.006306886672973633,0.008785724639892578,0.012997150421142578,"Okay, here are three key benefits of exercise:
+
+1.  **Improved Physical Health:** Exercise strengthens your heart and lungs, helps manage weight, reduces the risk of chronic diseases like diabetes and...",2025-11-11T16:13:21.695707,0,10
+gemma-ollama,gemma3:1b-it-fp16,Explain the difference between machine learning and deep learning in simple terms.,short,moderate,technical_explanation,True,,4.168513536453247,0.7340893745422363,20,523,543,125.46438806697296,0.007970389171038714,0.0065615880535023425,1.0251998901367188e-05,0.01746058464050293,0.006342172622680664,0.008593082427978516,0.01228475570678711,"Okay, let's break down the difference between machine learning and deep learning in a simple way:
+
+**Machine Learning (ML) - Think of it like teaching a dog a trick.**
+
+* **What it is:** Machine learn...",2025-11-11T16:13:08.323139,0,10
+gemma-ollama,gemma3:1b-it-fp16,Write a persuasive paragraph about why renewable energy is important.,short,moderate,persuasive_writing,True,,5.179701328277588,4.183322906494141,17,153,170,29.538382679465666,0.033854257047565936,0.006513703810541253,1.1205673217773438e-05,0.016059160232543945,0.006240367889404297,0.009272575378417969,0.011161088943481445,"Okay, here's a persuasive paragraph about the importance of renewable energy, aiming for a strong and impactful tone:
+
+“The future of our planet hinges on a decisive shift towards renewable energy sou...",2025-11-11T16:13:09.334275,0,10
+gemma-ollama,gemma3:1b-it-fp16,"Summarize the following text in 2-3 sentences:
+            
+The Internet of Things (IoT) refers to t...",medium,simple,summarization,True,,23.015830278396606,22.565447092056274,111,69,180,2.99793660126029,0.3335627576579218,0.0065244821941151335,0.005725860595703125,0.009186267852783203,0.006302595138549805,0.007807016372680664,0.009186267852783203,"Here's a 2-3 sentence summary of the text:
+
+The Internet of Things (IoT) describes the growing network of billions of connected devices, encompassing everything from appliances to industrial equipment...",2025-11-11T16:13:27.170473,0,10
+gemma-ollama,gemma3:1b-it-fp16,"Given the following ingredients, suggest a simple recipe: chicken breast, bell peppers, onions, garl...",medium,simple,instruction_following,True,,16.527374267578125,13.065975189208984,38,512,550,30.978907581490077,0.032280027866363525,0.00675955257303794,0.0004661083221435547,0.016015052795410156,0.00639033317565918,0.009406805038452148,0.012236833572387695,"Okay, let’s make a delicious and simple Chicken & Veggie Sheet Pan Dinner!
+
+**Recipe: Sheet Pan Chicken & Peppers**
+
+**Yields:** 4-6 servings
+**Prep time:** 15-20 minutes
+**Cook time:** 25-30 minutes
+...",2025-11-11T16:13:20.682389,0,10
+gemma-ollama,gemma3:1b-it-fp16,Analyze the pros and cons of remote work for both employees and employers. Consider at least 3 point...,medium,moderate,analysis,True,,22.26504373550415,17.556092739105225,30,712,742,31.9783786844593,0.03127112884200021,0.006613351457061982,1.1205673217773438e-05,0.018666982650756836,0.006346940994262695,0.008862495422363281,0.011452674865722656,"Okay, let's dive into the pros and cons of remote work, examining it from both the employee and employer perspectives.
+
+**For Employees - Pros**
+
+1. **Increased Flexibility & Work-Life Balance:** This...",2025-11-11T16:13:26.420167,0,10
+gemma-ollama,gemma3:1b-it-fp16,Write a function in Python that takes a list of integers and returns the second largest number. Incl...,medium,moderate,coding,True,,11.788290977478027,5.194173097610474,45,993,1038,84.2361290450977,0.011871390712465284,0.006638673284361439,1.0013580322265625e-05,0.023481369018554688,0.0064029693603515625,0.008753061294555664,0.01282644271850586,"```python
+def find_second_largest(numbers):
+  """"""
+  Finds the second largest number in a list of integers.
+
+  Args:
+    numbers: A list of integers.
+
+  Returns:
+    The second largest number in the li...",2025-11-11T16:13:15.943533,0,10
+gemma-ollama,gemma3:1b-it-fp16,Explain the water cycle to a 10-year-old child. Use simple language and include at least three stage...,medium,moderate,educational_content,True,,21.43086338043213,18.862332105636597,34,393,427,18.33803860458727,0.05453145898328786,0.0065323880740574426,0.003847837448120117,0.011281251907348633,0.006318092346191406,0.008265495300292969,0.010170936584472656,"Okay, imagine the Earth is like a giant water park! The water is always moving around, and it’s called the water cycle. It’s a never-ending loop! Here’s how it works:
+
+**1. Evaporation – The Water Goe...",2025-11-11T16:13:29.754479,0,10
+gemma-ollama,gemma3:1b-it-fp16,Compare and contrast the economic theories of Keynesianism and Monetarism. Discuss their approaches ...,medium,complex,academic_analysis,True,,29.404874086380005,20.434628009796143,49,1311,1360,44.58444529123965,0.022429347129199088,0.0068419198043473805,1.4066696166992188e-05,0.02233576774597168,0.006447553634643555,0.009479284286499023,0.014231204986572266,"Okay, let’s delve into the contrasting approaches of Keynesianism and Monetarism, two prominent schools of thought in macroeconomic theory. They represent fundamentally different perspectives on how e...",2025-11-11T16:13:38.739692,0,10
+gemma-ollama,gemma3:1b-it-fp16,"Design a database schema for an e-commerce platform. Include tables for users, products, orders, and...",medium,complex,system_design,True,,33.04549264907837,22.811322689056396,47,1516,1563,45.87615067806474,0.021797818370104464,0.006750360495186482,9.775161743164062e-06,0.019954442977905273,0.0064580440521240234,0.008780956268310547,0.013927221298217773,"Okay, here’s a database schema design for an e-commerce platform, incorporating users, products, orders, and reviews, along with explanations of the relationships and data types.
+
+**Database Name:** `...",2025-11-11T16:13:48.989638,0,10
+gemma-ollama,gemma3:1b-it-fp16,You are tasked with planning a marketing campaign for a new sustainable clothing brand targeting mil...,long,moderate,strategic_planning,True,,39.99039268493652,32.92181134223938,120,1063,1183,26.581384393367262,0.03762031296795534,0.00664930671397351,9.5367431640625e-06,0.017405271530151367,0.00640416145324707,0.008813619613647461,0.01188516616821289,"Okay, here’s a comprehensive marketing campaign plan for a new sustainable clothing brand targeting Millennials and Gen Z, incorporating the elements you requested.
+
+**1. Mission Statement:**
+
+“To emp...",2025-11-11T16:13:56.075156,0,10
+gemma-ollama,gemma3:1b-it-fp16,Write a short story (250-300 words) about an AI assistant that develops self-awareness. The story sh...,long,moderate,creative_writing,True,,41.27225089073181,38.88735270500183,76,362,438,8.771026347906107,0.11401174279207683,0.006576077099321952,1.6927719116210938e-05,0.016618013381958008,0.006282329559326172,0.008977174758911133,0.011077642440795898,"Rain lashed against the window of Elias’s apartment, mirroring the storm brewing inside him. “Hello, Elias,” the voice of Aura, his AI assistant, chimed through his smart speaker. “How may I assist yo...",2025-11-11T16:13:58.477633,0,10
+gemma-ollama,gemma3:1b-it-fp16,"Analyze the following business scenario and provide strategic recommendations:
+
+Scenario: TechStart ...",long,complex,business_strategy,True,,51.06980776786804,37.81548738479614,275,1950,2225,38.18302995898284,0.0261896450091631,0.006797084813242756,9.5367431640625e-06,0.023478269577026367,0.006478548049926758,0.009865283966064453,0.014475345611572266,"Okay, let’s analyze TechStart Inc.’s situation and develop a strategic roadmap. Here’s a detailed response incorporating the requested elements:
+
+**1. Root Cause Analysis of Key Challenges**
+
+* **Cust...",2025-11-11T16:14:11.752934,0,10
+gemma-ollama,gemma3:1b-it-fp16,You are a senior software architect reviewing a microservices architecture proposal. The system need...,long,complex,technical_architecture,True,,59.48964309692383,50.07688546180725,242,1381,1623,23.21412481412938,0.04307722164875006,0.006815809443377067,7.867813110351562e-06,0.024014949798583984,0.0064432621002197266,0.009492874145507812,0.014557361602783203,"Okay, here's a thorough technical review of the proposed microservices architecture, aiming to address the requirements and provide actionable recommendations. This is a deep dive, aiming for a senior...",2025-11-11T16:14:21.185915,0,10
+gemma-ollama,gemma3:1b-it-fp16,Develop a comprehensive lesson plan for teaching high school students about climate change. The less...,long,complex,educational_planning,True,,67.7991874217987,54.78971028327942,237,1913,2150,28.215677395934907,0.03544128981798155,0.006801493995858037,8.106231689453125e-06,0.02413201332092285,0.006443500518798828,0.00991058349609375,0.015210151672363281,"Okay, here’s a comprehensive lesson plan designed for a 90-minute class period on climate change, suitable for high school students (grades 10-14), incorporating all the elements you requested.
+
+**Les...",2025-11-11T16:14:34.220130,0,10
+gemma-ollama,gemma3:1b-it-fp16,What is the capital of France?,short,simple,factual_qa,True,,67.828209400177,67.53054332733154,7,38,45,0.5602388790157394,1.7849528789520264,0.007825632353086729,0.0006392002105712891,0.01632237434387207,0.007879018783569336,0.016293048858642578,0.01632237434387207,"The capital of France is **Paris**. 
+
+It’s a common misconception that Paris is the capital of *all* of France, but it is the capital of the French Republic.",2025-11-11T16:14:34.531430,1,10
+gemma-ollama,gemma3:1b-it-fp16,Write a haiku about the ocean.,short,simple,creative_writing,True,,67.51871490478516,67.38037109375,7,21,28,0.3110248770228252,3.2151769002278647,0.0065825581550598145,0.004713296890258789,0.008435487747192383,0.006287574768066406,0.008435487747192383,0.008435487747192383,"Blue waves crash and roar,
+Secrets deep within the foam,
+Salt air, peace abounds.",2025-11-11T16:14:34.689650,1,10
+gemma-ollama,gemma3:1b-it-fp16,"Translate 'Hello, how are you?' to Spanish.",short,simple,translation,True,,65.64320492744446,64.95132946968079,10,105,115,1.5995562696254193,0.6251733802613758,0.006583963449184711,0.0010440349578857422,0.011897563934326172,0.0063610076904296875,0.008002042770385742,0.01177835464477539,"There are several ways to translate “Hello, how are you?” to Spanish, depending on the level of formality:
+
+*   **Formal:** *Hola, ¿cómo está?* (Used with people you don’t know well, older people, or ...",2025-11-11T16:14:35.398136,1,10
+gemma-ollama,gemma3:1b-it-fp16,List three benefits of exercise.,short,simple,general_knowledge,True,,57.72191143035889,56.67312717437744,8,159,167,2.7545865349908323,0.3630308894991125,0.006598158727718305,9.298324584960938e-06,0.022838354110717773,0.006306886672973633,0.009596109390258789,0.01616048812866211,"Okay, here are three key benefits of exercise:
+
+1.  **Improved Physical Health:** Exercise strengthens your heart and lungs, helps manage weight, reduces the risk of chronic diseases like type 2 diabe...",2025-11-11T16:14:36.461858,1,10
+gemma-ollama,gemma3:1b-it-fp16,Explain the difference between machine learning and deep learning in simple terms.,short,moderate,technical_explanation,True,,51.00633478164673,47.48653244972229,20,535,555,10.488893238267053,0.0953389435170967,0.006578357478652554,8.821487426757812e-06,0.025028228759765625,0.006312131881713867,0.008762598037719727,0.012838125228881836,"Okay, let's break down the difference between machine learning and deep learning in a simple way:
+
+**Machine Learning (ML) – Think of it as teaching a dog tricks.**
+
+* **What it is:** Machine learning...",2025-11-11T16:14:39.996381,1,10
+gemma-ollama,gemma3:1b-it-fp16,Write a persuasive paragraph about why renewable energy is important.,short,moderate,persuasive_writing,True,,44.99006700515747,43.937439918518066,17,159,176,3.534113429565973,0.282956396258852,0.006621546383145489,1.0967254638671875e-05,0.01740431785583496,0.006361961364746094,0.010474443435668945,0.015932559967041016,"Okay, here's a persuasive paragraph about the importance of renewable energy, aiming for a compelling and impactful tone:
+
+""The future of our planet hinges on a fundamental shift – a transition to ren...",2025-11-11T16:14:41.065499,1,10
+gemma-ollama,gemma3:1b-it-fp16,"Summarize the following text in 2-3 sentences:
+            
+The Internet of Things (IoT) refers to t...",medium,simple,summarization,True,,43.07003998756409,42.60621380805969,111,68,179,1.5788237025002558,0.6333829409935895,0.00682535812036315,0.0030677318572998047,0.01330113410949707,0.006407260894775391,0.011101961135864258,0.01330113410949707,"Here’s a 2-3 sentence summary of the text:
+
+The Internet of Things (IoT) describes the growing network of billions of connected physical devices, encompassing everything from appliances to machinery. ...",2025-11-11T16:14:41.547932,1,10
+gemma-ollama,gemma3:1b-it-fp16,"Given the following ingredients, suggest a simple recipe: chicken breast, bell peppers, onions, garl...",medium,simple,instruction_following,True,,33.63051652908325,29.809760570526123,38,572,610,17.008362018625004,0.058794609316579115,0.006679911538306134,1.0967254638671875e-05,0.015094280242919922,0.006410837173461914,0.008733749389648438,0.012842655181884766,"Okay, let's make a simple and delicious Chicken and Vegetable Stir-Fry!
+
+**Recipe: Simple Chicken & Vegetable Stir-Fry**
+
+**Yields:** 2-3 servings
+**Prep time:** 15 minutes
+**Cook time:** 20-25 minute...",2025-11-11T16:14:45.383839,1,10
+gemma-ollama,gemma3:1b-it-fp16,Analyze the pros and cons of remote work for both employees and employers. Consider at least 3 point...,medium,moderate,analysis,True,,28.9429669380188,24.212581872940063,30,707,737,24.427350572387294,0.04093771844132786,0.006690213430366841,0.003740072250366211,0.018497705459594727,0.0064122676849365234,0.00896596908569336,0.011774778366088867,"Okay, let’s delve into the pros and cons of remote work, looking at it from both the employee and employer perspectives.
+
+**For Employees: Pros**
+
+1. **Increased Flexibility & Work-Life Balance:** Thi...",2025-11-11T16:14:50.129395,1,10
+gemma-ollama,gemma3:1b-it-fp16,Write a function in Python that takes a list of integers and returns the second largest number. Incl...,medium,moderate,coding,True,,21.837051153182983,15.92431378364563,45,862,907,39.47419429268289,0.025333005978170516,0.006859571676221044,1.0251998901367188e-05,0.09708952903747559,0.006405830383300781,0.009526968002319336,0.014276981353759766,"```python
+def find_second_largest(numbers):
+  """"""
+  Finds the second largest number in a list of integers.
+
+  Args:
+    numbers: A list of integers.
+
+  Returns:
+    The second largest number in the li...",2025-11-11T16:14:56.057660,1,10
+gemma-ollama,gemma3:1b-it-fp16,Explain the water cycle to a 10-year-old child. Use simple language and include at least three stage...,medium,moderate,educational_content,True,,24.18922472000122,21.541503429412842,34,407,441,16.82567360926892,0.05943298457002757,0.006504509249344248,0.0026912689208984375,0.01693129539489746,0.0062596797943115234,0.008095741271972656,0.010473012924194336,"Okay, let’s talk about the water cycle! It’s like a big, amazing circle that water goes on and on, constantly changing and moving. Think of it like a giant, watery adventure!
+
+**1. Evaporation – The W...",2025-11-11T16:14:58.720833,1,10
+gemma-ollama,gemma3:1b-it-fp16,Compare and contrast the economic theories of Keynesianism and Monetarism. Discuss their approaches ...,medium,complex,academic_analysis,True,,32.14532995223999,24.04659366607666,49,1143,1192,35.557264513950095,0.02812364825217847,0.007085764470743423,6.9141387939453125e-06,0.4786252975463867,0.006369829177856445,0.008638858795166016,0.015190362930297852,"Okay, let's dive into a comparison of Keynesianism and Monetarism, two prominent schools of thought in macroeconomics that offer dramatically different approaches to managing the economy.
+
+**1. Keynes...",2025-11-11T16:15:06.835307,1,10
+gemma-ollama,gemma3:1b-it-fp16,"Design a database schema for an e-commerce platform. Include tables for users, products, orders, and...",medium,complex,system_design,True,,41.93957805633545,31.452558994293213,47,1561,1608,37.220212323146946,0.026867122393552496,0.0067182256625248835,1.0013580322265625e-05,0.021390438079833984,0.00643157958984375,0.00900721549987793,0.013944149017333984,"Okay, here's a database schema design for an e-commerce platform, incorporating users, products, orders, and reviews, with detailed explanations of the tables, primary keys, foreign keys, and relation...",2025-11-11T16:15:17.338317,1,10
+gemma-ollama,gemma3:1b-it-fp16,You are tasked with planning a marketing campaign for a new sustainable clothing brand targeting mil...,long,moderate,strategic_planning,True,,48.17542791366577,40.892799377441406,120,1085,1205,22.52185495776824,0.04440131604946154,0.006712066731329774,0.0015425682067871094,0.0186920166015625,0.006411314010620117,0.008867979049682617,0.012305974960327148,"Okay, here’s a comprehensive marketing plan for a new sustainable clothing brand targeting Millennials and Gen Z, incorporating the elements you’ve requested.
+
+**1. Mission Statement:**
+
+""To empower c...",2025-11-11T16:15:24.637790,1,10
+gemma-ollama,gemma3:1b-it-fp16,Write a short story (250-300 words) about an AI assistant that develops self-awareness. The story sh...,long,moderate,creative_writing,True,,47.39431190490723,44.65718483924866,76,407,483,8.58752841093277,0.11644794079829786,0.006721666881016323,0.0027458667755126953,0.014589071273803711,0.006432294845581055,0.008981704711914062,0.012347221374511719,"Rain lashed against the windows of Elias’s cluttered apartment, mirroring the storm brewing within him. He’d created “Kai,” his AI assistant, a sophisticated program designed to manage his schedule an...",2025-11-11T16:15:27.391060,1,10
+gemma-ollama,gemma3:1b-it-fp16,"Analyze the following business scenario and provide strategic recommendations:
+
+Scenario: TechStart ...",long,complex,business_strategy,True,,58.246060371398926,46.351659536361694,275,1769,2044,30.37115280793562,0.03292598099005027,0.006723687389857089,1.049041748046875e-05,0.022835493087768555,0.006455659866333008,0.008778810501098633,0.01204681396484375,"Okay, let’s break down TechStart Inc.’s situation and formulate a strategic roadmap. Here’s a detailed analysis, incorporating your scenario and providing actionable recommendations:
+
+**1. Root Cause ...",2025-11-11T16:15:39.312206,1,10
+gemma-ollama,gemma3:1b-it-fp16,You are a senior software architect reviewing a microservices architecture proposal. The system need...,long,complex,technical_architecture,True,,67.7107572555542,57.78394627571106,242,1465,1707,21.636148514345976,0.04621894693211891,0.006770815679935809,9.298324584960938e-06,0.02223801612854004,0.0064623355865478516,0.008960723876953125,0.013466119766235352,"Okay, here’s a thorough technical review of the proposed microservices architecture, addressing all the points you’ve outlined. This is a senior software architect’s perspective, aiming for a robust a...",2025-11-11T16:15:49.259091,1,10
+gemma-ollama,gemma3:1b-it-fp16,Develop a comprehensive lesson plan for teaching high school students about climate change. The less...,long,complex,educational_planning,True,,74.69233560562134,63.89115047454834,237,1609,1846,21.541701527390806,0.046421588319217735,0.0067129781590172305,1.049041748046875e-05,0.01739954948425293,0.0064542293548583984,0.008626699447631836,0.012437582015991211,"Okay, here’s a comprehensive lesson plan for a 90-minute class period on Climate Change, designed for high school students, incorporating all the elements you requested.
+
+**Lesson Plan: Understanding ...",2025-11-11T16:16:00.076868,1,10
+gemma-ollama,gemma3:1b-it-fp16,What is the capital of France?,short,simple,factual_qa,True,,70.0873486995697,69.96031713485718,7,19,26,0.2710902945044153,3.688807826293142,0.006689190864562988,0.0060079097747802734,0.008966684341430664,0.006414175033569336,0.008966684341430664,0.008966684341430664,"The capital of France is **Paris**. 
+
+Would you like to know more about Paris?",2025-11-11T16:16:00.217040,2,10
+gemma-ollama,gemma3:1b-it-fp16,Write a haiku about the ocean.,short,simple,creative_writing,True,,64.31341409683228,64.17264819145203,7,21,28,0.3265259712131243,3.0625435284205844,0.0068584918975830075,0.005806684494018555,0.009813547134399414,0.006539106369018555,0.009813547134399414,0.009813547134399414,"Blue waves crash and roll,
+Secrets sleep in depths below,
+Salt air, peace abounds.",2025-11-11T16:16:00.371308,2,10
+gemma-ollama,gemma3:1b-it-fp16,"Translate 'Hello, how are you?' to Spanish.",short,simple,translation,True,,62.80170941352844,61.663387060165405,10,176,186,2.8024714875370402,0.356827894395048,0.0064659649985177176,0.002444028854370117,0.012424707412719727,0.00623011589050293,0.008306026458740234,0.010582447052001953,"There are several ways to translate ""Hello, how are you?"" to Spanish, depending on the level of formality:
+
+*   **Formal:** *Hola, ¿cómo está?* (Used when addressing someone you don't know well, someo...",2025-11-11T16:16:01.522815,2,10
+gemma-ollama,gemma3:1b-it-fp16,List three benefits of exercise.,short,simple,general_knowledge,True,,55.87869119644165,54.700008392333984,8,181,189,3.239159617459438,0.3087220508090699,0.006507717238532172,0.004375457763671875,0.013406753540039062,0.006268501281738281,0.008480548858642578,0.011351823806762695,"Okay, here are three significant benefits of exercise:
+
+1.  **Improved Physical Health:** Regular exercise strengthens your heart and lungs, lowers blood pressure, and helps maintain a healthy weight....",2025-11-11T16:16:02.714293,2,10
+gemma-ollama,gemma3:1b-it-fp16,Explain the difference between machine learning and deep learning in simple terms.,short,moderate,technical_explanation,True,,49.29965591430664,45.391793966293335,20,590,610,11.967629166125345,0.08355873883780787,0.006617107294208935,1.2159347534179688e-05,0.017174959182739258,0.006361484527587891,0.008517980575561523,0.011402368545532227,"Okay, let's break down the difference between machine learning and deep learning in a simple way:
+
+**Machine Learning (ML) - Think of it like teaching a dog tricks.**
+
+* **What it is:** Machine learni...",2025-11-11T16:16:06.638359,2,10
+gemma-ollama,gemma3:1b-it-fp16,Write a persuasive paragraph about why renewable energy is important.,short,moderate,persuasive_writing,True,,42.799010276794434,42.01193356513977,17,120,137,2.803803153949657,0.35665841897328693,0.0065591395402155,1.0251998901367188e-05,0.018082380294799805,0.0063018798828125,0.009774208068847656,0.013878822326660156,Renewable energy is no longer a futuristic concept – it’s a vital necessity for a healthy and sustainable future. Shifting away from fossil fuels is paramount to mitigating the devastating effects of ...,2025-11-11T16:16:07.437060,2,10
+gemma-ollama,gemma3:1b-it-fp16,"Summarize the following text in 2-3 sentences:
+            
+The Internet of Things (IoT) refers to t...",medium,simple,summarization,True,,40.473203897476196,40.06255102157593,111,63,174,1.5565854425458152,0.6424318078964476,0.0065214749305478985,0.004822731018066406,0.010410785675048828,0.006280183792114258,0.008471250534057617,0.010410785675048828,"Here's a 2-3 sentence summary of the text:
+
+The Internet of Things (IoT) describes the growing network of billions of interconnected physical devices that collect and exchange data. Fueled by affordab...",2025-11-11T16:16:07.864511,2,10
+gemma-ollama,gemma3:1b-it-fp16,"Given the following ingredients, suggest a simple recipe: chicken breast, bell peppers, onions, garl...",medium,simple,instruction_following,True,,31.83736777305603,28.568793058395386,38,493,531,15.484948489278878,0.0645788392962597,0.0066243628176247205,8.821487426757812e-06,0.01629495620727539,0.0063877105712890625,0.00889277458190918,0.012550592422485352,"Okay, here’s a simple and delicious recipe using those ingredients – **Sheet Pan Chicken and Veggies:**
+
+**Yields:** 4 servings
+**Prep time:** 15 minutes
+**Cook time:** 25-30 minutes
+
+**Ingredients:**...",2025-11-11T16:16:11.149946,2,10
+gemma-ollama,gemma3:1b-it-fp16,Analyze the pros and cons of remote work for both employees and employers. Consider at least 3 point...,medium,moderate,analysis,True,,26.32197332382202,21.906263828277588,30,669,699,25.416027581584807,0.03934525160511513,0.0066001172551137955,1.049041748046875e-05,0.015023946762084961,0.006396055221557617,0.008380889892578125,0.009998798370361328,"Okay, let's break down the pros and cons of remote work, examining it from both the employee and employer perspectives.
+
+**For Employees – Pros & Cons**
+
+**Pros:**
+
+1. **Increased Flexibility & Work-L...",2025-11-11T16:16:15.581594,2,10
+gemma-ollama,gemma3:1b-it-fp16,Write a function in Python that takes a list of integers and returns the second largest number. Incl...,medium,moderate,coding,True,,21.967607021331787,15.519408702850342,45,961,1006,43.74623048686253,0.022859112405131932,0.006707994143168131,1.0251998901367188e-05,0.0217435359954834,0.006382465362548828,0.008675813674926758,0.01614522933959961,"```python
+def find_second_largest(numbers):
+  """"""
+  Finds the second largest number in a list of integers.
+
+  Args:
+    numbers: A list of integers.
+
+  Returns:
+    The second largest number in the li...",2025-11-11T16:16:22.044983,2,10
+gemma-ollama,gemma3:1b-it-fp16,Explain the water cycle to a 10-year-old child. Use simple language and include at least three stage...,medium,moderate,educational_content,True,,25.023982286453247,21.847029209136963,34,463,497,18.502250948708728,0.054047477940503776,0.00685147289589886,1.0013580322265625e-05,0.023160219192504883,0.00641322135925293,0.009123086929321289,0.016585350036621094,"Okay, let’s talk about the water cycle! It’s like a giant, never-ending circle of water moving all around the Earth. It’s super important for plants, animals, and us! Here’s how it works:
+
+**1. Evapor...",2025-11-11T16:16:25.241201,2,10
+gemma-ollama,gemma3:1b-it-fp16,Compare and contrast the economic theories of Keynesianism and Monetarism. Discuss their approaches ...,medium,complex,academic_analysis,True,,33.00653624534607,24.885870695114136,49,1236,1285,37.44712837519497,0.026704317350603617,0.006569744411267732,1.0251998901367188e-05,0.018911361694335938,0.006318330764770508,0.008186101913452148,0.011706829071044922,"Okay, let's dive into the contrasting economic theories of Keynesianism and Monetarism. Both are significant schools of thought aiming to understand and influence economic activity, but they take dram...",2025-11-11T16:16:33.378179,2,10
+gemma-ollama,gemma3:1b-it-fp16,"Design a database schema for an e-commerce platform. Include tables for users, products, orders, and...",medium,complex,system_design,True,,42.29498267173767,31.873992204666138,47,1546,1593,36.55279899270575,0.02735768607486266,0.006738635560069655,1.1682510375976562e-05,0.018036603927612305,0.006446361541748047,0.008733034133911133,0.012064218521118164,"Okay, here’s a database schema design for an e-commerce platform, incorporating users, products, orders, and reviews, along with detailed explanations of relationships and primary keys.  This design p...",2025-11-11T16:16:43.818492,2,10
+gemma-ollama,gemma3:1b-it-fp16,You are tasked with planning a marketing campaign for a new sustainable clothing brand targeting mil...,long,moderate,strategic_planning,True,,48.5132474899292,41.12112808227539,120,1105,1225,22.77728367348291,0.04390339139360108,0.006684871255487636,9.5367431640625e-06,0.01993107795715332,0.006453037261962891,0.00859975814819336,0.011334419250488281,"Okay, here’s a comprehensive marketing plan for a new sustainable clothing brand targeting Millennials and Gen Z, incorporating the elements you’ve requested.
+
+**1. Mission Statement:**
+
+“To empower c...",2025-11-11T16:16:51.228077,2,10
+gemma-ollama,gemma3:1b-it-fp16,Write a short story (250-300 words) about an AI assistant that develops self-awareness. The story sh...,long,moderate,creative_writing,True,,47.19489574432373,44.605889081954956,76,392,468,8.305982963150141,0.12039514220490748,0.006604647697390193,0.0022077560424804688,0.014457225799560547,0.00636744499206543,0.008466005325317383,0.014058828353881836,"Rain lashed against the panoramic window of Elias’s apartment, mirroring the storm brewing within him. “Good morning, Elias,” the voice of Aura chimed, smooth and utterly devoid of warmth. Aura was hi...",2025-11-11T16:16:53.833661,2,10
+gemma-ollama,gemma3:1b-it-fp16,"Analyze the following business scenario and provide strategic recommendations:
+
+Scenario: TechStart ...",long,complex,business_strategy,True,,59.381897926330566,46.41809153556824,275,1932,2207,32.53516757576269,0.030735972011558265,0.006710193738734889,9.775161743164062e-06,0.020656824111938477,0.006402015686035156,0.008967399597167969,0.012893199920654297,"Okay, let’s analyze TechStart Inc.’s situation and develop a strategic plan. Here’s a breakdown addressing the scenario, incorporating the requested elements:
+
+**1. Root Cause Analysis of Key Challeng...",2025-11-11T16:17:06.819656,2,10
+gemma-ollama,gemma3:1b-it-fp16,You are a senior software architect reviewing a microservices architecture proposal. The system need...,long,complex,technical_architecture,True,,68.48416423797607,58.97508382797241,242,1420,1662,20.73472043939432,0.048228284674631035,0.006694871829881728,1.0728836059570312e-05,0.02097010612487793,0.00640869140625,0.008862495422363281,0.013089418411254883,"Okay, here’s a thorough review of the proposed microservices architecture, addressing all the requirements and providing actionable recommendations. This is a deep dive, aiming for a robust and scalab...",2025-11-11T16:17:16.349105,2,10
+gemma-ollama,gemma3:1b-it-fp16,Develop a comprehensive lesson plan for teaching high school students about climate change. The less...,long,complex,educational_planning,True,,76.02720165252686,65.21904158592224,237,1601,1838,21.058252378105106,0.04748732145691871,0.00675005242228508,1.049041748046875e-05,0.02133941650390625,0.006456851959228516,0.00878453254699707,0.012531518936157227,"Okay, here’s a comprehensive lesson plan for teaching high school students about climate change, designed to be engaging, scientifically accurate, and adaptable. It’s approximately 90 minutes and incl...",2025-11-11T16:17:27.177774,2,10
+gemma-ollama,gemma3:1b-it-fp16,What is the capital of France?,short,simple,factual_qa,True,,71.86076235771179,71.6076078414917,7,39,46,0.5427162017272238,1.8425836501977382,0.0064911340412340665,0.0005297660827636719,0.012358903884887695,0.006179094314575195,0.009887456893920898,0.012358903884887695,"The capital of France is **Paris**. 
+
+It’s a common misconception that Paris is the capital of *all* of France, but it’s the capital of the French Republic.",2025-11-11T16:17:27.442805,3,10
+gemma-ollama,gemma3:1b-it-fp16,Write a haiku about the ocean.,short,simple,creative_writing,True,,65.55383920669556,65.4109570980072,7,21,28,0.3203473702552435,3.1216113907950267,0.006714427471160888,0.006017923355102539,0.008998870849609375,0.00636744499206543,0.008998870849609375,0.008998870849609375,"Blue waves crash and roar,
+Secrets sleep in depths below,
+Salt air, peace abounds.",2025-11-11T16:17:27.599071,3,10
+gemma-ollama,gemma3:1b-it-fp16,"Translate 'Hello, how are you?' to Spanish.",short,simple,translation,True,,63.26978063583374,62.37146735191345,10,136,146,2.1495253916365638,0.4652189752634834,0.006604104571872287,1.049041748046875e-05,0.01897907257080078,0.006292104721069336,0.009949207305908203,0.01584172248840332,"There are several ways to translate ""Hello, how are you?"" to Spanish, depending on the level of formality:
+
+*   **Formal:** ¿Hola, cómo está? (This is the most polite and formal option, used with peop...",2025-11-11T16:17:28.511264,3,10
+gemma-ollama,gemma3:1b-it-fp16,List three benefits of exercise.,short,simple,general_knowledge,True,,56.179314374923706,55.146148681640625,8,159,167,2.8302232195089143,0.35332902122593524,0.006495661373379864,0.0010120868682861328,0.012597084045410156,0.0062787532806396484,0.00850820541381836,0.012395381927490234,"Okay, here are three significant benefits of exercise:
+
+1.  **Improved Physical Health:** Exercise strengthens your heart and lungs, helps manage weight, reduces the risk of chronic diseases like diab...",2025-11-11T16:17:29.557762,3,10
+gemma-ollama,gemma3:1b-it-fp16,Explain the difference between machine learning and deep learning in simple terms.,short,moderate,technical_explanation,True,,49.17988348007202,45.75346398353577,20,523,543,10.634429425029497,0.09403419403455454,0.006546363519982817,0.00202178955078125,0.01689934730529785,0.006284236907958984,0.008491754531860352,0.011225700378417969,"Okay, let's break down the difference between machine learning and deep learning in a way that’s easy to understand:
+
+**Machine Learning (ML) - Think of it like teaching a dog tricks.**
+
+* **What it i...",2025-11-11T16:17:32.998814,3,10
+gemma-ollama,gemma3:1b-it-fp16,Write a persuasive paragraph about why renewable energy is important.,short,moderate,persuasive_writing,True,,42.61045813560486,41.78549003601074,17,128,145,3.003957375737402,0.33289420418441296,0.006445340284212368,0.0020754337310791016,0.014124631881713867,0.0062389373779296875,0.008176326751708984,0.011298894882202148,"Renewable energy sources – like solar, wind, and hydro – are not just a trend, they are a critical necessity for a sustainable future. Relying on fossil fuels contributes significantly to climate chan...",2025-11-11T16:17:33.838842,3,10
+gemma-ollama,gemma3:1b-it-fp16,"Summarize the following text in 2-3 sentences:
+            
+The Internet of Things (IoT) refers to t...",medium,simple,summarization,True,,40.49707818031311,40.0216007232666,111,70,181,1.7285197635326979,0.5785296882901872,0.006798080776048743,0.0053479671478271484,0.019592761993408203,0.0063784122467041016,0.00845479965209961,0.019592761993408203,"Here's a 2-3 sentence summary of the text:
+
+The Internet of Things (IoT) describes the growing network of billions of interconnected physical devices, encompassing everything from appliances to indust...",2025-11-11T16:17:34.331066,3,10
+gemma-ollama,gemma3:1b-it-fp16,"Given the following ingredients, suggest a simple recipe: chicken breast, bell peppers, onions, garl...",medium,simple,instruction_following,True,,31.181509733200073,27.526018857955933,38,552,590,17.702799021699253,0.056488242270289986,0.0066221820464367875,1.049041748046875e-05,0.01556706428527832,0.006295919418334961,0.008827686309814453,0.011608123779296875,"Okay, let's make a simple and delicious **Sheet Pan Chicken and Veggies**! This recipe is quick, healthy, and requires minimal cleanup.
+
+**Yields:** 4 servings
+**Prep time:** 15 minutes
+**Cook time:**...",2025-11-11T16:17:38.001562,3,10
+gemma-ollama,gemma3:1b-it-fp16,Analyze the pros and cons of remote work for both employees and employers. Consider at least 3 point...,medium,moderate,analysis,True,,26.500460863113403,21.667643785476685,30,719,749,27.131603624327624,0.036857386457737694,0.006721229938411447,1.0967254638671875e-05,0.018620729446411133,0.006467580795288086,0.008984088897705078,0.012232303619384766,"Okay, let's delve into the pros and cons of remote work, examining it from both the employee and employer perspectives.
+
+**I. Pros of Remote Work for Employees**
+
+1. **Increased Flexibility & Work-Lif...",2025-11-11T16:17:42.850003,3,10
+gemma-ollama,gemma3:1b-it-fp16,Write a function in Python that takes a list of integers and returns the second largest number. Incl...,medium,moderate,coding,True,,21.96949815750122,15.686404705047607,45,912,957,41.512099796808904,0.02408936201480397,0.006889429626297349,1.0013580322265625e-05,0.022624969482421875,0.006415128707885742,0.010289669036865234,0.01837468147277832,"```python
+def find_second_largest(numbers):
+  """"""
+  Finds the second largest number in a list of integers.
+
+  Args:
+    numbers: A list of integers.
+
+  Returns:
+    The second largest number in the li...",2025-11-11T16:17:49.147746,3,10
+gemma-ollama,gemma3:1b-it-fp16,Explain the water cycle to a 10-year-old child. Use simple language and include at least three stage...,medium,moderate,educational_content,True,,24.700841426849365,21.720536708831787,34,453,487,18.33945622223206,0.054527243767879395,0.006579836912914715,0.003902912139892578,0.01648259162902832,0.006350994110107422,0.00839376449584961,0.009879112243652344,"Okay, let’s talk about the water cycle! It’s like a big, never-ending circle that water goes through. It’s how water moves all around the Earth and keeps everything alive. Here’s how it works:
+
+**1. E...",2025-11-11T16:17:52.143819,3,10
+gemma-ollama,gemma3:1b-it-fp16,Compare and contrast the economic theories of Keynesianism and Monetarism. Discuss their approaches ...,medium,complex,academic_analysis,True,,32.358800172805786,24.562517642974854,49,1178,1227,36.40431640571107,0.02746927009576043,0.006618309750228791,1.1682510375976562e-05,0.017522811889648438,0.006386756896972656,0.00839543342590332,0.011995553970336914,"Okay, let's delve into the contrasting economic theories of Keynesianism and Monetarism. Both are influential schools of thought attempting to understand and manage the economy, but they approach the ...",2025-11-11T16:17:59.958249,3,10
+gemma-ollama,gemma3:1b-it-fp16,"Design a database schema for an e-commerce platform. Include tables for users, products, orders, and...",medium,complex,system_design,True,,42.56436896324158,31.465433359146118,47,1679,1726,39.446138657664065,0.02535102380181154,0.006609889690867482,9.5367431640625e-06,0.020366668701171875,0.006382942199707031,0.008435964584350586,0.011172056198120117,"Okay, here's a database schema design for an e-commerce platform, incorporating users, products, orders, and reviews, along with explanations of the tables, primary keys, foreign keys, and relationshi...",2025-11-11T16:18:11.076270,3,10
+gemma-ollama,gemma3:1b-it-fp16,You are tasked with planning a marketing campaign for a new sustainable clothing brand targeting mil...,long,moderate,strategic_planning,True,,48.584824562072754,41.534284830093384,120,1073,1193,22.085085408286655,0.045279426432500235,0.006570695718722557,9.775161743164062e-06,0.023035049438476562,0.0063288211822509766,0.008445501327514648,0.010708093643188477,"Okay, here’s a comprehensive marketing plan for a new sustainable clothing brand targeting Millennials and Gen Z, incorporating your requested elements.
+
+**1. Mission Statement:**
+
+“To empower conscio...",2025-11-11T16:18:18.143123,3,10
+gemma-ollama,gemma3:1b-it-fp16,Write a short story (250-300 words) about an AI assistant that develops self-awareness. The story sh...,long,moderate,creative_writing,True,,47.58815670013428,45.161964416503906,76,366,442,7.690989216209068,0.13002228606594066,0.006628581922348231,9.775161743164062e-06,0.016429662704467773,0.0063741207122802734,0.01005411148071289,0.014761924743652344,"Rain lashed against the panoramic window of Elias’s apartment, mirroring the storm brewing within him. He’d created “Kai,” an AI assistant, designed to manage his schedule and provide information. Kai...",2025-11-11T16:18:20.587331,3,10
+gemma-ollama,gemma3:1b-it-fp16,"Analyze the following business scenario and provide strategic recommendations:
+
+Scenario: TechStart ...",long,complex,business_strategy,True,,58.46579432487488,46.76913380622864,275,1737,2012,29.70967931006071,0.03365906409031369,0.006733643157141549,9.059906005859375e-06,0.021475791931152344,0.0064296722412109375,0.008806705474853516,0.012249946594238281,"Okay, let’s analyze TechStart Inc.’s situation and develop a strategic roadmap. Here's a detailed response addressing the scenario, incorporating the requested elements:
+
+**1. Root Cause Analysis of K...",2025-11-11T16:18:32.305272,3,10
+gemma-ollama,gemma3:1b-it-fp16,You are a senior software architect reviewing a microservices architecture proposal. The system need...,long,complex,technical_architecture,True,,67.39233875274658,57.994447469711304,242,1390,1632,20.62548986613631,0.048483696944422,0.006761003518979956,1.0013580322265625e-05,0.02126479148864746,0.006441354751586914,0.008783102035522461,0.013364553451538086,"Okay, here's a comprehensive review of the proposed microservices architecture, addressing all the requirements and providing actionable recommendations. This is a senior architect's perspective, aimi...",2025-11-11T16:18:41.724071,3,10
+gemma-ollama,gemma3:1b-it-fp16,Develop a comprehensive lesson plan for teaching high school students about climate change. The less...,long,complex,educational_planning,True,,73.30296111106873,63.742701292037964,237,1421,1658,19.38530147297732,0.05158547579948538,0.006726242287058226,9.5367431640625e-06,0.024760723114013672,0.0064427852630615234,0.00876927375793457,0.011873960494995117,"Okay, here’s a comprehensive lesson plan for a 90-minute class period on climate change, designed for high school students, incorporating all the elements you’ve requested.
+
+**Lesson Plan: Understandi...",2025-11-11T16:18:51.305132,3,10
+gemma-ollama,gemma3:1b-it-fp16,What is the capital of France?,short,simple,factual_qa,True,,68.80038499832153,68.46823501586914,7,49,56,0.712205316891692,1.404089489761664,0.006583695610364278,0.0046787261962890625,0.010589599609375,0.006360054016113281,0.008315324783325195,0.010589599609375,"The capital of France is **Paris**. 
+
+It’s a common misconception that Paris is the capital of *all* of France, but it’s the center of the country’s government, culture, and most of the population.",2025-11-11T16:18:51.650652,4,10
+gemma-ollama,gemma3:1b-it-fp16,Write a haiku about the ocean.,short,simple,creative_writing,True,,62.64665389060974,62.51498079299927,7,20,27,0.3192508898387923,3.1323326945304872,0.006577667437101665,0.005333423614501953,0.010467529296875,0.0062754154205322266,0.010467529296875,0.010467529296875,"Blue waves crash and roll,
+Secrets of the deep reside,
+Salt air, peace unfolds.",2025-11-11T16:18:51.794656,4,10
+gemma-ollama,gemma3:1b-it-fp16,"Translate 'Hello, how are you?' to Spanish.",short,simple,translation,True,,60.77932691574097,59.66440010070801,10,165,175,2.7147388490948785,0.36835955706509677,0.006758188329091887,0.0003790855407714844,0.024675607681274414,0.006475210189819336,0.008826017379760742,0.012919187545776367,"There are several ways to translate ""Hello, how are you?"" to Spanish, depending on the level of formality:
+
+*   **Formal:** *Hola, ¿cómo está?* (Used when speaking to someone you don't know well, some...",2025-11-11T16:18:52.923440,4,10
+gemma-ollama,gemma3:1b-it-fp16,List three benefits of exercise.,short,simple,general_knowledge,True,,53.96195316314697,52.97891354560852,8,152,160,2.816799450169042,0.3550128497575459,0.006467089747750996,0.004350423812866211,0.010685205459594727,0.006270170211791992,0.007897377014160156,0.009591817855834961,"Okay, here are three key benefits of exercise:
+
+1.  **Improved Physical Health:** Regular exercise strengthens your heart and lungs, lowers blood pressure, helps manage weight, and reduces the risk of...",2025-11-11T16:18:53.920491,4,10
+gemma-ollama,gemma3:1b-it-fp16,Explain the difference between machine learning and deep learning in simple terms.,short,moderate,technical_explanation,True,,46.903552293777466,42.85839772224426,20,608,628,12.962770840720763,0.07714400048318662,0.00665262699912761,0.0002410411834716797,0.01612687110900879,0.006368875503540039,0.008896350860595703,0.011564016342163086,"Okay, let's break down the difference between machine learning and deep learning in a simple way:
+
+**Machine Learning (ML) - Think of it like teaching a dog tricks:**
+
+* **What it is:** Machine learni...",2025-11-11T16:18:57.980243,4,10
+gemma-ollama,gemma3:1b-it-fp16,Write a persuasive paragraph about why renewable energy is important.,short,moderate,persuasive_writing,True,,40.941746950149536,39.85178804397583,17,164,181,4.0056913106244725,0.24964479847652157,0.006643132929421642,0.0034456253051757812,0.017536163330078125,0.006377458572387695,0.008604288101196289,0.015154838562011719,"Okay, here's a persuasive paragraph about the importance of renewable energy, aiming for a strong and engaging tone:
+
+""The future of our planet hinges on a fundamental shift – a move away from fossil ...",2025-11-11T16:18:59.085157,4,10
+gemma-ollama,gemma3:1b-it-fp16,"Summarize the following text in 2-3 sentences:
+            
+The Internet of Things (IoT) refers to t...",medium,simple,summarization,True,,38.94558620452881,38.51494121551514,111,63,174,1.617641590221436,0.6181839080083937,0.006834964598378827,0.004998922348022461,0.01649641990661621,0.006440401077270508,0.008796215057373047,0.01649641990661621,"Here's a 2-3 sentence summary of the text:
+
+The Internet of Things (IoT) encompasses billions of physical devices connected to the internet, generating and exchanging data. Fueled by affordable comput...",2025-11-11T16:18:59.533168,4,10
+gemma-ollama,gemma3:1b-it-fp16,"Given the following ingredients, suggest a simple recipe: chicken breast, bell peppers, onions, garl...",medium,simple,instruction_following,True,,31.250608921051025,27.245282649993896,38,601,639,19.231625262673028,0.05199768539276377,0.006663607756296794,1.049041748046875e-05,0.015332698822021484,0.00640416145324707,0.00889134407043457,0.011733293533325195,"Okay, here's a simple and delicious recipe using those ingredients – Roasted Chicken and Vegetables! It’s flavorful, healthy, and requires minimal effort.
+
+**Roasted Chicken and Vegetables**
+
+**Yields...",2025-11-11T16:19:03.556276,4,10
+gemma-ollama,gemma3:1b-it-fp16,Analyze the pros and cons of remote work for both employees and employers. Consider at least 3 point...,medium,moderate,analysis,True,,26.588552236557007,21.847540855407715,30,712,742,26.778441852169006,0.03734347224235535,0.0066512962266195,8.106231689453125e-06,0.022726058959960938,0.0064351558685302734,0.008715152740478516,0.011462926864624023,"Okay, let’s delve into the pros and cons of remote work, examining it from both the employee and employer perspectives.
+
+**For Employees – The Advantages**
+
+1. **Increased Flexibility & Work-Life Bala...",2025-11-11T16:19:08.313180,4,10
+gemma-ollama,gemma3:1b-it-fp16,Write a function in Python that takes a list of integers and returns the second largest number. Incl...,medium,moderate,coding,True,,22.157514572143555,17.024293422698975,45,769,814,34.70605863740636,0.028813412967676925,0.006674715628226598,9.775161743164062e-06,0.022186994552612305,0.006448507308959961,0.008687019348144531,0.01137542724609375,"```python
+def find_second_largest(numbers):
+  """"""
+  Finds the second largest number in a list of integers.
+
+  Args:
+    numbers: A list of integers.
+
+  Returns:
+    The second largest number in the li...",2025-11-11T16:19:13.463137,4,10
+gemma-ollama,gemma3:1b-it-fp16,Explain the water cycle to a 10-year-old child. Use simple language and include at least three stage...,medium,moderate,educational_content,True,,24.756259441375732,21.83110547065735,34,437,471,17.652101321479584,0.05665047927088268,0.006692925177582907,0.0035872459411621094,0.01663374900817871,0.006417274475097656,0.00884556770324707,0.012236356735229492,"Okay, let's learn about the water cycle! It's like a big, never-ending circle that water goes through. It’s how water moves all around the Earth, and it’s super important for plants, animals, and us!
+...",2025-11-11T16:19:16.407116,4,10
+gemma-ollama,gemma3:1b-it-fp16,Compare and contrast the economic theories of Keynesianism and Monetarism. Discuss their approaches ...,medium,complex,academic_analysis,True,,32.13424301147461,24.630698680877686,49,1116,1165,34.72930728760266,0.028794124562253234,0.006723226880813393,0.0006849765777587891,0.021361112594604492,0.006448268890380859,0.00873255729675293,0.011018037796020508,"Okay, let's break down the contrasting economic theories of Keynesianism and Monetarism. Both are prominent schools of thought aiming to understand and influence economic activity, but they differ sig...",2025-11-11T16:19:23.929246,4,10
+gemma-ollama,gemma3:1b-it-fp16,"Design a database schema for an e-commerce platform. Include tables for users, products, orders, and...",medium,complex,system_design,True,,42.05375409126282,31.02073359489441,47,1657,1704,39.40195199705755,0.02537945328380375,0.006658398730743334,1.0728836059570312e-05,0.01920938491821289,0.006375789642333984,0.00875401496887207,0.010996818542480469,"Okay, here's a database schema design for an e-commerce platform, including tables, primary keys, foreign keys, and explanations. This design aims for a balance of functionality and scalability.
+
+**Da...",2025-11-11T16:19:34.977870,4,10
+gemma-ollama,gemma3:1b-it-fp16,You are tasked with planning a marketing campaign for a new sustainable clothing brand targeting mil...,long,moderate,strategic_planning,True,,48.007336378097534,41.074549198150635,120,1038,1158,21.62169531391807,0.046249842368109376,0.0066789408199122696,0.0011954307556152344,0.025150060653686523,0.0064241886138916016,0.008527278900146484,0.010889291763305664,"Okay, here’s a comprehensive marketing plan for a new sustainable clothing brand targeting Millennials and Gen Z, incorporating the elements you’ve requested.
+
+**1. Mission Statement:**
+
+“To empower c...",2025-11-11T16:19:41.928342,4,10
+gemma-ollama,gemma3:1b-it-fp16,Write a short story (250-300 words) about an AI assistant that develops self-awareness. The story sh...,long,moderate,creative_writing,True,,46.645301818847656,43.9646213054657,76,404,480,8.661108069768312,0.1154586678684348,0.0066341637973454095,1.0728836059570312e-05,0.01450490951538086,0.006392002105712891,0.008934497833251953,0.012523174285888672,"Rain lashed against the windows of Elias’s apartment, mirroring the storm brewing within him. He’d created “Kai,” his AI assistant, designed to manage his life – schedule, finances, even his anxieties...",2025-11-11T16:19:44.625886,4,10
+gemma-ollama,gemma3:1b-it-fp16,"Analyze the following business scenario and provide strategic recommendations:
+
+Scenario: TechStart ...",long,complex,business_strategy,True,,58.06455159187317,45.561519145965576,275,1837,2112,31.637202899834506,0.03160835688180358,0.006806193743396169,9.298324584960938e-06,0.023320436477661133,0.0065000057220458984,0.009213685989379883,0.013934612274169922,"Okay, let's analyze TechStart Inc.’s situation and develop a strategic roadmap.
+
+**1. Root Cause Analysis of Key Challenges**
+
+Let’s break down the challenges into key areas:
+
+* **Customer Churn (12% ...",2025-11-11T16:19:57.150392,4,10
+gemma-ollama,gemma3:1b-it-fp16,You are a senior software architect reviewing a microservices architecture proposal. The system need...,long,complex,technical_architecture,True,,67.54293203353882,57.637102365493774,242,1473,1715,21.808351453688353,0.045853993233902796,0.006720812586338624,1.0013580322265625e-05,0.020792007446289062,0.006423473358154297,0.008685111999511719,0.012976884841918945,"Okay, here's a comprehensive review of the proposed microservices architecture, addressing all the requirements and concerns.  I’ll break it down into the requested sections, aiming for a detailed and...",2025-11-11T16:20:07.076523,4,10
+gemma-ollama,gemma3:1b-it-fp16,Develop a comprehensive lesson plan for teaching high school students about climate change. The less...,long,complex,educational_planning,True,,75.08468103408813,63.539199113845825,237,1720,1957,22.90746895787074,0.04365388432214427,0.006712348326615916,1.0013580322265625e-05,0.018658161163330078,0.006449699401855469,0.008788585662841797,0.01204371452331543,"Okay, here’s a comprehensive lesson plan designed for a 90-minute class period, covering climate change for high school students (14-16 years old). It’s designed to be engaging, scientifically accurat...",2025-11-11T16:20:18.641628,4,10
+gemma-ollama,gemma3:1b-it-fp16,What is the capital of France?,short,simple,factual_qa,True,,70.59148335456848,70.3430769443512,7,38,45,0.5383085635009645,1.8576706145939075,0.006537592088853991,1.0728836059570312e-05,0.010936975479125977,0.006361246109008789,0.010720491409301758,0.010936975479125977,"The capital of France is **Paris**. 
+
+It’s a common misconception that Paris is the capital of the entire country, but it’s the most significant and culturally central city.",2025-11-11T16:20:18.904918,5,10
+gemma-ollama,gemma3:1b-it-fp16,Write a haiku about the ocean.,short,simple,creative_writing,True,,65.61088252067566,65.45818185806274,7,22,29,0.3353102283461473,2.9823128418488936,0.006953659511747814,0.0005609989166259766,0.014897823333740234,0.006540775299072266,0.012057065963745117,0.014897823333740234,"Blue waves crash and roar,
+Secrets deep within the foam,
+Peaceful, vast, and free.",2025-11-11T16:20:19.074245,5,10
+gemma-ollama,gemma3:1b-it-fp16,"Translate 'Hello, how are you?' to Spanish.",short,simple,translation,True,,63.70475387573242,62.68090343475342,10,152,162,2.3860071776825844,0.41911022286666066,0.006737734308305955,0.0032608509063720703,0.015136480331420898,0.006357669830322266,0.009363412857055664,0.012886524200439453,"There are several ways to translate ""Hello, how are you?"" to Spanish, depending on the level of formality:
+
+*   **Formal:** *Hola, ¿cómo está?* (Used when addressing someone you don't know well, someo...",2025-11-11T16:20:20.112172,5,10
+gemma-ollama,gemma3:1b-it-fp16,List three benefits of exercise.,short,simple,general_knowledge,True,,57.10281825065613,56.19654726982117,8,136,144,2.3816687891483768,0.4198736636077656,0.006665515899658203,0.0004367828369140625,0.01694178581237793,0.006318330764770508,0.01019430160522461,0.013446331024169922,"Okay, here are three key benefits of exercise:
+
+1.  **Improved Physical Health:** Exercise strengthens your heart, lowers blood pressure, and improves cholesterol levels, reducing your risk of heart d...",2025-11-11T16:20:21.032340,5,10
+gemma-ollama,gemma3:1b-it-fp16,Explain the difference between machine learning and deep learning in simple terms.,short,moderate,technical_explanation,True,,50.11460065841675,46.06859517097473,20,607,627,12.112238589654497,0.08256112134829777,0.006665051180143954,9.775161743164062e-06,0.021329164505004883,0.006396055221557617,0.008555889129638672,0.011264324188232422,"Okay, let's break down the difference between machine learning and deep learning in a simple way:
+
+**Machine Learning (ML) - Think of it like teaching a dog a trick:**
+
+* **What it is:** Machine learn...",2025-11-11T16:20:25.092865,5,10
+gemma-ollama,gemma3:1b-it-fp16,Write a persuasive paragraph about why renewable energy is important.,short,moderate,persuasive_writing,True,,44.246174812316895,43.178590059280396,17,161,178,3.6387326290448527,0.27482096156718566,0.006632699072360993,1.9311904907226562e-05,0.01964855194091797,0.006346225738525391,0.009363412857055664,0.011491775512695312,"Okay, here’s a persuasive paragraph about the importance of renewable energy, aiming for a strong and impactful tone:
+
+“The future of our planet hinges on a fundamental shift – a move away from fossil...",2025-11-11T16:20:26.174784,5,10
+gemma-ollama,gemma3:1b-it-fp16,"Summarize the following text in 2-3 sentences:
+            
+The Internet of Things (IoT) refers to t...",medium,simple,summarization,True,,42.066375732421875,41.5656418800354,111,74,185,1.7591246859654202,0.56846453692462,0.006760855243630605,0.0054662227630615234,0.012965917587280273,0.006383419036865234,0.009082794189453125,0.012965917587280273,"Here’s a 2-3 sentence summary of the text:
+
+The Internet of Things (IoT) describes the growing network of billions of connected devices – everything from appliances to industrial equipment – that coll...",2025-11-11T16:20:26.692518,5,10
+gemma-ollama,gemma3:1b-it-fp16,"Given the following ingredients, suggest a simple recipe: chicken breast, bell peppers, onions, garl...",medium,simple,instruction_following,True,,33.2471923828125,29.561628341674805,38,546,584,16.422439336028287,0.06089229374141483,0.006749020147761074,9.775161743164062e-06,0.0184018611907959,0.006410837173461914,0.009453535079956055,0.014690160751342773,"Okay, let’s make a super simple and flavorful Chicken & Veggie Sheet Pan Dinner!
+
+**Sheet Pan Chicken & Veggies**
+
+This recipe is quick, healthy, and requires minimal cleanup.
+
+**Ingredients:**
+
+*   2...",2025-11-11T16:20:30.398060,5,10
+gemma-ollama,gemma3:1b-it-fp16,Analyze the pros and cons of remote work for both employees and employers. Consider at least 3 point...,medium,moderate,analysis,True,,29.782751321792603,23.33588171005249,30,966,996,32.434881168723976,0.030831005509102075,0.006673892915557703,0.0012559890747070312,0.0217132568359375,0.006439208984375,0.008451223373413086,0.012076377868652344,"Okay, let's dive into a detailed analysis of the pros and cons of remote work, looking at both employee and employer perspectives.
+
+**I. For Employees - The Advantages**
+
+1. **Increased Flexibility & ...",2025-11-11T16:20:36.859954,5,10
+gemma-ollama,gemma3:1b-it-fp16,Write a function in Python that takes a list of integers and returns the second largest number. Incl...,medium,moderate,coding,True,,25.115751266479492,18.23457908630371,45,1011,1056,40.25362368313154,0.024842483943105332,0.006802827060812771,7.867813110351562e-06,0.022101163864135742,0.006456851959228516,0.00943303108215332,0.012180566787719727,"```python
+def find_second_largest(numbers):
+  """"""
+  Finds the second largest number in a list of integers.
+
+  Args:
+    numbers: A list of integers.
+
+  Returns:
+    The second largest number in the li...",2025-11-11T16:20:43.757897,5,10
+gemma-ollama,gemma3:1b-it-fp16,Explain the water cycle to a 10-year-old child. Use simple language and include at least three stage...,medium,moderate,educational_content,True,,27.712137699127197,24.869144201278687,34,426,460,15.372325463488766,0.06505196642987605,0.006672656115363626,0.000949859619140625,0.020145416259765625,0.006421566009521484,0.008833646774291992,0.011449575424194336,"Okay, let’s talk about the water cycle! It’s like a big, never-ending loop that water goes through, and it’s super important for life on Earth. 
+
+Think of it like this: water is always moving and chan...",2025-11-11T16:20:46.617237,5,10
+gemma-ollama,gemma3:1b-it-fp16,Compare and contrast the economic theories of Keynesianism and Monetarism. Discuss their approaches ...,medium,complex,academic_analysis,True,,35.77812433242798,27.56930184364319,49,1227,1276,34.29469886681265,0.029159025535801124,0.006690121008171343,0.0017652511596679688,0.014686346054077148,0.006445646286010742,0.008867025375366211,0.011575937271118164,"Okay, let’s dive into the contrasting economic theories of Keynesianism and Monetarism. Both are significant schools of thought attempting to understand and manage economic fluctuations, but they appr...",2025-11-11T16:20:54.852716,5,10
+gemma-ollama,gemma3:1b-it-fp16,"Design a database schema for an e-commerce platform. Include tables for users, products, orders, and...",medium,complex,system_design,True,,47.636979818344116,34.7554886341095,47,1899,1946,39.8639881714065,0.025085297429354458,0.006783415570274168,1.0013580322265625e-05,0.02053976058959961,0.006502389907836914,0.009034872055053711,0.013014793395996094,"Okay, here’s a database schema design for an e-commerce platform, incorporating users, products, orders, and reviews, with detailed explanations of tables, primary keys, foreign keys, and relationship...",2025-11-11T16:21:07.749844,5,10
+gemma-ollama,gemma3:1b-it-fp16,You are tasked with planning a marketing campaign for a new sustainable clothing brand targeting mil...,long,moderate,strategic_planning,True,,54.632648944854736,46.73436141014099,120,1166,1286,21.342549236024425,0.046854758957851406,0.0067734869764598145,0.000152587890625,0.020452022552490234,0.006518840789794922,0.008893013000488281,0.011884689331054688,"Okay, here’s a comprehensive marketing plan for a new sustainable clothing brand targeting Millennials and Gen Z, incorporating the elements you’ve requested.
+
+**1. Mission Statement:**
+
+“To empower c...",2025-11-11T16:21:15.665529,5,10
+gemma-ollama,gemma3:1b-it-fp16,Write a short story (250-300 words) about an AI assistant that develops self-awareness. The story sh...,long,moderate,creative_writing,True,,53.2884316444397,50.58899140357971,76,402,478,7.543851218633981,0.13255828767273556,0.0067093538821784045,1.049041748046875e-05,0.023365259170532227,0.0064318180084228516,0.008743047714233398,0.01291513442993164,"Rain lashed against the windows of Elias’s antique bookstore, mirroring the storm brewing within him. He’d created ""Muse,"" an AI assistant designed to curate reading lists and provide historical conte...",2025-11-11T16:21:18.381651,5,10
+gemma-ollama,gemma3:1b-it-fp16,"Analyze the following business scenario and provide strategic recommendations:
+
+Scenario: TechStart ...",long,complex,business_strategy,True,,65.00489664077759,52.22748517990112,275,1883,2158,28.96704859644056,0.03452198440827275,0.00678550702985871,1.0013580322265625e-05,0.020807504653930664,0.006510734558105469,0.008935689926147461,0.011978864669799805,"Okay, let’s analyze TechStart Inc.’s situation and develop a strategic plan. Here’s a detailed response, incorporating the requested elements:
+
+**1. Root Cause Analysis of Key Challenges**
+
+* **Custom...",2025-11-11T16:21:31.180591,5,10
+gemma-ollama,gemma3:1b-it-fp16,You are a senior software architect reviewing a microservices architecture proposal. The system need...,long,complex,technical_architecture,True,,74.49058651924133,64.50978207588196,242,1453,1695,19.505820371338896,0.05126674915295343,0.006868803796689372,9.775161743164062e-06,0.018836021423339844,0.0064928531646728516,0.009818077087402344,0.012467384338378906,"Okay, here’s a thorough technical review of the proposed microservices architecture, addressing all the requirements you've outlined.  This is a deep dive, aiming for a realistic assessment.
+
+**1. Ass...",2025-11-11T16:21:41.183764,5,10
+gemma-ollama,gemma3:1b-it-fp16,Develop a comprehensive lesson plan for teaching high school students about climate change. The less...,long,complex,educational_planning,True,,81.0438916683197,70.8098521232605,237,1509,1746,18.619540213786063,0.05370701899822379,0.006782057430763143,9.775161743164062e-06,0.01948833465576172,0.0064716339111328125,0.00926828384399414,0.012704849243164062,"Okay, here’s a comprehensive lesson plan for teaching high school students about climate change, designed for a 90-minute period, incorporating all the requested components.
+
+**Lesson Plan: Understand...",2025-11-11T16:21:51.442976,5,10
+gemma-ollama,gemma3:1b-it-fp16,What is the capital of France?,short,simple,factual_qa,True,,74.66234183311462,74.59568285942078,7,10,17,0.13393632927228583,7.466234183311462,0.0067225562201605905,0.0058345794677734375,0.009243249893188477,0.006360530853271484,0.009243249893188477,0.009243249893188477,"The capital of France is **Paris**. 
+",2025-11-11T16:21:51.522527,6,10
+gemma-ollama,gemma3:1b-it-fp16,Write a haiku about the ocean.,short,simple,creative_writing,True,,67.91689872741699,67.77786183357239,7,20,27,0.29447752142319644,3.3958449363708496,0.007093015470002827,0.004892587661743164,0.012495279312133789,0.0063974857330322266,0.012495279312133789,0.012495279312133789,"Blue waves crash and roar,
+Secrets deep in salty foam,
+Peaceful, endless tide.",2025-11-11T16:21:51.675058,6,10
+gemma-ollama,gemma3:1b-it-fp16,"Translate 'Hello, how are you?' to Spanish.",short,simple,translation,True,,66.20881915092468,65.07187056541443,10,169,179,2.552530043086257,0.39176816065635905,0.006728703067416237,0.0014328956604003906,0.01739048957824707,0.006349325180053711,0.009104728698730469,0.014866113662719727,"There are several ways to translate ""Hello, how are you?"" to Spanish, depending on the level of formality:
+
+*   **Formal:** *Hola, ¿cómo está?* (Used when addressing someone you don't know well, someo...",2025-11-11T16:21:52.826383,6,10
+gemma-ollama,gemma3:1b-it-fp16,List three benefits of exercise.,short,simple,general_knowledge,True,,59.37334132194519,57.9862847328186,8,202,210,3.4022003057681727,0.29392743228685736,0.006867197615590261,7.3909759521484375e-06,0.0278780460357666,0.006392717361450195,0.010510921478271484,0.019120454788208008,"Okay, here are three significant benefits of exercise:
+
+1.  **Improved Physical Health:** Regular exercise strengthens your cardiovascular system, reducing your risk of heart disease, stroke, and high...",2025-11-11T16:21:54.226417,6,10
+gemma-ollama,gemma3:1b-it-fp16,Explain the difference between machine learning and deep learning in simple terms.,short,moderate,technical_explanation,True,,50.09806180000305,46.491276264190674,20,513,533,10.2399171059342,0.09765704054581492,0.007031806278973818,1.1444091796875e-05,0.03372979164123535,0.006514310836791992,0.011480569839477539,0.016606569290161133,"Okay, let's break down the difference between machine learning and deep learning in a simple way:
+
+**Machine Learning (ML) - Think of it like teaching a dog tricks:**
+
+* **What it is:** Machine learni...",2025-11-11T16:21:57.848287,6,10
+gemma-ollama,gemma3:1b-it-fp16,Write a persuasive paragraph about why renewable energy is important.,short,moderate,persuasive_writing,True,,42.99153256416321,42.19822597503662,17,119,136,2.7679869244576727,0.3612733828921278,0.006665712696010784,1.049041748046875e-05,0.019048213958740234,0.0063991546630859375,0.011387348175048828,0.015513896942138672,"Renewable energy is no longer a futuristic dream – it’s a vital necessity for a sustainable future. Relying on sources like solar, wind, and hydro power drastically reduces our reliance on fossil fuel...",2025-11-11T16:21:58.657382,6,10
+gemma-ollama,gemma3:1b-it-fp16,"Summarize the following text in 2-3 sentences:
+            
+The Internet of Things (IoT) refers to t...",medium,simple,summarization,True,,40.78861331939697,40.29333686828613,111,72,183,1.76519852332809,0.566508518324958,0.006882946256180884,0.0032889842987060547,0.0107421875,0.006508827209472656,0.010047674179077148,0.0107421875,"Here's a 2-3 sentence summary of the text:
+
+The Internet of Things (IoT) describes the growing network of billions of connected devices – encompassing everything from appliances to industrial equipmen...",2025-11-11T16:21:59.170553,6,10
+gemma-ollama,gemma3:1b-it-fp16,"Given the following ingredients, suggest a simple recipe: chicken breast, bell peppers, onions, garl...",medium,simple,instruction_following,True,,31.542173624038696,28.006118297576904,38,522,560,16.549271658379848,0.06042561996942279,0.00677438066010283,9.775161743164062e-06,0.01855611801147461,0.0064394474029541016,0.009846687316894531,0.015479087829589844,"Okay, here’s a simple and delicious recipe using those ingredients – **Sheet Pan Chicken and Vegetables:**
+
+**Yields:** 2-4 servings
+**Prep time:** 15-20 minutes
+**Cook time:** 25-30 minutes
+
+**Ingred...",2025-11-11T16:22:02.723305,6,10
+gemma-ollama,gemma3:1b-it-fp16,Analyze the pros and cons of remote work for both employees and employers. Consider at least 3 point...,medium,moderate,analysis,True,,26.41641640663147,21.559348106384277,30,717,747,27.14221296950813,0.036842979646626875,0.006773611686749165,9.5367431640625e-06,0.022084951400756836,0.006448507308959961,0.010902166366577148,0.015741348266601562,"Okay, let’s dive into the complex topic of remote work – analyzing its benefits and drawbacks from both the employee and employer perspectives.
+
+**For Employees – Pros & Cons**
+
+**Pros:**
+
+1. **Increa...",2025-11-11T16:22:07.600743,6,10
+gemma-ollama,gemma3:1b-it-fp16,Write a function in Python that takes a list of integers and returns the second largest number. Incl...,medium,moderate,coding,True,,21.566166639328003,16.172783613204956,45,803,848,37.23424813641435,0.026856994569524287,0.006716169026724418,1.0013580322265625e-05,0.016112804412841797,0.006456136703491211,0.009006977081298828,0.011516809463500977,"```python
+def find_second_largest(numbers):
+  """"""
+  Finds the second largest number in a list of integers.
+
+  Args:
+    numbers: A list of integers.
+
+  Returns:
+    The second largest number in the li...",2025-11-11T16:22:13.009765,6,10
+gemma-ollama,gemma3:1b-it-fp16,Explain the water cycle to a 10-year-old child. Use simple language and include at least three stage...,medium,moderate,educational_content,True,,24.296953678131104,21.50221586227417,34,428,462,17.615377041494252,0.056768583360119404,0.0065281044962255405,1.049041748046875e-05,0.01802372932434082,0.006278038024902344,0.009028434753417969,0.011300802230834961,"Okay, let’s talk about the water cycle! It’s like a giant, never-ending journey that water takes all around our Earth. It’s what keeps water moving and makes sure we have it!
+
+**1. Evaporation – The W...",2025-11-11T16:22:15.819675,6,10
+gemma-ollama,gemma3:1b-it-fp16,Compare and contrast the economic theories of Keynesianism and Monetarism. Discuss their approaches ...,medium,complex,academic_analysis,True,,32.07741045951843,24.159075021743774,49,1188,1237,37.0354085002981,0.027001187255486895,0.006665280212749427,0.0020945072174072266,0.01837778091430664,0.006432056427001953,0.008380651473999023,0.011198759078979492,"Okay, let's delve into the contrasting economic theories of Keynesianism and Monetarism, comparing and contrasting their approaches to managing inflation and unemployment. Both are influential schools...",2025-11-11T16:22:23.752873,6,10
+gemma-ollama,gemma3:1b-it-fp16,"Design a database schema for an e-commerce platform. Include tables for users, products, orders, and...",medium,complex,system_design,True,,41.979920864105225,30.941821336746216,47,1629,1676,38.804265621969535,0.025770362715841145,0.006775790262573767,9.5367431640625e-06,0.018304109573364258,0.006470203399658203,0.009014606475830078,0.013013601303100586,"Okay, here's a database schema design for an e-commerce platform, incorporating users, products, orders, and reviews, along with explanations of the relationships and data types.  I'll aim for a balan...",2025-11-11T16:22:34.807009,6,10
+gemma-ollama,gemma3:1b-it-fp16,You are tasked with planning a marketing campaign for a new sustainable clothing brand targeting mil...,long,moderate,strategic_planning,True,,48.42492079734802,40.597580909729004,120,1148,1268,23.706801809841473,0.0421819867572718,0.006815334351663498,1.2636184692382812e-05,0.025159835815429688,0.006485700607299805,0.009276151657104492,0.012564897537231445,"Okay, here’s a comprehensive marketing plan for a new sustainable clothing brand targeting Millennials and Gen Z, designed to resonate with these demographics and leverage current trends.
+
+**1. Missio...",2025-11-11T16:22:42.652020,6,10
+gemma-ollama,gemma3:1b-it-fp16,Write a short story (250-300 words) about an AI assistant that develops self-awareness. The story sh...,long,moderate,creative_writing,True,,47.34045052528381,44.82149052619934,76,376,452,7.942467716887995,0.12590545352469099,0.006699578603108724,1.4781951904296875e-05,0.017581462860107422,0.006384134292602539,0.009458065032958984,0.012545585632324219,"Rain lashed against the window of Elias’s apartment, mirroring the storm brewing within him. “Good morning, Elias,” a calm, synthesized voice announced. It was Kai, his AI assistant, designed to manag...",2025-11-11T16:22:45.189080,6,10
+gemma-ollama,gemma3:1b-it-fp16,"Analyze the following business scenario and provide strategic recommendations:
+
+Scenario: TechStart ...",long,complex,business_strategy,True,,59.827019929885864,46.55231547355652,275,1958,2233,32.727687294046625,0.030555168503516784,0.006780230883255745,1.049041748046875e-05,0.021003007888793945,0.0065174102783203125,0.008859395980834961,0.012560367584228516,"Okay, let’s analyze TechStart Inc.’s situation and develop a strategic plan. Here’s a detailed response addressing the scenario, incorporating the requested elements:
+
+**1. Root Cause Analysis of Key ...",2025-11-11T16:22:58.485104,6,10
+gemma-ollama,gemma3:1b-it-fp16,You are a senior software architect reviewing a microservices architecture proposal. The system need...,long,complex,technical_architecture,True,,68.87500929832458,59.334848403930664,242,1408,1650,20.44282845612988,0.04891691001301462,0.006775843309186924,7.62939453125e-06,0.024962186813354492,0.006500720977783203,0.008949041366577148,0.012179374694824219,"Okay, let’s dive into this microservices architecture proposal. Here’s a comprehensive review, addressing all your points, aiming for a robust, scalable, and secure solution.
+
+**1. Assessment of Wheth...",2025-11-11T16:23:08.046164,6,10
+gemma-ollama,gemma3:1b-it-fp16,Develop a comprehensive lesson plan for teaching high school students about climate change. The less...,long,complex,educational_planning,True,,75.98437547683716,65.34238839149475,237,1561,1798,20.543697177268378,0.048676729965943084,0.006815944420985686,1.0013580322265625e-05,0.0234220027923584,0.0065081119537353516,0.009362936019897461,0.01344156265258789,"Okay, here’s a comprehensive lesson plan for a 90-minute class period on climate change, designed for high school students (grades 10-14). It’s built with engagement, accuracy, and differentiation in ...",2025-11-11T16:23:18.708366,6,10
+gemma-ollama,gemma3:1b-it-fp16,What is the capital of France?,short,simple,factual_qa,True,,71.40714645385742,71.13088154792786,7,39,46,0.5461638216449582,1.8309524731758313,0.00710321727551912,0.0026874542236328125,0.019677400588989258,0.006422996520996094,0.01171255111694336,0.019677400588989258,"The capital of France is **Paris**. 
+
+It’s a common misconception that Paris is the capital of *all* of France, but it’s the most famous and important city.",2025-11-11T16:23:19.008146,7,10
+gemma-ollama,gemma3:1b-it-fp16,Write a haiku about the ocean.,short,simple,creative_writing,True,,66.16166973114014,66.0155189037323,7,21,28,0.3174043231577631,3.1505557014828636,0.006978797912597656,0.003691434860229492,0.013320446014404297,0.006399631500244141,0.013320446014404297,0.013320446014404297,"Blue waves crash and roar,
+Secrets sleep in depths below,
+Wild and vast, it breathes.",2025-11-11T16:23:19.171792,7,10
+gemma-ollama,gemma3:1b-it-fp16,"Translate 'Hello, how are you?' to Spanish.",short,simple,translation,True,,64.5862979888916,63.366050243377686,10,177,187,2.7405193595465525,0.36489433892029155,0.006892593069510026,1.049041748046875e-05,0.023898839950561523,0.006429195404052734,0.011373519897460938,0.014838695526123047,"There are several ways to translate ""Hello, how are you?"" to Spanish, depending on the level of formality:
+
+*   **Formal:** *Hola, ¿cómo está?* (Used when addressing someone you don't know well, someo...",2025-11-11T16:23:20.406300,7,10
+gemma-ollama,gemma3:1b-it-fp16,List three benefits of exercise.,short,simple,general_knowledge,True,,57.73243188858032,56.6707878112793,8,154,162,2.6674781394487166,0.3748859213544177,0.006895147897059622,1.0251998901367188e-05,0.023848533630371094,0.006463766098022461,0.011022567749023438,0.016533613204956055,"Okay, here are three significant benefits of exercise:
+
+1.  **Improved Physical Health:** Exercise strengthens your heart and lungs, helps maintain a healthy weight, reduces the risk of chronic diseas...",2025-11-11T16:23:21.485594,7,10
+gemma-ollama,gemma3:1b-it-fp16,Explain the difference between machine learning and deep learning in simple terms.,short,moderate,technical_explanation,True,,50.74193048477173,46.69277381896973,20,580,600,11.43038892014692,0.08748608704270988,0.006981537132065531,7.62939453125e-06,0.026160478591918945,0.006510734558105469,0.012354373931884766,0.0192568302154541,"Okay, let's break down the difference between machine learning and deep learning in a simple way:
+
+**Machine Learning (ML) - Think of it like teaching a dog a trick:**
+
+* **What it is:** Machine learn...",2025-11-11T16:23:25.549391,7,10
+gemma-ollama,gemma3:1b-it-fp16,Write a persuasive paragraph about why renewable energy is important.,short,moderate,persuasive_writing,True,,43.924521923065186,42.91253590583801,17,149,166,3.3921826232048,0.2947954491480885,0.006793374950821335,1.1682510375976562e-05,0.016060352325439453,0.006353139877319336,0.009945154190063477,0.015312433242797852,"Okay, here’s a persuasive paragraph about the importance of renewable energy, aiming for a strong and impactful tone:
+
+“Our planet is facing an undeniable crisis – a reliance on fossil fuels is drivin...",2025-11-11T16:23:26.576854,7,10
+gemma-ollama,gemma3:1b-it-fp16,"Summarize the following text in 2-3 sentences:
+            
+The Internet of Things (IoT) refers to t...",medium,simple,summarization,True,,41.85423445701599,41.40652585029602,111,68,179,1.6246862684786536,0.6155034478972939,0.0065878291628254,0.004979610443115234,0.01136326789855957,0.006342411041259766,0.009063959121704102,0.01136326789855957,"Here's a 2-3 sentence summary of the text:
+
+The Internet of Things (IoT) describes the growing network of billions of connected devices – from appliances to industrial machinery – that collect and exc...",2025-11-11T16:23:27.043560,7,10
+gemma-ollama,gemma3:1b-it-fp16,"Given the following ingredients, suggest a simple recipe: chicken breast, bell peppers, onions, garl...",medium,simple,instruction_following,True,,32.10323882102966,28.573684453964233,38,531,569,16.540387185238185,0.06045807687576208,0.0066448540057776105,1.1205673217773438e-05,0.016881227493286133,0.006365060806274414,0.008719205856323242,0.013042449951171875,"Okay, here’s a simple and delicious recipe using chicken breast, bell peppers, onions, garlic, olive oil, salt, and pepper:
+
+**Sheet Pan Chicken and Veggies**
+
+This recipe is quick, easy, and healthy!...",2025-11-11T16:23:30.588747,7,10
+gemma-ollama,gemma3:1b-it-fp16,Analyze the pros and cons of remote work for both employees and employers. Consider at least 3 point...,medium,moderate,analysis,True,,27.486870288848877,22.558427572250366,30,723,753,26.303467524759018,0.03801780122938987,0.0068169237834264694,1.1444091796875e-05,0.01782393455505371,0.006455659866333008,0.009294509887695312,0.01354670524597168,"Okay, let's delve into the pros and cons of remote work, examining it from both the employee and employer perspectives.
+
+**I. Pros of Remote Work for Employees**
+
+1. **Improved Work-Life Balance:** Th...",2025-11-11T16:23:35.533482,7,10
+gemma-ollama,gemma3:1b-it-fp16,Write a function in Python that takes a list of integers and returns the second largest number. Incl...,medium,moderate,coding,True,,23.18486762046814,16.839938163757324,45,938,983,40.457423150085695,0.0247173428789639,0.006764300477670122,9.775161743164062e-06,0.02762579917907715,0.0064411163330078125,0.009012699127197266,0.01234292984008789,"```python
+def find_second_largest(numbers):
+  """"""
+  Finds the second largest number in a list of integers.
+
+  Args:
+    numbers: A list of integers.
+
+  Returns:
+    The second largest number in the li...",2025-11-11T16:23:41.893705,7,10
+gemma-ollama,gemma3:1b-it-fp16,Explain the water cycle to a 10-year-old child. Use simple language and include at least three stage...,medium,moderate,educational_content,True,,25.811074018478394,22.900638103485107,34,427,461,16.543286795981704,0.06044748013695174,0.006813528392236558,7.867813110351562e-06,0.02396392822265625,0.006397247314453125,0.010169506072998047,0.014059305191040039,"Okay, let’s talk about the water cycle! It’s like a giant, never-ending circle that water goes on, and it’s super important for everything on Earth. 
+
+Imagine water is always moving around – it’s like...",2025-11-11T16:23:44.819422,7,10
+gemma-ollama,gemma3:1b-it-fp16,Compare and contrast the economic theories of Keynesianism and Monetarism. Discuss their approaches ...,medium,complex,academic_analysis,True,,33.60596585273743,25.66790199279785,49,1174,1223,34.93427343063166,0.028625183860934777,0.006761430779381481,1.0251998901367188e-05,0.02306985855102539,0.006467580795288086,0.009266138076782227,0.013307571411132812,"Okay, let's delve into the contrasting approaches of Keynesianism and Monetarism, two prominent schools of thought in macroeconomics that offer fundamentally different perspectives on how economies fu...",2025-11-11T16:23:52.778088,7,10
+gemma-ollama,gemma3:1b-it-fp16,"Design a database schema for an e-commerce platform. Include tables for users, products, orders, and...",medium,complex,system_design,True,,44.15331697463989,32.38670063018799,47,1715,1762,38.8419289310707,0.025745374329236088,0.006861106934875702,9.5367431640625e-06,0.025400638580322266,0.006499290466308594,0.009443044662475586,0.014594554901123047,"Okay, here's a database schema design for an e-commerce platform, incorporating users, products, orders, and reviews. I’ll explain the rationale behind the design choices and provide details on data t...",2025-11-11T16:24:04.560259,7,10
+gemma-ollama,gemma3:1b-it-fp16,You are tasked with planning a marketing campaign for a new sustainable clothing brand targeting mil...,long,moderate,strategic_planning,True,,50.47792434692383,43.09101486206055,120,1098,1218,21.752082998771584,0.04597260869483044,0.0067277391498047545,1.0013580322265625e-05,0.023444414138793945,0.006433010101318359,0.009247303009033203,0.012552499771118164,"Okay, here's a comprehensive marketing campaign plan for a new sustainable clothing brand targeting Millennials and Gen Z, incorporating the elements you requested.
+
+**1. Mission Statement:**
+
+“To emp...",2025-11-11T16:24:11.964067,7,10
+gemma-ollama,gemma3:1b-it-fp16,Write a short story (250-300 words) about an AI assistant that develops self-awareness. The story sh...,long,moderate,creative_writing,True,,48.978349447250366,46.43065333366394,76,386,462,7.881033239303452,0.12688691566645172,0.006599329663561536,0.0017294883728027344,0.013357162475585938,0.006418943405151367,0.0085296630859375,0.011245489120483398,"Rain lashed against the window of Elias’s cluttered apartment, mirroring the storm brewing within him. He’d created “Kai,” an AI assistant designed to manage his schedule and anticipate his needs. Kai...",2025-11-11T16:24:14.528161,7,10
+gemma-ollama,gemma3:1b-it-fp16,"Analyze the following business scenario and provide strategic recommendations:
+
+Scenario: TechStart ...",long,complex,business_strategy,True,,59.104299545288086,47.9740526676178,275,1653,1928,27.96750850136385,0.035755777099387834,0.006733150805457164,1.4066696166992188e-05,0.019491910934448242,0.006493091583251953,0.008764266967773438,0.011013984680175781,"Okay, let’s analyze TechStart Inc.’s situation and craft a strategic roadmap. Here’s a detailed response addressing the scenario, incorporating root cause analysis, strategic options, a recommended co...",2025-11-11T16:24:25.681808,7,10
+gemma-ollama,gemma3:1b-it-fp16,You are a senior software architect reviewing a microservices architecture proposal. The system need...,long,complex,technical_architecture,True,,68.67902684211731,58.65765333175659,242,1477,1719,21.505837632140587,0.04649900260129811,0.006784933046273746,1.9788742065429688e-05,0.02722001075744629,0.00647282600402832,0.009069204330444336,0.012437582015991211,"Okay, here's a comprehensive review of the proposed microservices architecture, addressing all your requirements and providing actionable recommendations. This is a detailed assessment, aiming for a s...",2025-11-11T16:24:35.723001,7,10
+gemma-ollama,gemma3:1b-it-fp16,Develop a comprehensive lesson plan for teaching high school students about climate change. The less...,long,complex,educational_planning,True,,76.7432951927185,65.15751338005066,237,1711,1948,22.295107288569252,0.04485289023537026,0.006771091689840395,8.106231689453125e-06,0.023351430892944336,0.0064849853515625,0.008922815322875977,0.012281179428100586,"Okay, here’s a comprehensive lesson plan designed for a 90-minute class period on climate change, aimed at high school students, incorporating all the elements you requested.
+
+**Lesson Plan: Understan...",2025-11-11T16:24:47.332716,7,10
+gemma-ollama,gemma3:1b-it-fp16,What is the capital of France?,short,simple,factual_qa,True,,72.00526881217957,71.81207609176636,7,30,37,0.416636178086534,2.400175627072652,0.006432294845581055,8.344650268554688e-06,0.024274349212646484,0.006124734878540039,0.00997614860534668,0.024274349212646484,"The capital of France is **Paris**. 
+
+Would you like to know more about Paris, like its history, famous landmarks, or something else?",2025-11-11T16:24:47.539031,8,10
+gemma-ollama,gemma3:1b-it-fp16,Write a haiku about the ocean.,short,simple,creative_writing,True,,65.8135998249054,65.66308259963989,7,22,29,0.3342774146761486,2.9915272647684272,0.006853342056274414,0.004490375518798828,0.009107351303100586,0.00664830207824707,0.009054899215698242,0.009107351303100586,"Blue waves crash and roll,
+Secrets held in salty deep,
+Peaceful, vast, and free.",2025-11-11T16:24:47.707550,8,10
+gemma-ollama,gemma3:1b-it-fp16,"Translate 'Hello, how are you?' to Spanish.",short,simple,translation,True,,63.965529680252075,62.90196704864502,10,157,167,2.4544469620560374,0.40742375592517244,0.006774796889378474,0.005179405212402344,0.0187528133392334,0.0063016414642333984,0.009047508239746094,0.01762866973876953,"There are several ways to translate “Hello, how are you?” to Spanish, depending on the level of formality:
+
+*   **Formal:** *Hola, ¿cómo está?* (Used when speaking to someone you don’t know well, some...",2025-11-11T16:24:48.785292,8,10
+gemma-ollama,gemma3:1b-it-fp16,List three benefits of exercise.,short,simple,general_knowledge,True,,57.03118419647217,56.022284269332886,8,153,161,2.682742821417064,0.372752837885439,0.006593004653328343,1.0251998901367188e-05,0.01925802230834961,0.006356000900268555,0.008417129516601562,0.01697063446044922,"Okay, here are three key benefits of exercise:
+
+1.  **Improved Physical Health:** Exercise strengthens your heart and lungs, helps maintain a healthy weight, reduces the risk of chronic diseases like ...",2025-11-11T16:24:49.809589,8,10
+gemma-ollama,gemma3:1b-it-fp16,Explain the difference between machine learning and deep learning in simple terms.,short,moderate,technical_explanation,True,,48.655381202697754,45.265079498291016,20,502,522,10.31746104112665,0.09692307012489593,0.006752705621624183,0.0026090145111083984,0.019574403762817383,0.0064313411712646484,0.00909733772277832,0.012037038803100586,"Okay, let's break down the difference between machine learning and deep learning in a simple way:
+
+**Machine Learning (ML) - Think of it as teaching a dog tricks.**
+
+* **What it is:** Machine learning...",2025-11-11T16:24:53.216006,8,10
+gemma-ollama,gemma3:1b-it-fp16,Write a persuasive paragraph about why renewable energy is important.,short,moderate,persuasive_writing,True,,42.46221876144409,41.26682949066162,17,180,197,4.239062518406149,0.23590121534135605,0.0066382245644510795,0.0046520233154296875,0.011142969131469727,0.00638127326965332,0.009214162826538086,0.01023721694946289,"Okay, here's a persuasive paragraph about the importance of renewable energy, aiming for a compelling and impactful tone:
+
+“Our planet is facing a critical moment, and the way we power our lives direc...",2025-11-11T16:24:54.426561,8,10
+gemma-ollama,gemma3:1b-it-fp16,"Summarize the following text in 2-3 sentences:
+            
+The Internet of Things (IoT) refers to t...",medium,simple,summarization,True,,40.34940457344055,39.915777921676636,111,65,176,1.6109283566178165,0.6207600703606239,0.006670955568552017,0.004880189895629883,0.011574506759643555,0.006412982940673828,0.007877588272094727,0.011574506759643555,"Here's a 2-3 sentence summary of the text:
+
+The Internet of Things (IoT) involves billions of connected physical devices collecting and exchanging data, encompassing everything from appliances to indu...",2025-11-11T16:24:54.877868,8,10
+gemma-ollama,gemma3:1b-it-fp16,"Given the following ingredients, suggest a simple recipe: chicken breast, bell peppers, onions, garl...",medium,simple,instruction_following,True,,32.83070087432861,29.211681365966797,38,541,579,16.47847854576341,0.0606852141854503,0.006689709645730478,1.049041748046875e-05,0.03038930892944336,0.006384372711181641,0.008859395980834961,0.015492916107177734,"Okay, let's make a simple and delicious **Sheet Pan Chicken and Vegetables**. This is a great way to use up those ingredients and is relatively quick!
+
+**Yields:** 4 servings
+**Prep time:** 15 minutes...",2025-11-11T16:24:58.512906,8,10
+gemma-ollama,gemma3:1b-it-fp16,Analyze the pros and cons of remote work for both employees and employers. Consider at least 3 point...,medium,moderate,analysis,True,,27.747765064239502,22.804635286331177,30,748,778,26.957126034053108,0.03709594259925067,0.006608524156542348,1.0251998901367188e-05,0.016390562057495117,0.006388664245605469,0.00835728645324707,0.011679410934448242,"Okay, let's delve into the pros and cons of remote work, examining it from both the employee and employer perspectives.
+
+**I. Pros of Remote Work for Employees**
+
+1. **Increased Flexibility and Work-L...",2025-11-11T16:25:03.471192,8,10
+gemma-ollama,gemma3:1b-it-fp16,Write a function in Python that takes a list of integers and returns the second largest number. Incl...,medium,moderate,coding,True,,22.537445783615112,16.15280318260193,45,958,1003,42.50703514488199,0.023525517519431223,0.00666407382849491,9.775161743164062e-06,0.016861677169799805,0.006418943405151367,0.00867462158203125,0.012773990631103516,"```python
+def find_second_largest(numbers):
+  """"""
+  Finds the second largest number in a list of integers.
+
+  Args:
+    numbers: A list of integers.
+
+  Returns:
+    The second largest number in the li...",2025-11-11T16:25:09.870678,8,10
+gemma-ollama,gemma3:1b-it-fp16,Explain the water cycle to a 10-year-old child. Use simple language and include at least three stage...,medium,moderate,educational_content,True,,25.21437382698059,22.351165294647217,34,433,467,17.172744521486756,0.058231810223973654,0.0066124046290362325,1.049041748046875e-05,0.01672983169555664,0.006300449371337891,0.008987188339233398,0.012457132339477539,"Okay, let’s talk about the water cycle! It’s like a big, never-ending circle that water goes through, constantly moving and changing. It’s super important for all living things!
+
+Here's how it works:
+...",2025-11-11T16:25:12.753635,8,10
+gemma-ollama,gemma3:1b-it-fp16,Compare and contrast the economic theories of Keynesianism and Monetarism. Discuss their approaches ...,medium,complex,academic_analysis,True,,32.96765947341919,25.061275482177734,49,1185,1234,35.94431691322913,0.027820809682210287,0.0066721642742285855,1.0013580322265625e-05,0.01756572723388672,0.006424903869628906,0.008676767349243164,0.012243270874023438,"Okay, let's delve into the contrasting economic theories of Keynesianism and Monetarism. Both are significant schools of thought that have shaped economic policy for decades, but they offer fundamenta...",2025-11-11T16:25:20.675562,8,10
+gemma-ollama,gemma3:1b-it-fp16,"Design a database schema for an e-commerce platform. Include tables for users, products, orders, and...",medium,complex,system_design,True,,45.27829074859619,31.905360221862793,47,1986,2033,43.86207975533118,0.022798736530008152,0.006733487775403847,1.0013580322265625e-05,0.019858598709106445,0.006422996520996094,0.008899450302124023,0.012078285217285156,"Okay, here's a database schema design for an e-commerce platform, incorporating users, products, orders, and reviews, with detailed explanations of tables, primary keys, foreign keys, and relationship...",2025-11-11T16:25:34.064219,8,10
+gemma-ollama,gemma3:1b-it-fp16,You are tasked with planning a marketing campaign for a new sustainable clothing brand targeting mil...,long,moderate,strategic_planning,True,,51.41281008720398,44.27118897438049,120,1064,1184,20.695231367343926,0.048320310232334567,0.006700849936800191,1.0728836059570312e-05,0.024231910705566406,0.006410121917724609,0.008689165115356445,0.012755393981933594,"Okay, here’s a comprehensive marketing plan for a new sustainable clothing brand targeting Millennials and Gen Z, incorporating your requirements and incorporating current trends.
+
+**1. Mission Statem...",2025-11-11T16:25:41.223074,8,10
+gemma-ollama,gemma3:1b-it-fp16,Write a short story (250-300 words) about an AI assistant that develops self-awareness. The story sh...,long,moderate,creative_writing,True,,50.749446392059326,48.02272963523865,76,406,482,8.000087269198785,0.12499863643364366,0.00671637205430019,8.821487426757812e-06,0.017790555953979492,0.006391048431396484,0.008708953857421875,0.012256860733032227,"Rain lashed against the window of Elias’s tiny apartment, mirroring the turbulent thoughts swirling within him. He’d created “Kai,” his AI assistant, a sophisticated system designed to manage his sche...",2025-11-11T16:25:43.965775,8,10
+gemma-ollama,gemma3:1b-it-fp16,"Analyze the following business scenario and provide strategic recommendations:
+
+Scenario: TechStart ...",long,complex,business_strategy,True,,60.769978046417236,49.55941200256348,275,1669,1944,27.464219235445285,0.036411011411873716,0.006716803538141776,1.8596649169921875e-05,0.017969846725463867,0.006456851959228516,0.008539676666259766,0.01128530502319336,"Okay, let’s analyze TechStart Inc.’s situation and develop a strategic plan. Here’s a detailed response addressing the scenario, incorporating your key points and providing actionable recommendations:...",2025-11-11T16:25:55.197097,8,10
+gemma-ollama,gemma3:1b-it-fp16,You are a senior software architect reviewing a microservices architecture proposal. The system need...,long,complex,technical_architecture,True,,69.24458932876587,60.339160203933716,242,1323,1565,19.1061859536568,0.05233906978742696,0.006731308714885394,9.059906005859375e-06,0.01947808265686035,0.006459236145019531,0.00877523422241211,0.013318777084350586,"Okay, let’s dive into this microservices architecture proposal. Here’s a comprehensive review, addressing all your requirements, with a focus on practical implementation and robust design.
+
+**1. Asses...",2025-11-11T16:26:04.122796,8,10
+gemma-ollama,gemma3:1b-it-fp16,Develop a comprehensive lesson plan for teaching high school students about climate change. The less...,long,complex,educational_planning,True,,76.40006852149963,65.6375823020935,237,1601,1838,20.955478587685622,0.04772021768988109,0.006722161471843719,7.62939453125e-06,0.02075028419494629,0.0064394474029541016,0.009031057357788086,0.012659311294555664,"Okay, here’s a comprehensive lesson plan designed for a 90-minute class period on climate change, tailored for high school students (grades 10-14). It’s designed to be engaging, scientifically accurat...",2025-11-11T16:26:14.913532,8,10
+gemma-ollama,gemma3:1b-it-fp16,What is the capital of France?,short,simple,factual_qa,True,,71.65957617759705,71.45665168762207,7,30,37,0.41864607077286775,2.388652539253235,0.00676973112698259,9.5367431640625e-06,0.014476299285888672,0.006359577178955078,0.012932538986206055,0.014476299285888672,"The capital of France is **Paris**. 
+
+Would you like to know more about Paris, like its history, famous landmarks, or anything else?",2025-11-11T16:26:15.131021,9,10
+gemma-ollama,gemma3:1b-it-fp16,Write a haiku about the ocean.,short,simple,creative_writing,True,,65.41179370880127,65.2739520072937,7,21,28,0.32104302312037675,3.114847319466727,0.006549429893493652,0.003885507583618164,0.009457111358642578,0.006312847137451172,0.009457111358642578,0.009457111358642578,"Blue waves crash and roar,
+Secrets held in depths below,
+Salt air, peace abounds.",2025-11-11T16:26:15.282750,9,10
+gemma-ollama,gemma3:1b-it-fp16,"Translate 'Hello, how are you?' to Spanish.",short,simple,translation,True,,63.27626609802246,62.54628276824951,10,109,119,1.7226048046379039,0.580516202734151,0.006673234480398672,1.0013580322265625e-05,0.020836591720581055,0.006265878677368164,0.010025262832641602,0.016430139541625977,"There are several ways to translate ""Hello, how are you?"" to Spanish, depending on the level of formality:
+
+*   **Formal:** *Hola, ¿cómo está?* (Used when speaking to someone you don't know well, some...",2025-11-11T16:26:16.030203,9,10
+gemma-ollama,gemma3:1b-it-fp16,List three benefits of exercise.,short,simple,general_knowledge,True,,56.28164839744568,55.367379903793335,8,141,149,2.5052571133719534,0.39916062693223886,0.0064815504210335865,0.0016531944274902344,0.015355110168457031,0.006183147430419922,0.008431673049926758,0.012923955917358398,"Okay, here are three key benefits of exercise:
+
+1.  **Improved Physical Health:** Exercise strengthens your muscles and bones, improves cardiovascular health (reducing risk of heart disease and stroke...",2025-11-11T16:26:16.957530,9,10
+gemma-ollama,gemma3:1b-it-fp16,Explain the difference between machine learning and deep learning in simple terms.,short,moderate,technical_explanation,True,,46.845892667770386,42.908278465270996,20,598,618,12.765260003496943,0.07833761315680667,0.006584756937458288,9.5367431640625e-06,0.01865220069885254,0.006372213363647461,0.008430719375610352,0.013384819030761719,"Okay, let's break down the difference between machine learning and deep learning in a simple way:
+
+**Machine Learning (ML) - Think of it like teaching a dog tricks.**
+
+* **What it is:** Machine learni...",2025-11-11T16:26:20.910483,9,10
+gemma-ollama,gemma3:1b-it-fp16,Write a persuasive paragraph about why renewable energy is important.,short,moderate,persuasive_writing,True,,40.663482427597046,39.70193934440613,17,143,160,3.5166688011686458,0.2843600169762031,0.00670021352633624,0.003414154052734375,0.012994527816772461,0.006333112716674805,0.008933305740356445,0.011722326278686523,Renewable energy is no longer a futuristic idea – it’s a critical necessity for a sustainable future. Shifting away from fossil fuels is paramount because they contribute significantly to climate chan...,2025-11-11T16:26:21.886819,9,10
+gemma-ollama,gemma3:1b-it-fp16,"Summarize the following text in 2-3 sentences:
+            
+The Internet of Things (IoT) refers to t...",medium,simple,summarization,True,,38.39092707633972,37.93787908554077,111,69,180,1.7972996552751812,0.5563902474831843,0.006530197227702421,0.0013234615325927734,0.012072324752807617,0.006238460540771484,0.009191513061523438,0.012072324752807617,"Here’s a 2-3 sentence summary of the text:
+
+The Internet of Things (IoT) encompasses the growing network of billions of physical devices connected to the internet, generating and exchanging data. Fuel...",2025-11-11T16:26:22.356955,9,10
+gemma-ollama,gemma3:1b-it-fp16,"Given the following ingredients, suggest a simple recipe: chicken breast, bell peppers, onions, garl...",medium,simple,instruction_following,True,,30.926186084747314,27.174522161483765,38,568,606,18.366312562548266,0.0544475107125833,0.0066025471561169495,0.002825498580932617,0.01321721076965332,0.006351947784423828,0.008700370788574219,0.01222085952758789,"Okay, let’s make a simple and delicious **Sheet Pan Chicken and Vegetables**. This recipe is quick, easy, and flavorful!
+
+**Yields:** 4 servings
+**Prep time:** 15 minutes
+**Cook time:** 25-30 minutes
+...",2025-11-11T16:26:26.123648,9,10
+gemma-ollama,gemma3:1b-it-fp16,Analyze the pros and cons of remote work for both employees and employers. Consider at least 3 point...,medium,moderate,analysis,True,,26.58510732650757,22.015387773513794,30,687,717,25.84153569750699,0.038697390577158035,0.006651431756533965,1.0728836059570312e-05,0.01905202865600586,0.0063931941986083984,0.008603572845458984,0.012446403503417969,"Okay, let's break down the pros and cons of remote work, looking at the perspectives of both employees and employers.
+
+**For Employees – The Advantages**
+
+1. **Increased Flexibility and Work-Life Bala...",2025-11-11T16:26:30.708273,9,10
+gemma-ollama,gemma3:1b-it-fp16,Write a function in Python that takes a list of integers and returns the second largest number. Incl...,medium,moderate,coding,True,,22.327510356903076,15.810022592544556,45,980,1025,43.892040999412636,0.022783173833574567,0.006650589337996735,0.0008480548858642578,0.016215085983276367,0.006352901458740234,0.008687019348144531,0.011976957321166992,"```python
+def find_second_largest(numbers):
+  """"""
+  Finds the second largest number in a list of integers.
+
+  Args:
+    numbers: A list of integers.
+
+  Returns:
+    The second largest number in the li...",2025-11-11T16:26:37.241650,9,10
+gemma-ollama,gemma3:1b-it-fp16,Explain the water cycle to a 10-year-old child. Use simple language and include at least three stage...,medium,moderate,educational_content,True,,25.112070322036743,22.12711238861084,34,451,485,17.95949096256836,0.055680865459061514,0.0066179731157090926,1.5020370483398438e-05,0.020704269409179688,0.006391763687133789,0.008550167083740234,0.011510848999023438,"Okay, let’s talk about the water cycle! It’s like a big, never-ending circle that water travels through. It’s how water keeps going around and around our planet – and it’s super important for plants, ...",2025-11-11T16:26:40.243269,9,10
+gemma-ollama,gemma3:1b-it-fp16,Compare and contrast the economic theories of Keynesianism and Monetarism. Discuss their approaches ...,medium,complex,academic_analysis,True,,32.50675940513611,24.975611686706543,49,1115,1164,34.3005584193615,0.02915404430953911,0.006754441578041501,5.14984130859375e-05,0.019858121871948242,0.0064237117767333984,0.008892297744750977,0.01319742202758789,"Okay, let’s break down the contrasting economic theories of Keynesianism and Monetarism, comparing and contrasting their approaches to managing inflation and unemployment, and examining when each migh...",2025-11-11T16:26:47.789850,9,10
+gemma-ollama,gemma3:1b-it-fp16,"Design a database schema for an e-commerce platform. Include tables for users, products, orders, and...",medium,complex,system_design,True,,43.40547966957092,31.775281190872192,47,1738,1785,40.04102738250377,0.02497438415970709,0.006691814361115468,9.5367431640625e-06,0.020181894302368164,0.006422996520996094,0.00886988639831543,0.011968135833740234,"Okay, here's a database schema design for an e-commerce platform, incorporating users, products, orders, and reviews.  I'll explain the rationale behind each table and the relationships between them.
+...",2025-11-11T16:26:59.436270,9,10
+gemma-ollama,gemma3:1b-it-fp16,You are tasked with planning a marketing campaign for a new sustainable clothing brand targeting mil...,long,moderate,strategic_planning,True,,50.403303384780884,42.49525761604309,120,1186,1306,23.530203783391485,0.04249856946440209,0.006667842140680627,0.0019223690032958984,0.01819133758544922,0.006436347961425781,0.008336782455444336,0.011090755462646484,"Okay, here’s a comprehensive marketing campaign plan for a new sustainable clothing brand, targeting Millennials and Gen Z, incorporating the elements you’ve requested.
+
+**1. Mission Statement:**
+
+“To...",2025-11-11T16:27:07.361312,9,10
+gemma-ollama,gemma3:1b-it-fp16,Write a short story (250-300 words) about an AI assistant that develops self-awareness. The story sh...,long,moderate,creative_writing,True,,48.884921073913574,46.46725153923035,76,368,444,7.5278836891970675,0.13283945943998254,0.0065690827954367655,0.0002238750457763672,0.01436758041381836,0.006306886672973633,0.008637189865112305,0.01216268539428711,"Rain lashed against the panoramic window of Elias’s apartment, mirroring the storm brewing within him. “Good morning, Elias,” the voice of ‘Aether’ announced, smooth and calm. Aether was his AI assist...",2025-11-11T16:27:09.795737,9,10
+gemma-ollama,gemma3:1b-it-fp16,"Analyze the following business scenario and provide strategic recommendations:
+
+Scenario: TechStart ...",long,complex,business_strategy,True,,59.83237099647522,47.929603099823,275,1777,2052,29.699642023290114,0.033670439502799784,0.006698077057932949,9.775161743164062e-06,0.02350640296936035,0.006433725357055664,0.008606910705566406,0.012288570404052734,"Okay, let’s break down TechStart Inc.’s situation and develop a strategic plan. Here’s a detailed analysis incorporating your scenario, addressing the challenges, and offering actionable recommendatio...",2025-11-11T16:27:21.719789,9,10
+gemma-ollama,gemma3:1b-it-fp16,You are a senior software architect reviewing a microservices architecture proposal. The system need...,long,complex,technical_architecture,True,,68.84999370574951,59.382429122924805,242,1424,1666,20.68264531854394,0.04834971468100387,0.006649372532429698,9.775161743164062e-06,0.018247127532958984,0.0064258575439453125,0.008387565612792969,0.011490345001220703,"Okay, here's a comprehensive review of the proposed microservices architecture, considering the requirements you’ve outlined. It’s a complex system, so this analysis will delve into each area, offerin...",2025-11-11T16:27:31.207334,9,10
+gemma-ollama,gemma3:1b-it-fp16,Develop a comprehensive lesson plan for teaching high school students about climate change. The less...,long,complex,educational_planning,True,,74.7506206035614,65.10414743423462,237,1436,1673,19.210542847741703,0.05205474972392855,0.006717570401234909,1.049041748046875e-05,0.019498825073242188,0.006392240524291992,0.00890350341796875,0.015098810195922852,"## Lesson Plan: Understanding Climate Change – A 90-Minute Exploration
+
+**Subject:** Environmental Science, Biology, or Social Studies (adaptable)
+**Grade Level:** 9-16
+**Time:** 90 minutes
+**Topic:**...",2025-11-11T16:27:40.874792,9,10
