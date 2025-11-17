@@ -1,8 +1,21 @@
 
-"""
-Visualization module for benchmark results.
-Creates presentation-ready charts comparing model families across inference engines.
-Focus: NIM vs vLLM performance comparison with meaningful insights.
+"""Benchmark Result Visualization.
+
+Creates production-ready visualizations for LLM benchmark analysis with HPE corporate
+branding. Generates comparative charts for TTFT, throughput, latency distributions,
+and inter-token latency metrics across different inference engines and model families.
+
+Visualization Suite:
+    - Engine comparison dashboards
+    - TTFT detailed analysis
+    - Throughput analysis
+    - Inter-token latency distributions
+    - Scalability analysis
+    - Performance heatmaps
+
+Typical usage:
+    visualizer = BenchmarkVisualizer(results, output_dir="viz")
+    visualizer.generate_all_visualizations()
 """
 
 import pandas as pd
@@ -13,9 +26,8 @@ import os
 from typing import List, Dict, Optional, Tuple
 from datetime import datetime
 
-# Set professional presentation style
 sns.set_style("whitegrid")
-sns.set_context("talk")  # Larger fonts for presentations
+sns.set_context("talk")
 plt.rcParams['figure.figsize'] = (14, 8)
 plt.rcParams['font.size'] = 11
 plt.rcParams['axes.titlesize'] = 14
@@ -27,54 +39,58 @@ plt.rcParams['figure.titlesize'] = 16
 plt.rcParams['axes.facecolor'] = '#FFFFFF'
 plt.rcParams['figure.facecolor'] = '#FFFFFF'
 
-# HPE Corporate Color Palette
 COLORS = {
-    # Primary colors for engine comparison
-    'nim': '#0070F8',           # HPE Blue - Clear, tech-forward
-    'vllm': '#7764FC',          # HPE Purple - Complementary, distinct
-    'ollama': '#01A982',        # HPE Green - Open source alternative
+    'nim': '#0070F8',
+    'vllm': '#7764FC',
+    'ollama': '#01A982',
     
-    # Alternate engine colors (if needed)
-    'nim_alt': '#01A982',       # HPE Green - Brand signature
-    'vllm_alt': '#62E5F6',      # HPE Cyan - Fresh, modern
-    'ollama_alt': '#05CC93',    # Jade Green
+    'nim_alt': '#01A982',
+    'vllm_alt': '#62E5F6',
+    'ollama_alt': '#05CC93',
     
-    # Status indicators
-    'success': '#01A982',       # HPE Green - Positive, growth
-    'warning': '#05CC93',       # Jade Green - Caution, attention
-    'danger': '#7764FC',        # Purple - Issues (softer than red)
+    'success': '#01A982',
+    'warning': '#05CC93',
+    'danger': '#7764FC',
     
-    # Secondary palette for variety
-    'primary': '#01A982',       # HPE Green
-    'secondary': '#0070F8',     # Blue
-    'accent1': '#05CC93',       # Jade Green
-    'accent2': '#00E0AF',       # Mint Green
-    'accent3': '#62E5F6',       # Cyan
-    'accent4': '#7764FC',       # Purple
+    'primary': '#01A982',
+    'secondary': '#0070F8',
+    'accent1': '#05CC93',
+    'accent2': '#00E0AF',
+    'accent3': '#62E5F6',
+    'accent4': '#7764FC',
     
-    # Neutrals for backgrounds and text
-    'midnight': '#292D3A',      # Dark text/borders
-    'black': '#000000',         # Pure black
-    'white': '#FFFFFF',         # Pure white
-    'light_cloud': '#F7F7F7',   # Light background
-    'cloud': '#E6E8E9',         # Subtle background
-    'dark_cloud': '#D4D8DB',    # Medium gray
-    'slate': '#B1B9BE',         # Mid gray
-    'light_carbon': '#7D8A92',  # Dark gray
-    'carbon': '#535C66',        # Very dark gray
+    'midnight': '#292D3A',
+    'black': '#000000',
+    'white': '#FFFFFF',
+    'light_cloud': '#F7F7F7',
+    'cloud': '#E6E8E9',
+    'dark_cloud': '#D4D8DB',
+    'slate': '#B1B9BE',
+    'light_carbon': '#7D8A92',
+    'carbon': '#535C66',
 }
 
 
 class BenchmarkVisualizer:
-    """Create presentation-ready visualizations for model family comparisons."""
+    """Generate production-ready benchmark visualizations.
     
-    def __init__(self, results: List[Dict], output_dir: str = "visualizations"):
-        """
-        Initialize visualizer with results.
+    Creates a comprehensive suite of charts for LLM benchmark analysis including
+    comparative dashboards, detailed metric breakdowns, and statistical distributions.
+    All visualizations follow HPE corporate branding guidelines.
+    
+    Attributes:
+        results: Raw benchmark result dictionaries.
+        output_dir: Target directory for generated charts.
+        df: Complete results as pandas DataFrame.
+        df_success: Filtered DataFrame containing only successful requests.
+    """
+    
+    def __init__(self, results: List[Dict], output_dir: str = "visualizations") -> None:
+        """Initialize visualizer with benchmark results.
         
         Args:
-            results: List of benchmark result dictionaries
-            output_dir: Directory to save visualization files
+            results: List of benchmark result dictionaries.
+            output_dir: Directory for generated visualizations (default: "visualizations").
         """
         self.results = results
         self.output_dir = output_dir

@@ -1,6 +1,13 @@
 
-"""
-CSV writer for benchmark results.
+"""CSV Export for Benchmark Results.
+
+Provides functionality to export benchmark results to CSV format with both
+detailed per-request metrics and aggregated summary statistics.
+
+Typical usage:
+    writer = BenchmarkCSVWriter()
+    filepath = writer.write_results(results, output_dir="results")
+    summary_path = writer.write_summary(results, output_dir="results")
 """
 
 import csv
@@ -10,19 +17,27 @@ from datetime import datetime
 
 
 class BenchmarkCSVWriter:
-    """Write benchmark results to CSV files."""
+    """Handles CSV export of benchmark results.
+    
+    This class provides methods to export benchmark data in two formats:
+    - Detailed: Individual metrics for each request
+    - Summary: Aggregated statistics per endpoint
+    """
     
     @staticmethod
     def write_results(results: List[Dict], output_dir: str = "results") -> str:
-        """
-        Write benchmark results to a CSV file.
+        """Export detailed benchmark results to CSV.
+        
+        Creates a timestamped CSV file containing individual metrics for each
+        benchmark request including latency, throughput, token counts, and
+        inter-token latency distributions.
         
         Args:
-            results: List of benchmark result dictionaries
-            output_dir: Directory to save CSV file
+            results: List of benchmark result dictionaries.
+            output_dir: Target directory for CSV file (default: "results").
             
         Returns:
-            Path to the created CSV file
+            Absolute path to the created CSV file.
         """
         os.makedirs(output_dir, exist_ok=True)
         
@@ -34,7 +49,6 @@ class BenchmarkCSVWriter:
             print("No results to write")
             return filepath
         
-        # Define CSV columns
         fieldnames = [
             'endpoint_name',
             'model_name',
@@ -68,7 +82,6 @@ class BenchmarkCSVWriter:
             writer.writeheader()
             
             for result in results:
-                # Ensure all fields are present
                 row = {field: result.get(field, '') for field in fieldnames}
                 writer.writerow(row)
         
@@ -77,15 +90,17 @@ class BenchmarkCSVWriter:
     
     @staticmethod
     def write_summary(results: List[Dict], output_dir: str = "results") -> str:
-        """
-        Write a summary CSV with aggregated statistics per endpoint.
+        """Export aggregated summary statistics to CSV.
+        
+        Creates a timestamped CSV file with endpoint-level statistics including
+        success rates, average metrics, and percentile distributions.
         
         Args:
-            results: List of benchmark result dictionaries
-            output_dir: Directory to save CSV file
+            results: List of benchmark result dictionaries.
+            output_dir: Target directory for CSV file (default: "results").
             
         Returns:
-            Path to the created summary CSV file
+            Absolute path to the created summary CSV file.
         """
         os.makedirs(output_dir, exist_ok=True)
         
@@ -97,7 +112,6 @@ class BenchmarkCSVWriter:
             print("No results to summarize")
             return filepath
         
-        # Group results by endpoint
         endpoint_stats = {}
         
         for result in results:
@@ -139,7 +153,6 @@ class BenchmarkCSVWriter:
                 if result['output_tokens']:
                     stats['output_tokens'].append(result['output_tokens'])
                 
-                # Collect inter-token latency metrics
                 if result.get('avg_inter_token_latency'):
                     stats['avg_inter_token_latencies'].append(result['avg_inter_token_latency'])
                 if result.get('min_inter_token_latency'):
@@ -155,7 +168,6 @@ class BenchmarkCSVWriter:
             else:
                 stats['failed_requests'] += 1
         
-        # Calculate summary statistics
         summary_data = []
         
         for endpoint, stats in endpoint_stats.items():
@@ -167,7 +179,6 @@ class BenchmarkCSVWriter:
                 'success_rate': f"{100 * stats['successful_requests'] / stats['total_requests']:.2f}%",
             }
             
-            # Calculate averages
             if stats['total_latencies']:
                 summary['avg_total_latency'] = sum(stats['total_latencies']) / len(stats['total_latencies'])
                 summary['min_total_latency'] = min(stats['total_latencies'])
@@ -194,7 +205,6 @@ class BenchmarkCSVWriter:
             if stats['output_tokens']:
                 summary['avg_output_tokens'] = sum(stats['output_tokens']) / len(stats['output_tokens'])
             
-            # Add inter-token latency statistics
             if stats['avg_inter_token_latencies']:
                 summary['avg_inter_token_latency'] = sum(stats['avg_inter_token_latencies']) / len(stats['avg_inter_token_latencies'])
             
@@ -215,7 +225,6 @@ class BenchmarkCSVWriter:
             
             summary_data.append(summary)
         
-        # Write summary CSV
         if summary_data:
             fieldnames = list(summary_data[0].keys())
             
@@ -224,6 +233,6 @@ class BenchmarkCSVWriter:
                 writer.writeheader()
                 writer.writerows(summary_data)
             
-            print(f"✓ Summary written to: {filepath}")
+            print(f"\u2713 Summary written to: {filepath}")
         
         return filepath

@@ -1,7 +1,14 @@
 
-"""
-Main benchmarking script for LLM endpoint comparison.
-Measures TTFT, TPOT, latency, throughput, and other performance metrics.
+"""LLM Endpoint Benchmarking Module.
+
+This module provides comprehensive performance benchmarking capabilities for Large Language Model
+(LLM) inference endpoints. It measures critical performance metrics including Time to First Token
+(TTFT), Time Per Output Token (TPOT), total latency, throughput, and inter-token latencies.
+
+Typical usage:
+    config = BenchmarkConfig(num_iterations=10, concurrent_requests=5)
+    benchmark = LLMBenchmark(config)
+    results = await benchmark.run_benchmark(endpoints, sequential=False)
 """
 
 import time
@@ -18,16 +25,31 @@ import urllib3
 from config import EndpointConfig, BenchmarkConfig
 from prompts import get_test_prompts
 
-# Suppress SSL warnings
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 warnings.filterwarnings("ignore", message="Unverified HTTPS request")
 
 
 class ProgressTracker:
-    """Enhanced progress tracking with rich terminal visualization."""
+    """Real-time Progress Tracking for Benchmark Execution.
     
-    def __init__(self, endpoints: List[str], total_requests_per_endpoint: int):
-        """Initialize progress tracker."""
+    Provides visual feedback during benchmark execution with live updates on completion status,
+    success rates, and performance metrics. Updates are throttled to avoid excessive terminal I/O.
+    
+    Attributes:
+        endpoints: Dictionary mapping endpoint names to their status and metrics.
+        start_time: Timestamp when tracking began.
+        last_update: Timestamp of the last display update.
+        update_interval: Minimum seconds between display updates.
+        first_display: Whether this is the first time displaying progress.
+    """
+    
+    def __init__(self, endpoints: List[str], total_requests_per_endpoint: int) -> None:
+        """Initialize progress tracker.
+        
+        Args:
+            endpoints: List of endpoint names to track.
+            total_requests_per_endpoint: Total number of requests per endpoint.
+        """
         self.endpoints = {name: {
             'completed': 0,
             'total': total_requests_per_endpoint,
@@ -37,12 +59,12 @@ class ProgressTracker:
             'latencies': [],
             'ttfts': [],
             'throughputs': [],
-            'status': 'pending'  # pending, running, completed, error
+            'status': 'pending'
         } for name in endpoints}
         self.start_time = time.time()
         self.last_update = 0
-        self.update_interval = 0.5  # Update display every 0.5 seconds
-        self.first_display = True  # Track if this is the first display
+        self.update_interval = 0.5
+        self.first_display = True
         
     def _get_progress_bar(self, completed: int, total: int, width: int = 30) -> str:
         """Generate a visual progress bar."""
@@ -125,18 +147,16 @@ class ProgressTracker:
             self.last_update = current_time
     
     def display(self):
-        """Display the current progress with rich formatting."""
-        # Calculate total lines to display
-        # 1 separator + 1 title + 1 separator + 1 blank + 
-        # 1 overall + 1 success/fail + 1 blank + 1 header + 1 separator + 
-        # N endpoints + 1 separator + 1 blank = 11 + N (was 10, now 11)
+        """Render current progress to terminal.
+        
+        Displays a comprehensive progress table with completion status, success rates,
+        and performance metrics for each endpoint. Updates are limited by update_interval
+        to prevent excessive terminal I/O.
+        """
         total_lines = 11 + len(self.endpoints)
         
-        # Clear previous display
         if not self.first_display:
-            # Move cursor up to the beginning of previous output
             sys.stdout.write(f'\033[{total_lines}A')
-            # Clear from cursor to end of screen
             sys.stdout.write('\033[J')
         
         self.first_display = False
@@ -144,31 +164,26 @@ class ProgressTracker:
         elapsed = time.time() - self.start_time
         
         print("=" * 100)
-        print(f"  🚀 LLM BENCHMARK PROGRESS  |  ⏱  Elapsed: {self._format_time(elapsed)}")
+        print(f"  \U0001f680 LLM BENCHMARK PROGRESS  |  \u23f1  Elapsed: {self._format_time(elapsed)}")
         print("=" * 100)
         
-        # Calculate overall stats
         total_completed = sum(ep['completed'] for ep in self.endpoints.values())
         total_requests = sum(ep['total'] for ep in self.endpoints.values())
         total_success = sum(ep['success'] for ep in self.endpoints.values())
         total_failed = sum(ep['failed'] for ep in self.endpoints.values())
         
-        # Overall progress bar
         overall_bar = self._get_progress_bar(total_completed, total_requests, width=40)
         print(f"\n  Overall: {overall_bar}  ({total_completed}/{total_requests} requests)")
         print(f"  Success: {total_success} ✓  |  Failed: {total_failed} ✗")
         print()
         
-        # Header for endpoint table
         print(f"{'Endpoint':<20} {'Status':<8} {'Progress':<35} {'Success':<12} {'Avg TTFT':<12} {'Avg Thr.':<12} {'ETA':<10}")
         print("-" * 100)
         
-        # Display each endpoint
         for name, ep in self.endpoints.items():
             status = self._get_status_symbol(ep['status'])
             progress_bar = self._get_progress_bar(ep['completed'], ep['total'], width=20)
             
-            # Calculate averages
             avg_ttft = sum(ep['ttfts']) / len(ep['ttfts']) if ep['ttfts'] else 0
             avg_thr = sum(ep['throughputs']) / len(ep['throughputs']) if ep['throughputs'] else 0
             
@@ -176,11 +191,9 @@ class ProgressTracker:
             ttft_str = f"{avg_ttft:.3f}s" if avg_ttft > 0 else "N/A"
             thr_str = f"{avg_thr:.1f} t/s" if avg_thr > 0 else "N/A"
             
-            # Calculate ETA for this endpoint
             ep_elapsed = time.time() - ep['start_time'] if ep['start_time'] else elapsed
             eta = self._calculate_eta(ep['completed'], ep['total'], ep_elapsed)
             
-            # Truncate endpoint name if too long
             display_name = name[:18] + '..' if len(name) > 20 else name
             
             print(f"{display_name:<20} {status:<8} {progress_bar:<35} {success_rate:<12} {ttft_str:<12} {thr_str:<12} {eta:<10}")
@@ -219,7 +232,39 @@ class ProgressTracker:
 
 @dataclass
 class BenchmarkResult:
-    """Results from a single benchmark run."""
+    """Comprehensive metrics from a single benchmark request.
+    
+    This dataclass encapsulates all performance metrics collected during a single
+    LLM inference request, including timing, token counts, and latency distributions.
+    
+    Attributes:
+        endpoint_name: Identifier for the tested endpoint.
+        model_name: Full model identifier.
+        prompt_text: Truncated prompt text for reference.
+        prompt_length: Categorical prompt length (short/medium/long).
+        prompt_complexity: Complexity level (simple/moderate/complex).
+        prompt_category: Semantic category of the prompt.
+        success: Whether the request completed successfully.
+        error_message: Error details if success is False.
+        total_latency: End-to-end request duration in seconds.
+        time_to_first_token: TTFT - latency until first token arrives.
+        input_tokens: Number of tokens in the prompt.
+        output_tokens: Number of generated tokens.
+        total_tokens: Sum of input and output tokens.
+        tokens_per_second: Overall throughput metric.
+        time_per_output_token: TPOT - average time per generated token.
+        inter_token_latencies: Raw inter-token latency measurements.
+        avg_inter_token_latency: Mean inter-token latency.
+        min_inter_token_latency: Minimum observed inter-token latency.
+        max_inter_token_latency: Maximum observed inter-token latency.
+        p50_inter_token_latency: Median inter-token latency.
+        p95_inter_token_latency: 95th percentile inter-token latency.
+        p99_inter_token_latency: 99th percentile inter-token latency.
+        response_text: Truncated generated text.
+        timestamp: ISO 8601 timestamp of request completion.
+        iteration: Iteration number within the benchmark run.
+        concurrent_level: Number of concurrent requests in this test.
+    """
     endpoint_name: str
     model_name: str
     prompt_text: str
@@ -229,39 +274,49 @@ class BenchmarkResult:
     success: bool
     error_message: Optional[str]
     
-    # Timing metrics
-    total_latency: float  # Total time from request to complete response
-    time_to_first_token: Optional[float]  # TTFT - time until streaming starts
+    total_latency: float
+    time_to_first_token: Optional[float]
     
-    # Token metrics
     input_tokens: Optional[int]
     output_tokens: Optional[int]
     total_tokens: Optional[int]
     
-    # Throughput metrics
-    tokens_per_second: Optional[float]  # Overall throughput
-    time_per_output_token: Optional[float]  # TPOT - average time per token
+    tokens_per_second: Optional[float]
+    time_per_output_token: Optional[float]
     
-    # Inter-token latency metrics
-    inter_token_latencies: Optional[List[float]]  # List of latencies between consecutive tokens
-    avg_inter_token_latency: Optional[float]  # Average inter-token latency
-    min_inter_token_latency: Optional[float]  # Minimum inter-token latency
-    max_inter_token_latency: Optional[float]  # Maximum inter-token latency
-    p50_inter_token_latency: Optional[float]  # 50th percentile (median)
-    p95_inter_token_latency: Optional[float]  # 95th percentile
-    p99_inter_token_latency: Optional[float]  # 99th percentile
+    inter_token_latencies: Optional[List[float]]
+    avg_inter_token_latency: Optional[float]
+    min_inter_token_latency: Optional[float]
+    max_inter_token_latency: Optional[float]
+    p50_inter_token_latency: Optional[float]
+    p95_inter_token_latency: Optional[float]
+    p99_inter_token_latency: Optional[float]
     
-    # Response
     response_text: Optional[str]
     
-    # Metadata
     timestamp: str
     iteration: int
     concurrent_level: int
 
 
 class LLMBenchmark:
-    """LLM endpoint benchmarking utility."""
+    """Orchestrates comprehensive LLM endpoint benchmarking.
+    
+    This class manages the complete benchmarking lifecycle including request execution,
+    metric collection, progress tracking, and result aggregation. Supports both sequential
+    and concurrent execution modes with configurable parallelism.
+    
+    Attributes:
+        config: Benchmark configuration parameters.
+        results: Accumulated benchmark results.
+        progress_tracker: Optional real-time progress tracker.
+    
+    Example:
+        >>> config = BenchmarkConfig(num_iterations=10, concurrent_requests=5)
+        >>> benchmark = LLMBenchmark(config)
+        >>> results = await benchmark.run_benchmark(endpoints, sequential=False)
+        >>> metrics = benchmark.get_results()
+    """
     
     def __init__(self, config: BenchmarkConfig):
         """Initialize benchmarking utility."""
@@ -277,18 +332,20 @@ class LLMBenchmark:
         iteration: int,
         concurrent_level: int
     ) -> BenchmarkResult:
-        """
-        Make a streaming request to an LLM endpoint and measure performance.
+        """Execute streaming request and collect comprehensive metrics.
+        
+        Performs a single inference request with streaming enabled, measuring all relevant
+        performance metrics including TTFT, TPOT, throughput, and inter-token latencies.
         
         Args:
-            session: aiohttp session
-            endpoint: Endpoint configuration
-            prompt: Prompt dictionary with text and metadata
-            iteration: Current iteration number
-            concurrent_level: Number of concurrent requests
+            session: Active aiohttp client session.
+            endpoint: Target endpoint configuration.
+            prompt: Prompt dictionary containing text and metadata.
+            iteration: Current iteration number.
+            concurrent_level: Number of concurrent requests in this batch.
             
         Returns:
-            BenchmarkResult with all metrics
+            BenchmarkResult containing all collected metrics.
         """
         headers = {
             "Authorization": f"Bearer {endpoint.auth_token}",
@@ -314,7 +371,6 @@ class LLMBenchmark:
         error_message = None
         success = False
         
-        # Inter-token latency tracking
         token_timestamps: List[float] = []
         last_token_time = None
         
@@ -323,13 +379,12 @@ class LLMBenchmark:
                 endpoint.url,
                 headers=headers,
                 json=payload,
-                ssl=False,  # verify=False
+                ssl=False,
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             ) as response:
                 response.raise_for_status()
                 
                 if self.config.stream:
-                    # Handle streaming response
                     first_token_received = False
                     
                     async for line in response.content:
@@ -348,24 +403,20 @@ class LLMBenchmark:
                         try:
                             data = json.loads(data_str)
                             
-                            # Record TTFT on first token
                             if not first_token_received:
                                 time_to_first_token = time.time() - start_time
                                 first_token_received = True
                             
-                            # Extract token content
                             if 'choices' in data and len(data['choices']) > 0:
                                 delta = data['choices'][0].get('delta', {})
                                 content = delta.get('content', '')
                                 if content:
-                                    # Record token timestamp for inter-token latency
                                     current_time = time.time()
                                     token_timestamps.append(current_time)
                                     
                                     response_text += content
                                     output_tokens += 1
                                 
-                                # Extract usage information if available
                                 if 'usage' in data:
                                     usage = data['usage']
                                     input_tokens = usage.get('prompt_tokens')
@@ -374,7 +425,6 @@ class LLMBenchmark:
                         except json.JSONDecodeError:
                             continue
                 else:
-                    # Handle non-streaming response
                     data = await response.json()
                     time_to_first_token = time.time() - start_time
                     
@@ -396,10 +446,8 @@ class LLMBenchmark:
         except Exception as e:
             error_message = f"Unexpected error: {str(e)}"
         
-        # Calculate final metrics
         total_latency = time.time() - start_time
         
-        # Calculate throughput metrics
         tokens_per_second = None
         time_per_output_token = None
         
@@ -407,7 +455,6 @@ class LLMBenchmark:
             tokens_per_second = output_tokens / total_latency
             time_per_output_token = total_latency / output_tokens
         
-        # Calculate inter-token latencies
         inter_token_latencies = None
         avg_inter_token_latency = None
         min_inter_token_latency = None
@@ -417,7 +464,6 @@ class LLMBenchmark:
         p99_inter_token_latency = None
         
         if len(token_timestamps) > 1:
-            # Calculate time differences between consecutive tokens
             inter_token_latencies = [
                 token_timestamps[i] - token_timestamps[i-1] 
                 for i in range(1, len(token_timestamps))
@@ -428,7 +474,6 @@ class LLMBenchmark:
                 min_inter_token_latency = min(inter_token_latencies)
                 max_inter_token_latency = max(inter_token_latencies)
                 
-                # Calculate percentiles
                 sorted_latencies = sorted(inter_token_latencies)
                 n = len(sorted_latencies)
                 
@@ -440,9 +485,7 @@ class LLMBenchmark:
                 p95_inter_token_latency = sorted_latencies[p95_idx] if p95_idx < n else sorted_latencies[-1]
                 p99_inter_token_latency = sorted_latencies[p99_idx] if p99_idx < n else sorted_latencies[-1]
         
-        # If we couldn't get input tokens from usage, estimate from prompt
         if input_tokens is None:
-            # Rough estimation: ~4 characters per token
             input_tokens = len(prompt["prompt"]) // 4
         
         if total_tokens is None and input_tokens and output_tokens:
@@ -482,22 +525,22 @@ class LLMBenchmark:
         endpoint: EndpointConfig,
         prompts: List[Dict]
     ) -> List[BenchmarkResult]:
-        """
-        Run sequential benchmark (one request at a time).
+        """Execute benchmark with sequential prompt processing.
+        
+        Processes one prompt at a time while maintaining a dedicated session for
+        the endpoint to ensure fair comparison with concurrent mode.
         
         Args:
-            endpoint: Endpoint to test
-            prompts: List of prompts to test
+            endpoint: Target endpoint configuration.
+            prompts: List of prompts to benchmark.
             
         Returns:
-            List of benchmark results
+            List of benchmark results for all prompts and iterations.
         """
         results = []
         
-        # Create dedicated session for this endpoint
-        # Even in sequential mode, each endpoint gets its own session for fairness
         connector = aiohttp.TCPConnector(
-            limit=10,  # Sequential doesn't need many connections
+            limit=10,
             limit_per_host=10
         )
         
@@ -511,7 +554,6 @@ class LLMBenchmark:
                     )
                     results.append(result)
                     
-                    # Update progress tracker
                     if self.progress_tracker:
                         self.progress_tracker.update_progress(
                             endpoint.name,
@@ -528,41 +570,37 @@ class LLMBenchmark:
         endpoint: EndpointConfig,
         prompts: List[Dict]
     ) -> List[BenchmarkResult]:
-        """
-        Run concurrent benchmark with continuous concurrency control.
-        Uses semaphore to maintain exactly N concurrent requests at all times.
+        """Execute benchmark with controlled concurrent request processing.
+        
+        Uses semaphore-based concurrency control to maintain exactly N concurrent
+        requests at all times, ensuring continuous endpoint utilization.
         
         Args:
-            endpoint: Endpoint to test
-            prompts: List of prompts to test
+            endpoint: Target endpoint configuration.
+            prompts: List of prompts to benchmark.
             
         Returns:
-            List of benchmark results
+            List of benchmark results for all prompts and iterations.
         """
         results = []
         
-        # Create dedicated session for this endpoint with fair connection limits
-        # This ensures each endpoint gets equal access to HTTP connections
         connector = aiohttp.TCPConnector(
-            limit=self.config.concurrent_requests * 2,  # 2x concurrent for safety
-            limit_per_host=self.config.concurrent_requests * 2,  # Per-endpoint limit
-            ttl_dns_cache=300  # DNS cache for performance
+            limit=self.config.concurrent_requests * 2,
+            limit_per_host=self.config.concurrent_requests * 2,
+            ttl_dns_cache=300
         )
         
         timeout = aiohttp.ClientTimeout(total=self.config.timeout)
         
-        # Semaphore to limit concurrent requests to exactly the configured amount
         semaphore = asyncio.Semaphore(self.config.concurrent_requests)
         
         async def bounded_request(session, endpoint, prompt, iteration):
-            """Wrapper to enforce concurrency limit with semaphore and update progress."""
             async with semaphore:
                 result = await self._make_streaming_request(
                     session, endpoint, prompt, iteration, 
                     concurrent_level=self.config.concurrent_requests
                 )
                 
-                # Update progress tracker immediately after each request completes
                 if self.progress_tracker:
                     self.progress_tracker.update_progress(
                         endpoint.name,
@@ -575,16 +613,12 @@ class LLMBenchmark:
                 return result
         
         async with aiohttp.ClientSession(connector=connector, timeout=timeout) as session:
-            # Create ALL tasks upfront (all iterations × all prompts)
             all_tasks = []
             for iteration in range(self.config.num_iterations):
                 for prompt in prompts:
                     task = bounded_request(session, endpoint, prompt, iteration)
                     all_tasks.append(task)
             
-            # Run ALL tasks concurrently - semaphore controls how many run at once
-            # This ensures continuous utilization: as soon as one finishes, another starts
-            # Progress is updated in real-time as each request completes
             all_results = await asyncio.gather(*all_tasks)
             
             results.extend(all_results)
@@ -597,18 +631,16 @@ class LLMBenchmark:
         prompts: List[Dict],
         sequential: bool
     ) -> Tuple[EndpointConfig, List[BenchmarkResult]]:
-        """
-        Benchmark a single endpoint (helper for parallel execution).
+        """Benchmark single endpoint with appropriate execution strategy.
         
         Args:
-            endpoint: Endpoint to test
-            prompts: List of prompts
-            sequential: Whether to run prompts sequentially
+            endpoint: Target endpoint configuration.
+            prompts: List of prompts to benchmark.
+            sequential: If True, process prompts sequentially; otherwise concurrently.
             
         Returns:
-            Tuple of (endpoint, results)
+            Tuple of endpoint configuration and collected results.
         """
-        # Mark endpoint as started in progress tracker
         if self.progress_tracker:
             self.progress_tracker.start_endpoint(endpoint.name)
         
@@ -624,16 +656,19 @@ class LLMBenchmark:
         endpoints: List[EndpointConfig],
         sequential: bool = True
     ) -> List[BenchmarkResult]:
-        """
-        Run complete benchmark suite with parallel endpoint testing.
+        """Execute comprehensive benchmark across multiple endpoints.
+        
+        All endpoints are tested in parallel to ensure fair comparison under identical
+        system conditions. The sequential parameter controls whether prompts within
+        each endpoint are processed sequentially or concurrently.
         
         Args:
-            endpoints: List of endpoints to test (will be tested in parallel)
-            sequential: If True, run prompts sequentially within each endpoint;
-                       if False, run prompts concurrently within each endpoint
+            endpoints: List of endpoints to benchmark (executed in parallel).
+            sequential: If True, process prompts sequentially within each endpoint;
+                       if False, use concurrent processing with semaphore control.
             
         Returns:
-            List of all benchmark results
+            Aggregated list of benchmark results from all endpoints.
         """
         print(f"\n{'='*100}")
         print(f"  🚀 LLM ENDPOINT BENCHMARK")
@@ -685,12 +720,15 @@ class LLMBenchmark:
         
         self.results = all_results
         
-        # Display final summary
         if self.progress_tracker:
             self.progress_tracker.final_summary()
         
         return all_results
     
     def get_results(self) -> List[Dict]:
-        """Get results as list of dictionaries."""
+        """Export results as list of dictionaries.
+        
+        Returns:
+            List of dictionaries containing all benchmark metrics.
+        """
         return [asdict(result) for result in self.results]

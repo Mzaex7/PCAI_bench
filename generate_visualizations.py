@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
-"""
-Generate visualizations from existing benchmark CSV results.
+"""Visualization Generation from Existing CSV Results.
 
-This script allows you to regenerate charts from previously saved benchmark data
-without re-running the entire benchmark. Supports combining multiple CSVs for
-comparative analysis.
+Enables regeneration of benchmark visualizations from previously saved CSV data
+without re-running benchmarks. Supports combining multiple CSV files for
+comparative analysis across different test runs or configurations.
+
+Typical usage:
+    python generate_visualizations.py
+    python generate_visualizations.py --csv results/llama.csv
+    python generate_visualizations.py --pattern "results/llama*.csv"
 """
 import argparse
 import os
@@ -13,14 +17,17 @@ from pathlib import Path
 import pandas as pd
 from typing import List
 
-# Add src to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
 from visualize import BenchmarkVisualizer
 
 
 def parse_args():
-    """Parse command line arguments."""
+    """Parse and validate command-line arguments.
+    
+    Returns:
+        argparse.Namespace: Parsed arguments including CSV paths and output directory.
+    """
     parser = argparse.ArgumentParser(
         description='Generate visualizations from benchmark CSV results',
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -75,7 +82,14 @@ Examples:
 
 
 def find_csv_files(pattern: str) -> List[str]:
-    """Find CSV files matching a glob pattern."""
+    """Locate CSV files matching glob pattern.
+    
+    Args:
+        pattern: Glob pattern for file matching (e.g., "results/*.csv").
+        
+    Returns:
+        Sorted list of matching CSV file paths.
+    """
     from glob import glob
     
     files = glob(pattern)
@@ -85,7 +99,14 @@ def find_csv_files(pattern: str) -> List[str]:
 
 
 def find_latest_csv(results_dir='results'):
-    """Find the most recent benchmark CSV file."""
+    """Locate most recently modified benchmark CSV file.
+    
+    Args:
+        results_dir: Directory to search (default: "results").
+        
+    Returns:
+        Path to latest CSV file, or None if none found.
+    """
     results_path = Path(results_dir)
     
     if not results_path.exists():
@@ -102,14 +123,16 @@ def find_latest_csv(results_dir='results'):
 
 
 def load_and_combine_csvs(csv_files: List[str]) -> pd.DataFrame:
-    """
-    Load and combine multiple CSV files into a single DataFrame.
+    """Load and merge multiple CSV files into unified DataFrame.
     
     Args:
-        csv_files: List of CSV file paths
+        csv_files: List of CSV file paths to combine.
         
     Returns:
-        Combined DataFrame
+        Combined pandas DataFrame with all results.
+        
+    Raises:
+        ValueError: If no valid CSV files could be loaded.
     """
     print(f"\n📂 Loading CSV files...")
     
@@ -141,7 +164,17 @@ def load_and_combine_csvs(csv_files: List[str]) -> pd.DataFrame:
 
 
 def detect_comparison_type(csv_files: List[str]) -> str:
-    """Detect what type of comparison is being made based on filenames."""
+    """Infer comparison type from CSV filenames.
+    
+    Analyzes filename patterns to determine whether comparison is by
+    concurrency level, inference engine, model family, or general.
+    
+    Args:
+        csv_files: List of CSV file paths.
+        
+    Returns:
+        Comparison type: "concurrency", "engine", "model", or "general".
+    """
     basenames = [os.path.basename(f) for f in csv_files]
     
     # Check for concurrency comparison (llama.csv, llama-5.csv, llama-10.csv, etc.)
@@ -165,7 +198,11 @@ def detect_comparison_type(csv_files: List[str]) -> str:
 
 
 def main():
-    """Main execution function."""
+    """Execute visualization generation workflow.
+    
+    Orchestrates CSV file discovery, data loading, comparison type detection,
+    and visualization generation.
+    """
     args = parse_args()
     
     # Determine which CSV files to process

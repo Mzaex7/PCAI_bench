@@ -1,12 +1,19 @@
 
 #!/usr/bin/env python3
-"""
-Main script to run LLM benchmark suite.
+"""LLM Benchmark Suite - Main Entry Point.
 
-This script orchestrates the complete benchmarking process:
-1. Runs benchmarks on configured endpoints
-2. Saves results to CSV
-3. Generates visualization charts
+Orchestrates the complete benchmarking workflow including:
+1. Endpoint configuration and selection
+2. Benchmark execution with progress tracking
+3. CSV result export
+4. Visualization generation
+
+Supports both sequential and concurrent execution modes with configurable
+parallelism and comprehensive performance metrics.
+
+Usage:
+    python run_benchmark.py --models llama-vllm qwen-nim --iterations 10
+    python run_benchmark.py --mode concurrent --concurrent 5
 """
 
 import asyncio
@@ -14,7 +21,6 @@ import argparse
 import sys
 import os
 
-# Add src to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
 from config import ENDPOINTS, BenchmarkConfig, get_models_by_names, list_available_models, print_available_models
@@ -24,7 +30,11 @@ from visualize import BenchmarkVisualizer
 
 
 def parse_args():
-    """Parse command line arguments."""
+    """Parse and validate command-line arguments.
+    
+    Returns:
+        argparse.Namespace: Parsed command-line arguments.
+    """
     parser = argparse.ArgumentParser(
         description='LLM Benchmark Suite - Compare performance of multiple LLM deployments',
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -131,7 +141,14 @@ Note: All endpoints are ALWAYS tested in parallel (simultaneously).
 
 
 async def main():
-    """Main execution function."""
+    """Execute benchmark workflow.
+    
+    Coordinates endpoint selection, configuration, benchmark execution,
+    result export, and visualization generation.
+    
+    Returns:
+        int: Exit code (0 for success, 1 for failure).
+    """
     args = parse_args()
     
     # Handle --list-models

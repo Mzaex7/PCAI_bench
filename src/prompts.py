@@ -1,7 +1,15 @@
 
-"""
-Test prompt generator for LLM benchmarking.
-Creates prompts with varying lengths and complexity levels.
+"""Test Prompt Generation for LLM Benchmarking.
+
+Provides a comprehensive test suite of prompts with varying lengths and complexity
+levels to thoroughly evaluate LLM endpoint performance across diverse use cases.
+
+Typical usage:
+    from prompts import get_test_prompts
+    
+    prompts = get_test_prompts()
+    for prompt in prompts:
+        print(f"{prompt['category']}: {prompt['length']} / {prompt['complexity']}")
 """
 
 from typing import List, Dict
@@ -9,28 +17,41 @@ from enum import Enum
 
 
 class PromptLength(Enum):
-    """Prompt length categories."""
+    """Categorizes prompts by character count.
+    
+    SHORT: < 200 characters
+    MEDIUM: 200-600 characters
+    LONG: > 600 characters
+    """
     SHORT = "short"
     MEDIUM = "medium"
     LONG = "long"
 
 
 class PromptComplexity(Enum):
-    """Prompt complexity levels."""
+    """Categorizes prompts by task complexity.
+    
+    SIMPLE: Basic factual queries, straightforward tasks
+    MODERATE: Multi-step reasoning, structured output
+    COMPLEX: Advanced analysis, technical design, strategic thinking
+    """
     SIMPLE = "simple"
     MODERATE = "moderate"
     COMPLEX = "complex"
 
 
 def get_test_prompts() -> List[Dict[str, any]]:
-    """
-    Generate a diverse set of test prompts with varying lengths and complexity.
+    """Generate comprehensive test prompt suite.
+    
+    Returns a curated collection of 18 prompts spanning:
+    - 3 length categories (short, medium, long)
+    - 3 complexity levels (simple, moderate, complex)
+    - 10+ semantic categories (factual QA, coding, analysis, etc.)
     
     Returns:
-        List of dictionaries containing prompt text, length, and complexity metadata.
+        List of prompt dictionaries with keys: prompt, length, complexity, category.
     """
     prompts = [
-        # SHORT + SIMPLE
         {
             "prompt": "What is the capital of France?",
             "length": PromptLength.SHORT.value,
@@ -55,8 +76,6 @@ def get_test_prompts() -> List[Dict[str, any]]:
             "complexity": PromptComplexity.SIMPLE.value,
             "category": "general_knowledge"
         },
-        
-        # SHORT + MODERATE
         {
             "prompt": "Explain the difference between machine learning and deep learning in simple terms.",
             "length": PromptLength.SHORT.value,
@@ -69,12 +88,8 @@ def get_test_prompts() -> List[Dict[str, any]]:
             "complexity": PromptComplexity.MODERATE.value,
             "category": "persuasive_writing"
         },
-        
-        # MEDIUM + SIMPLE
         {
-            "prompt": """Summarize the following text in 2-3 sentences:
-            
-The Internet of Things (IoT) refers to the billions of physical devices around the world that are now connected to the internet, collecting and sharing data. These devices range from ordinary household items to sophisticated industrial tools. Thanks to the arrival of super-cheap computer chips and the ubiquity of wireless networks, it's possible to turn anything into part of the IoT.""",
+            "prompt": """Summarize the following text in 2-3 sentences: The Internet of Things (IoT) refers to the billions of physical devices around the world that are now connected to the internet, collecting and sharing data. These devices range from ordinary household items to sophisticated industrial tools. Thanks to the arrival of super-cheap computer chips and the ubiquity of wireless networks, it's possible to turn anything into part of the IoT.""",
             "length": PromptLength.MEDIUM.value,
             "complexity": PromptComplexity.SIMPLE.value,
             "category": "summarization"
@@ -85,8 +100,6 @@ The Internet of Things (IoT) refers to the billions of physical devices around t
             "complexity": PromptComplexity.SIMPLE.value,
             "category": "instruction_following"
         },
-        
-        # MEDIUM + MODERATE
         {
             "prompt": """Analyze the pros and cons of remote work for both employees and employers. Consider at least 3 points for each perspective.""",
             "length": PromptLength.MEDIUM.value,
@@ -105,8 +118,6 @@ The Internet of Things (IoT) refers to the billions of physical devices around t
             "complexity": PromptComplexity.MODERATE.value,
             "category": "educational_content"
         },
-        
-        # MEDIUM + COMPLEX
         {
             "prompt": """Compare and contrast the economic theories of Keynesianism and Monetarism. Discuss their approaches to managing inflation and unemployment, and provide examples of when each might be more effective.""",
             "length": PromptLength.MEDIUM.value,
@@ -119,8 +130,6 @@ The Internet of Things (IoT) refers to the billions of physical devices around t
             "complexity": PromptComplexity.COMPLEX.value,
             "category": "system_design"
         },
-        
-        # LONG + MODERATE
         {
             "prompt": """You are tasked with planning a marketing campaign for a new sustainable clothing brand targeting millennials and Gen Z consumers. 
 
@@ -233,18 +242,39 @@ Make the lesson engaging, scientifically accurate, and appropriate for 14-16 yea
 
 
 def get_prompts_by_category(category: str) -> List[Dict[str, any]]:
-    """Get all prompts of a specific category."""
+    """Filter prompts by semantic category.
+    
+    Args:
+        category: Target category (e.g., "factual_qa", "coding", "analysis").
+        
+    Returns:
+        List of prompts matching the specified category.
+    """
     all_prompts = get_test_prompts()
     return [p for p in all_prompts if p.get("category") == category]
 
 
 def get_prompts_by_length(length: PromptLength) -> List[Dict[str, any]]:
-    """Get all prompts of a specific length."""
+    """Filter prompts by length category.
+    
+    Args:
+        length: Target length category from PromptLength enum.
+        
+    Returns:
+        List of prompts matching the specified length.
+    """
     all_prompts = get_test_prompts()
     return [p for p in all_prompts if p.get("length") == length.value]
 
 
 def get_prompts_by_complexity(complexity: PromptComplexity) -> List[Dict[str, any]]:
-    """Get all prompts of a specific complexity."""
+    """Filter prompts by complexity level.
+    
+    Args:
+        complexity: Target complexity level from PromptComplexity enum.
+        
+    Returns:
+        List of prompts matching the specified complexity.
+    """
     all_prompts = get_test_prompts()
     return [p for p in all_prompts if p.get("complexity") == complexity.value]
