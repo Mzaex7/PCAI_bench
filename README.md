@@ -163,3 +163,9 @@ python run_benchmark.py --models your-model --iterations 2
 ```
 
 **Requirements**: OpenAI-compatible `/v1/chat/completions` endpoint.
+
+## License
+
+MIT License - See [LICENSE](LICENSE) file for details.
+
+Copyright (c) 2025 HPE AI Infrastructure Team
