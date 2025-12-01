@@ -122,14 +122,11 @@ class BenchmarkVisualizer:
             """
             Parse endpoint name to extract model and engine.
             Examples:
-              'llama-vllm-new' -> ('Llama', 'vLLM New')
-              'llama-vllm' -> ('Llama', 'vLLM Old')
+              'llama-vllm-new' -> ('Llama', 'vLLM')
+              'llama-vllm' -> ('Llama', 'vLLM')
               'llama-nim' -> ('Llama', 'NIM')
               'llama-ollama' -> ('Llama', 'Ollama')
               'qwen-vllm' -> ('Qwen', 'vLLM')
-            
-            SPECIAL CASE: For vLLM comparisons (vllm.csv, vllm-*.csv),
-            distinguish between old and new versions by checking for 'new' suffix.
             """
             name_lower = name.lower()
             
@@ -139,13 +136,7 @@ class BenchmarkVisualizer:
             elif 'nim' in name_lower:
                 engine = 'NIM'
             elif 'vllm' in name_lower:
-                # SPECIAL: Distinguish vLLM old vs new
-                if 'new' in name_lower:
-                    engine = 'vLLM New'
-                else:
-                    # Check if this is the old version (no 'new' in name)
-                    # For endpoints like 'llama-vllm' (without 'new')
-                    engine = 'vLLM Old'
+                engine = 'vLLM'
             else:
                 engine = 'Unknown'
             
@@ -178,10 +169,8 @@ class BenchmarkVisualizer:
             return COLORS['ollama']
         elif 'nim' in engine_lower:
             return COLORS['nim']
-        elif 'vllm new' in engine_lower:
-            return COLORS['vllm']  # Purple for new
-        elif 'vllm old' in engine_lower or 'vllm' in engine_lower:
-            return '#9B8DD9'  # Lighter purple for old
+        elif 'vllm' in engine_lower:
+            return COLORS['vllm']
         return COLORS['primary']
     
     def _apply_hpe_styling(self, ax):
